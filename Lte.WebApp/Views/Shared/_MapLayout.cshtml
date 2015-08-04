@@ -1,0 +1,14 @@
+﻿<!DOCTYPE html>
+<html>
+    @Html.Partial("_HtmlHead")
+    <body>
+        @Html.Partial("_BodyHeader")
+        <div class="container body-content">
+            @RenderBody()
+        </div>
+        <div id="allmap" style="width: 100%;height: 600px;overflow: hidden;margin:0;"></div>
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=OeWDTDlnolWHBNP1GSkDph34"></script>
+        @RenderSection("css", required: false)
+        @RenderSection("scripts", required: true)
+    </body>
+</html>

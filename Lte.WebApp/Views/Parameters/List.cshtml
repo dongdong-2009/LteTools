@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Lte.Evaluations.ViewHelpers.TownENodebStat>
+
+@{
+    ViewBag.Title = "各镇区LTE基站分布情况";
+}
+
+@section featured {
+    <hgroup class="title">
+        <h1>@ViewBag.Title</h1>
+
+    </hgroup>
+    }
+
+<article class="half">
+    @{ Html.RenderPartial("_TownENodebStatTable"); }
+</article>
+
+<aside class="half">
+    <div id="pieCharts">
+    @foreach (string cityName in Model.Select(x=>x.CityName).Distinct())
+    {
+        <h3><a href="#">基站数统计-@cityName</a></h3>
+        <div id="pie-@cityName" class="city" style="min-height: 400px"></div>
+        foreach (string districtName in Model.Where(x => x.CityName == cityName).Select(x => x.DistrictName).Distinct())
+        { 
+            <h3><a href="#">基站数统计-@cityName@districtName</a></h3>
+            <div id="pie-@cityName-@districtName" class="district" style="min-height: 400px"></div>
+        }
+    }
+    </div>    
+</aside>
+
+@section css{
+@Styles.Render("~/Content/themes/base/css")
+}
+@section scripts{
+@Scripts.Render("~/bundles/jqueryui")
+@Scripts.Render("~/bundles/highcharts")
+<script type="text/javascript" src="~/Scripts/Parameters/ENodebStatSet.js"></script>
+<script type="text/javascript" src="../../Scripts/Dingli/Pie3dSetting.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#pieCharts").accordion({ autoHeight: false });
+        var dataSet = new ENodebStatSet();
+        $(".city").each(function () {
+            var parts = $(this).attr("id").split('-');
+            var cityStat = dataSet.getDistrictENodebsStat(parts[1]);
+            var pieSetting = new Pie3dSetting(parts[1] + '基站数统计', cityStat);
+            $(this).highcharts(pieSetting.getOptions(true));
+        });
+        $(".district").each(function () {
+            var parts = $(this).attr("id").split('-');
+            var districtStat = dataSet.getTownENodebsStat(parts[1], parts[2]);
+            var pieSetting = new Pie3dSetting(parts[1] + parts[2] + '基站数统计', districtStat);
+            $(this).highcharts(pieSetting.getOptions(true));
+        });
+        $(".show-details").click("normal", function () {
+            var parts = $(this).attr("id").split('-');
+            $("#row-" + parts[0] + "-" + parts[1]).toggle();
+        });
+    });
+</script>
+}

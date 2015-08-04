@@ -1,0 +1,24 @@
+﻿using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Lte.Domain.Regular;
+
+namespace Lte.Domain.Test.Regular
+{
+    [TestClass]
+    public class SecureConversionTest
+    {
+        [TestMethod]
+        public void TestSecureConversion()
+        {
+            Assert.AreEqual(("2").ConvertToByte(1), 2);
+            Assert.AreEqual(("10000").ConvertToByte(1), 1);
+            Assert.AreEqual(("-2").ConvertToInt(0), -2);
+            Assert.AreEqual(("-33a").ConvertToInt(0), 0);
+            Assert.AreEqual(("2.3345").ConvertToDouble(3), 2.3345);
+            Assert.AreEqual(("2.33.45").ConvertToDouble(3), 3);
+        }
+    }
+}

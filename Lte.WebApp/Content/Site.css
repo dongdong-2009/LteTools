@@ -1,0 +1,183 @@
+﻿html {
+    background-color: #e2e2e2;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    padding-top: 100px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.header-content {
+    padding-left:20px;
+    padding-right:60px;
+}
+
+.blue-nav {
+    background-color: #0099FF;
+    border-color: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.docs-nav {
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-menu li {
+    margin-top:0;
+}
+
+    .docs-nav li a {
+    color: #fff;
+    font-family: 黑体;
+    font-size: 16px;
+}
+        .docs-nav li a:hover {
+            color:#1d365d
+        }
+
+/* site title
+----------------------------------------------------------*/
+.site-title {
+    font-family: 华文新魏;
+    font-size: 4em;
+    margin: 0;
+    padding-right: 140px;
+}
+
+.site-title a, .site-title a:hover, .site-title a:active {
+    margin-top:10px;
+    color: #FFFFCC;
+    background: none;
+    outline: none;
+    text-decoration: none;
+}
+
+fieldset {
+    margin: 5px;
+    padding: 5px;
+}
+
+    fieldset ol {
+        list-style: none;
+    }
+
+        fieldset ol li {
+            padding-bottom: 5px;
+        }
+            fieldset ol li label {
+                min-width:80px;
+            }
+
+    .login-menu li a {
+        font-size: 12px;
+    }
+
+        .login-menu li a:hover {
+            color:#1d365d;
+            background-color:rgba(0, 0, 0, 0.2);
+        }
+
+label.checkbox {
+    display: inline;
+}
+/* info and errors */
+.message-info {
+    border: 1px solid;
+    clear: both;
+    padding: 10px 20px;
+}
+
+.message-error {
+    clear: both;
+    color: #e80c4d;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+}
+
+.message-success {
+    color: #7ac0da;
+    font-size: 1.3em;
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+}
+
+.error {
+    color: #e80c4d;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #e80c4d;
+    font-weight: bold;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #e80c4d;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #e80c4d;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+    /* login page */
+    #loginForm {
+        border-right: none;
+        float: none;
+        width: auto;
+    }
+
+        #loginForm .validation-error {
+            display: block;
+            margin-left: 15px;
+        }
+
+    #socialLoginForm {
+        margin-left: 0;
+        float: none;
+        width: auto;
+    }
+
+    
+footer {
+    clear: both;
+    background-color: #e2e2e2;
+    font-size: .8em;
+    text-align: center;
+        height: auto;
+        padding: 10px 0;
+}
+
+    /* footer
+    ----------------------------------------------------------*/
+    footer .float-left,
+    footer .float-right {
+        float: none;
+    }
+
+        footer p {
+            margin: 0;
+        }
+

@@ -1,0 +1,54 @@
+﻿@model Lte.Evaluations.ViewHelpers.ENodebDetailsViewModel
+
+@{
+    ViewBag.Title = Model.ENodeb.Name + "基站信息和小区信息修改";
+}
+
+@section featured {
+    <hgroup class="title">
+        <h1>@ViewBag.Title</h1>
+    </hgroup>
+}
+
+<article>
+    <p>@Html.ActionLink("查看修改效果","CellList",new{eNodebId = Model.ENodeb.ENodebId, @class="btn-primary"})</p>
+    <div id="radiotabs">
+        <ul>
+            <li><a href="#info">基站信息</a></li>
+            <li><a href="#cellsLte">LTE小区</a></li>
+            <li><a href="#cellsCdma">CDMA小区</a></li>
+            <li><a href="#photos">图片信息</a></li>
+        </ul>
+        <div id="info">
+            @{Html.RenderPartial("_ENodebInfoEdit",Model.ENodeb);}
+            
+            @{Html.RenderPartial("_BtsInfoEdit",Model.Bts);}
+        </div>
+        <div id="cellsLte"></div>
+        <div id="cellsCdma"></div>
+        <div id="photos">
+            @{Html.RenderPartial("_ImageUpload",Model);}
+        </div>
+    </div>
+</article>
+
+@section css{
+    @Styles.Render("~/Content/themes/base/css")
+    <style type="text/css">
+        li{list-style-image: none;
+            float: left;
+            margin: 10px 10px 0 10px;
+        }
+        img{width:100px;height: 100px;}
+    </style>
+    }
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryui")
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#radiotabs").tabs();
+        });
+    </script>
+}

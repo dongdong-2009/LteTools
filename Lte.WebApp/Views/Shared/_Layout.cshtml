@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+    @Html.Partial("_HtmlHead")
+    <body class="homepage" data-spy="scroll" data-target=".navbar">
+        @Html.Partial("_BodyHeader")
+            @RenderPage("~/Views/Shared/Message.cshtml")
+            <section class="featured">
+                <div class="content-wrapper">
+                    @RenderSection("featured", required: false)
+                </div>
+            </section>
+        <div class="container body-content">
+            @RenderBody()
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; 2004 &nbsp;-&nbsp; @DateTime.Now.Year - 广东无线网络运营中心欧阳晖</p>
+                </div>
+            </div>
+        </footer>
+        @RenderSection("css", required: false)
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

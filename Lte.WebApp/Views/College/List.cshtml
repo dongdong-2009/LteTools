@@ -1,0 +1,181 @@
+﻿@model Lte.Evaluations.ViewHelpers.CollegeViewModel
+
+@{
+    ViewBag.Title = "校园网信息管理";
+    ViewBag.Info = "——校园网信息的整体呈现";
+}
+
+@section featured 
+{
+    <hgroup class="title">
+        <h1>@ViewBag.Title</h1>
+        <h2>@ViewBag.Info</h2>
+    </hgroup>
+}
+
+<section>
+    <div id="radiotabs">
+        <ul>
+            <li><a href="#show-list">校园列表</a></li>
+            <li><a href="#import-info">批量导入信息</a></li>
+        </ul>
+        <div id="show-list">
+            <table class="table table-hover">
+                @if (Model.Colleges.Any())
+                {
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(x=>x.Colleges.ElementAt(0).DistrictName)</th>
+                            <th>@Html.DisplayNameFor(x=>x.Colleges.ElementAt(0).TownName)</th>
+                            <th>@Html.DisplayNameFor(x=>x.Colleges.ElementAt(0).Name)</th>
+                            <th>基本信息</th>
+                            <th>覆盖信息</th>
+                            <th>容量信息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Lte.Evaluations.Entities.CollegeDto view in Model.Colleges)
+                        {
+                            <tr>
+                                <td>@view.DistrictName</td>
+                                <td>@view.TownName</td>
+                                <td>@view.Name</td>
+                                <td>
+                                    @if (DateTime.Today <= view.OldOpenDate.AddDays(-7))
+                                    {
+                                        <button class="btn btn-primary" data-toggle="modal" data-target="#main-@view.Id"
+                                                title="这里表示目前阶段和预计到达总用户数，点击可查看基本信息">
+                                            保障准备
+                                            <span class="badge pull-right">@view.ExpectedSubscribers</span>
+                                        </button>
+                                    }
+                                    else if (DateTime.Today <= view.OldOpenDate.AddDays(20))
+                                    {
+                                        <button class="btn btn-warning" data-toggle="modal" data-target="#main-@view.Id"
+                                                title="这里表示目前阶段和预计到达总用户数，点击可查看基本信息">
+                                            保障中
+                                            <span class="badge pull-right">@view.ExpectedSubscribers</span>
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-success" data-toggle="modal" data-target="#main-@view.Id"
+                                                title="这里表示目前阶段和预计到达总用户数，点击可查看基本信息">
+                                            保障后
+                                            <span class="badge pull-right">@view.ExpectedSubscribers</span>
+                                        </button>
+                                    }
+                                </td>
+                                <td>
+                                    @Html.ActionLink("覆盖情况", "CollegeCoverage", new { id = view.Id }, 
+                                        new {@class="btn btn-primary"})
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        @Html.ActionLink("详细信息", "CollegeDetails", new { id = view.Id }, 
+                                        new {@class="btn btn-primary"})
+                                        @Html.ActionLink("小区信息", "CollegeCells", new { id = view.Id }, 
+                                        new {@class="btn btn-primary"})
+                                    </div>
+                                </td>
+                            </tr>
+                            <div class="modal fade" id="main-@view.Id" tabindex="-1" role="dialog" 
+                                aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" 
+                                                    data-dismiss="modal" aria-hidden="true">
+                                                &times;
+                                            </button>
+                                            <h4 class="modal-title" id="myModalLabel">
+                                                @view.Name - 基本信息
+                                            </h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h2 class="label label-info">@Html.DisplayNameFor(x=>x.Colleges.ElementAt(0).ExpectedSubscribers)</h2>
+                                            <h2 class="label label-primary">@view.ExpectedSubscribers</h2>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">@Html.DisplayNameFor(x=>x.Colleges.ElementAt(0).OldOpenDate)</span>
+                                                <span class="form-control">@view.OldOpenDate.ToShortDateString()</span>
+                                                <span class="input-group-addon">@Html.DisplayNameFor(x=>x.Colleges.ElementAt(0).NewOpenDate)</span>
+                                                <span class="form-control">@view.NewOpenDate.ToShortDateString()</span>
+                                            </div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">@Html.DisplayNameFor(x=>x.Colleges.ElementAt(0).CurrentSubscribers)</span>
+                                                <span class="form-control">@view.CurrentSubscribers</span>
+                                                <span class="input-group-addon">@Html.DisplayNameFor(x=>x.Colleges.ElementAt(0).TotalStudents)</span>
+                                                <span class="form-control">@view.TotalStudents</span>
+                                            </div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">@Html.DisplayNameFor(x=>x.Colleges.ElementAt(0).GraduateStudents)</span>
+                                                <span class="form-control">@view.GraduateStudents</span>
+                                                <span class="input-group-addon">@Html.DisplayNameFor(x=>x.Colleges.ElementAt(0).NewSubscribers)</span>
+                                                <span class="form-control">@view.NewSubscribers</span>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" 
+                                                    data-dismiss="modal">关闭
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>合计</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>@Model.Colleges.Sum(x=>x.NewSubscribers)</td>
+                            <td>-</td>
+                        </tr>
+                    </tfoot>
+                }
+            </table>
+        </div>
+        <div id="import-info">
+            @using (Html.BeginForm("InfrastructureImport", "College",
+                FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <fieldset>
+                    <legend>基础信息文件导入选择</legend>
+                    <ol>
+                        <li>
+                            LTE基础信息文件选择：
+                            <input type="file" name="lte" accept=".xls, .xlsx" />
+                        </li>
+                        <li>
+                            CDMA基础信息文件选择：
+                            <input type="file" name="cdma" accept=".xls, .xlsx" />
+                        </li>
+                    </ol>
+                </fieldset>
+
+                <p>
+                    <div class="btn-group">
+                        @Html.ActionLink("新增校园", "CollegeDetails",  new { id = -1 }, new {@class="btn btn-primary"})
+                        <button type="submit" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-save"></span>导入信息
+                        </button>
+                    </div>
+                </p>
+            }
+        </div>
+    </div>
+</section>
+
+@section css
+{
+    @Styles.Render("~/Content/themes/base/css")
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryui")
+    <script type="text/javascript">
+        $("#radiotabs").tabs();
+    </script>
+}

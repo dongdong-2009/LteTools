@@ -1,0 +1,84 @@
+﻿using Lte.Parameters.Region.Abstract;
+using Lte.Parameters.Region.Entities;
+
+namespace Lte.Parameters.Region.Service
+{
+    public class RegionOperationService
+    {
+        private readonly IRegionRepository _repository;
+        private readonly string _cityName;
+        private readonly string _districtName;
+        private readonly string _regionName;
+        private QueryRegionService _service;
+
+        public RegionOperationService(IRegionRepository repository,
+            string cityName, string districtName, string regionName)
+        {
+            _repository = repository;
+            _cityName = cityName;
+            _districtName = districtName;
+            _regionName = regionName;
+            _service = new ByRegionQueryRegionService(_repository.OptimizeRegions,
+                _cityName, _districtName, _regionName);
+        }
+
+        public bool InputIsEmpty
+        {
+            get
+            {
+                return string.IsNullOrEmpty(_cityName) 
+                    || string.IsNullOrEmpty(_districtName) || string.IsNullOrEmpty(_regionName);
+            }
+        }
+
+        public bool SaveOneRegion(bool forceChangeExisted = false)
+        {
+            if (InputIsEmpty)
+            {
+                return false;
+            }
+
+            QueryRegionService districtService = new ByDistrictQueryRegionService(_repository.OptimizeRegions,
+                _cityName, _districtName);
+            OptimizeRegion existedRegion = districtService.Query();
+            if (existedRegion == null)
+            {
+                if (_service.Query() == null)
+                {
+                    _repository.AddOneRegion(new OptimizeRegion
+                    {
+                        City = _cityName,
+                        District = _districtName,
+                        Region = _regionName
+                    });
+                    _repository.SaveChanges();
+                    return true;
+                }
+            }
+            else if (_regionName != existedRegion.Region && forceChangeExisted)
+            {
+                existedRegion.Region = _regionName;
+                _repository.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteOneRegion()
+        {
+            if (InputIsEmpty)
+            {
+                return false;
+            }
+
+            OptimizeRegion region = _service.Query();
+            if (region == null)
+            {
+                return false;
+            }
+            _repository.RemoveOneRegion(region);
+            _repository.SaveChanges();
+            return true;
+        }
+    }
+}
