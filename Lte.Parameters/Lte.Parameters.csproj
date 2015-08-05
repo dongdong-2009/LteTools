@@ -156,6 +156,14 @@
     <Compile Include="Migrations\201508021413103_collegeview.Designer.cs">
       <DependentUpon>201508021413103_collegeview.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508050340473_college6.cs" />
+    <Compile Include="Migrations\201508050340473_college6.Designer.cs">
+      <DependentUpon>201508050340473_college6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508051237454_college7.cs" />
+    <Compile Include="Migrations\201508051237454_college7.Designer.cs">
+      <DependentUpon>201508051237454_college7.cs</DependentUpon>
+    </Compile>
     <Compile Include="Region\Abstract\IInfrastructureRepository.cs" />
     <Compile Include="Region\Concrete\EFCollegeRepository.cs" />
     <Compile Include="Region\Entities\InfrastructureInfo.cs" />
@@ -407,6 +415,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508021413103_collegeview.resx">
       <DependentUpon>201508021413103_collegeview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508050340473_college6.resx">
+      <DependentUpon>201508050340473_college6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508051237454_college7.resx">
+      <DependentUpon>201508051237454_college7.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Service\Coverage\DtContext.dbml.layout">
       <DependentUpon>DtContext.dbml</DependentUpon>

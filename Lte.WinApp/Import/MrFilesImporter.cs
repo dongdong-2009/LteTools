@@ -4,7 +4,6 @@ using System.Linq;
 using Lte.Evaluations.Rutrace.Entities;
 using Lte.Evaluations.Rutrace.Record;
 using Lte.Parameters.Abstract;
-using Lte.Parameters.Concrete;
 using Lte.Parameters.Entities;
 using Lte.Parameters.Region.Entities;
 using Lte.Evaluations.Rutrace.Service;

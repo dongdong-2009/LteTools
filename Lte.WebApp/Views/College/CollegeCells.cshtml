@@ -97,6 +97,7 @@
 
 <input type="hidden" id="longitude" value="@Model.CenterLongtitute" />
 <input type="hidden" id="lattitude" value="@Model.CenterLattitute" />
+<input type="hidden" id="college-id" value="@Model.InfrastructureId"/>
 
 @section css
 {
@@ -110,7 +111,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/highcharts")
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=OeWDTDlnolWHBNP1GSkDph34"></script>
-	<script type="text/javascript" src="~/Scripts/Plugins/DrawingManager.js"></script>
+    <script type="text/javascript" src="~/Scripts/Plugins/DrawingManager.js"></script>
     <script type="text/javascript" src="~/Scripts/Plugins/SearchInfoWindow.js"></script>
     <script type="text/javascript" src="~/Scripts/Plugins/GeoUtils.js"></script>
     <script type="text/javascript" src="~/Scripts/Parameters/MapContainer.js"></script>
@@ -128,13 +129,13 @@
 
         var lteContainer = new MapContainer(map);
         var lteCanvas = new EvaluationMapCanvas(lteContainer);
-        $("#show-enodeb").click(function () {
+        $("#show-enodeb").click(function() {
             lteCanvas.drawENodebMarkers("/api/QueryENodebs");
         });
-        $("#show-cell").click(function () {
+        $("#show-cell").click(function() {
             lteCanvas.drawQuerySectors("/api/QueryLteSectors");
         });
-        $(".show-precise").click(function () {
+        $(".show-precise").click(function() {
             var segments = $(this).attr("id").split(':');
             var eNodebId = segments[1];
             var sectorId = segments[2];
@@ -148,26 +149,26 @@
 
         var cdmaContainer = new MapContainer(map);
         var cdmaCanvas = new EvaluationMapCanvas(cdmaContainer);
-        $("#show-bts").click(function () {
+        $("#show-bts").click(function() {
             cdmaCanvas.drawBtsMarkers("/api/QueryBtss");
         });
-        $("#cdma-cell").click(function () {
+        $("#cdma-cell").click(function() {
             cdmaCanvas.drawQuerySectors("/api/QueryCdmaSectors");
         });
 
         var lteDisContainer = new MapContainer(map);
         var lteDisCanvas = new EvaluationMapCanvas(lteDisContainer);
-        $("#lte-distribution").click(function () {
+        $("#lte-distribution").click(function() {
             lteDisCanvas.drawDistributionMarkers("/api/QueryLteDistributions");
         });
 
         var cdmaDisContainer = new MapContainer(map);
         var cdmaDisCanvas = new EvaluationMapCanvas(cdmaDisContainer);
-        $("#cdma-distribution").click(function () {
+        $("#cdma-distribution").click(function() {
             cdmaDisCanvas.drawDistributionMarkers("/api/QueryCdmaDistributions");
         });
 
-        $("#resetmap").click(function () {
+        $("#resetmap").click(function() {
             lteCanvas.removeMarkers();
             lteCanvas.removeSectors();
             cdmaCanvas.removeMarkers();
@@ -180,8 +181,8 @@
             overlays.length = 0;
         });
 
-        $("#draw-area").click(function () {
-            
+        $("#draw-area").click(function() {
+
             alert(overlays.length);
         });
 
@@ -190,47 +191,63 @@
         map.enableScrollWheelZoom(); //启用滚轮放大缩小
 
         var overlays = [];
-        var overlaycomplete = function (e) {
-            overlays.push(e.overlay); var result = "";
-            result = "<p>";
-            result += e.drawingMode + ":";
-            if (e.drawingMode == BMAP_DRAWING_MARKER) {
-                result += ' 坐标：' + e.overlay.getPosition().lng + ',' + e.overlay.getPosition().lat;
-                if ($('isInfowindow').checked) {
-                    searchInfoWindow.open(e.overlay);
-                }
-            }
+        var overlaycomplete = function(e) {
+            overlays.push(e.overlay);
             if (e.drawingMode == BMAP_DRAWING_CIRCLE) {
                 var radius = e.overlay.getRadius();
-                result += ' 半径：' + radius;
-                result += ' 中心点：' + e.overlay.getCenter().lng + "," + e.overlay.getCenter().lat;
-                result += ' 面积：' + Math.PI * radius * radius;
-                result += "</p>";
-                alert(result);
+
+                $.ajax({
+                    url: "/api/CollegeQuery",
+                    type: "POST",
+                    data: {
+                        id: $("#college-id").attr("id"),
+                        centerX: e.overlay.getCenter().lng,
+                        centerY: e.overlay.getCenter().lat,
+                        radius: radius
+                    }
+                });
                 return;
             }
-            if (e.drawingMode == BMAP_DRAWING_POLYLINE || e.drawingMode == BMAP_DRAWING_POLYGON || e.drawingMode == BMAP_DRAWING_RECTANGLE) {
-                result += ' 所画的点个数：' + e.overlay.getPath().length;
+            if (e.drawingMode == BMAP_DRAWING_POLYGON || e.drawingMode == BMAP_DRAWING_RECTANGLE) {
+                var area = BMapLib.GeoUtils.getPolygonArea(e.overlay);
                 var points = e.overlay.getPath();
-                for (var i = 0; i< points.length; i++) {
-                    result += "[" + i + "]:(" + points[i].lng + "," + points[i].lat + ")";
-                }
-                if (e.drawingMode == BMAP_DRAWING_POLYGON || e.drawingMode == BMAP_DRAWING_RECTANGLE) {
-                    result += ' 面积：' + BMapLib.GeoUtils.getPolygonArea(e.overlay);
-                    result += "</p>";
-                    alert(result);
-                    return;
+                if (e.drawingMode == BMAP_DRAWING_POLYGON) {
+                    var info = "";
+                    for (var i = 0; i < points.length - 1; i++) {
+                        info += points[i].lng + ";" + points[i].lat + ";";
+                    }
+                    info += points[points.length - 1].lng + ";" + points[points.length - 1].lat;
+                    $.ajax({
+                        url: "/api/CollegeQuery",
+                        type: "POST",
+                        data: {
+                            id: $("#college-id").attr("id"),
+                            area: area,
+                            message: info
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        url: "/api/CollegeQuery",
+                        type: "POST",
+                        data: {
+                            id: $("#college-id").attr("id"),
+                            area: area,
+                            x1: points[0].lng,
+                            y1: points[0].lat,
+                            x2: points[2].lng,
+                            y2: points[2].lat
+                        }
+                    });
                 }
             }
-            result += "</p>";
-            alert(result);
         };
         var styleOptions = {
-            strokeColor: "red",    //边线颜色。
-            fillColor: "red",      //填充颜色。当参数为空时，圆形将没有填充效果。
-            strokeWeight: 3,       //边线的宽度，以像素为单位。
-            strokeOpacity: 0.8,	   //边线透明度，取值范围0 - 1。
-            fillOpacity: 0.2,      //填充的透明度，取值范围0 - 1。
+            strokeColor: "red", //边线颜色。
+            fillColor: "red", //填充颜色。当参数为空时，圆形将没有填充效果。
+            strokeWeight: 3, //边线的宽度，以像素为单位。
+            strokeOpacity: 0.8, //边线透明度，取值范围0 - 1。
+            fillOpacity: 0.2, //填充的透明度，取值范围0 - 1。
             strokeStyle: 'solid' //边线的样式，solid或dashed。
         }
         //实例化鼠标绘制工具

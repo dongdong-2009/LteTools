@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using Abp.Application.Services.Dto;
 using Abp.Domain.Entities.Auditing;
-using Abp.Runtime.Validation;
-using Lte.Domain.Geo.Abstract;
-using Lte.Domain.Regular;
-using Lte.Parameters.Service.Public;
 
 namespace Lte.Parameters.Region.Entities
 {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
+using Abp.Domain.Entities;
 using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Geo.Service;
 using Lte.Parameters.Abstract;
@@ -9,12 +9,8 @@ using Lte.Parameters.Service.Public;
 
 namespace Lte.Parameters.Region.Entities
 {
-    public class InfrastructureInfo
+    public class InfrastructureInfo : Entity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         public HotspotType HotspotType { get; set; }
 
         public string HotspotName { get; set; }
@@ -24,7 +20,7 @@ namespace Lte.Parameters.Region.Entities
         public int InfrastructureId { get; set; }
     }
 
-    public enum HotspotType
+    public enum HotspotType : byte
     {
         College,
         Hospital,
@@ -33,7 +29,7 @@ namespace Lte.Parameters.Region.Entities
         Transportation
     }
 
-    public enum InfrastructureType
+    public enum InfrastructureType : byte
     {
         ENodeb,
         Cell,
@@ -43,7 +39,7 @@ namespace Lte.Parameters.Region.Entities
         CdmaIndoor
     }
 
-    public enum RegionType
+    public enum RegionType : byte
     {
         Circle,
         Rectangle,
@@ -51,12 +47,8 @@ namespace Lte.Parameters.Region.Entities
         PolyLine
     }
 
-    public class IndoorDistribution : IGeoPoint<double>
+    public class IndoorDistribution : Entity, IGeoPoint<double>
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         [SimpleExcelColumn(Name = "室分名称")]
         [Display(Name = "室分名称")]
         public string Name { get; set; }
