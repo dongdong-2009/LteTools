@@ -29,14 +29,13 @@ namespace Lte.Parameters.Region.Entities
         public DateTime OldOpenDate { get; set; }
 
         public DateTime NewOpenDate { get; set; }
+
+        public CollegeRegion CollegeRegion { get; set; }
     }
 
     public class CollegeRegion
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         public int CollegeId { get; set; }
 
         public double Area { get; set; }

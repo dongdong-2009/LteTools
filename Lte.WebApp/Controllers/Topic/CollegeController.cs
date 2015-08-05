@@ -73,7 +73,7 @@ namespace Lte.WebApp.Controllers.Topic
 
         public ActionResult List()
         {
-            IEnumerable<CollegeInfo> infos = _repository.CollegeInfos.ToList();
+            IEnumerable<CollegeInfo> infos = _repository.GetAllList();
             IEnumerable<Town> towns = _townRepository.Towns.ToList();
             CollegeViewModel viewModel = new CollegeViewModel
             {
@@ -85,7 +85,7 @@ namespace Lte.WebApp.Controllers.Topic
         [Authorize]
         public ActionResult CollegeDetails(int id)
         {
-            CollegeInfo info = _repository.CollegeInfos.FirstOrDefault(x => x.Id == id);
+            CollegeInfo info = _repository.Get(id);
             IEnumerable<Town> towns = _townRepository.Towns.ToList();
             CollegeDto dto = (info == null)
                 ? new CollegeDto()
@@ -105,7 +105,7 @@ namespace Lte.WebApp.Controllers.Topic
 
         public ActionResult CollegeCells(int id)
         {
-            CollegeInfo info = _repository.CollegeInfos.FirstOrDefault(x => x.Id == id);
+            CollegeInfo info = _repository.Get(id);
             if (info == null)
                 return View(new InfrastructureInfoViewModel(id));
 
@@ -129,7 +129,7 @@ namespace Lte.WebApp.Controllers.Topic
 
             CollegeInfo info = viewModel.CollegeDto.Id == -1
                 ? new CollegeInfo()
-                : _repository.CollegeInfos.FirstOrDefault(x => x.Id == viewModel.CollegeDto.Id);
+                : _repository.Get(viewModel.CollegeDto.Id);
             if (info == null)
             {
                 TempData["error"] = "该校园不存在。无法修改！";
@@ -141,7 +141,7 @@ namespace Lte.WebApp.Controllers.Topic
             info.TownId = townId;
             if (viewModel.CollegeDto.Id == -1)
             {
-                _repository.AddOneCollege(info);
+                _repository.Insert(info);
                 TempData["success"] = "新增校园" + info.Name + "信息成功！";
             }
             else
@@ -149,8 +149,8 @@ namespace Lte.WebApp.Controllers.Topic
                 info.TownId = oldTownId;
                 info.Name = oldName;
                 TempData["success"] = "修改校园" + info.Name + "信息成功！";
+                _repository.Update(info);
             }
-            _repository.SaveChanges();
             return RedirectToAction("List");
         }
 
@@ -185,7 +185,7 @@ namespace Lte.WebApp.Controllers.Topic
 
         public ActionResult CollegeCoverage(int id)
         {
-            CollegeInfo info = _repository.CollegeInfos.FirstOrDefault(x => x.Id == id);
+            CollegeInfo info = _repository.Get(id);
             if (info == null)
                 return View(new InfrastructureCoverageViewModel(id));
 

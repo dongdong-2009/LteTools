@@ -17,7 +17,7 @@ namespace Lte.WebApp.Controllers.Topic
         [HttpGet]
         public CollegeInfo Get(int id)
         {
-            return _repository.CollegeInfos.FirstOrDefault(x => x.Id == id);
+            return _repository.Get(id);
         }
 
         public void PutCircleArea(int id, double centerX)

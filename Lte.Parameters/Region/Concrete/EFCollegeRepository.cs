@@ -1,48 +1,20 @@
 ﻿using System.Linq;
+using Abp.EntityFramework;
+using Lte.Parameters.Abstract;
 using Lte.Parameters.Concrete;
 using Lte.Parameters.Region.Abstract;
 using Lte.Parameters.Region.Entities;
 
 namespace Lte.Parameters.Region.Concrete
 {
-    public class EFCollegeRepository : ICollegeRepository
+    public class EFCollegeRepository : ParametersRepositoryBase<CollegeInfo>, ICollegeRepository
     {
-        private readonly EFParametersContext context = new EFParametersContext();
-
-        public IQueryable<CollegeInfo> CollegeInfos
+        public EFCollegeRepository(IDbContextProvider<EFParametersContext> dbContextProvider) : base(dbContextProvider)
         {
-            get { return context.CollegeInfos.AsQueryable(); }
-            
         }
 
-        public IQueryable<CollegeRegion> CollegeRegions
+        public EFCollegeRepository() : this(new EFParametersProvider())
         {
-            get { return context.CollegeRegions.AsQueryable(); }
-        }
-
-        public void AddOneCollege(CollegeInfo info)
-        {
-            context.CollegeInfos.Add(info);
-        }
-
-        public void AddOneRegion(CollegeRegion region)
-        {
-            context.CollegeRegions.Add(region);
-        }
-
-        public bool RemoveOneCollege(CollegeInfo info)
-        {
-            return context.CollegeInfos.Remove(info) != null;
-        }
-
-        public bool RemoveOneRegion(CollegeRegion region)
-        {
-            return context.CollegeRegions.Remove(region) != null;
-        }
-
-        public void SaveChanges()
-        {
-            context.SaveChanges();
         }
     }
 

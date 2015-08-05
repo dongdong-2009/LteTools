@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Abp.Domain.Repositories;
 using Lte.Parameters.Region.Entities;
 
 namespace Lte.Parameters.Region.Abstract
@@ -25,20 +26,7 @@ namespace Lte.Parameters.Region.Abstract
         void SaveChanges();
     }
 
-    public interface ICollegeRepository
+    public interface ICollegeRepository : IRepository<CollegeInfo>
     {
-        IQueryable<CollegeInfo> CollegeInfos { get; }
-
-        IQueryable<CollegeRegion> CollegeRegions { get; } 
-
-        void AddOneCollege(CollegeInfo info);
-
-        void AddOneRegion(CollegeRegion region);
-
-        bool RemoveOneCollege(CollegeInfo info);
-
-        bool RemoveOneRegion(CollegeRegion region);
-
-        void SaveChanges();
     }
 }
