@@ -36,13 +36,12 @@ namespace Lte.Parameters.Service.Cdma
         {
             using (var baseRepository = new ENodebBaseRepository(_repository))
             {
-                foreach (var cdmaBts in _btsInfoList)
+                foreach (var cdmaBts in from cdmaBts in _btsInfoList 
+                                        let bts = baseRepository.QueryENodeb(cdmaBts.BtsId) 
+                                        where bts == null select cdmaBts)
                 {
-                    var bts = baseRepository.QueryENodeb(cdmaBts.BtsId);
-                    if (bts != null) continue;
-                    _repository.AddOneBts(cdmaBts);
+                    _repository.Insert(cdmaBts);
                 }
-                _repository.SaveChanges();
             }
             infrastructure.CdmaBtsUpdated = 0;
         }
@@ -86,7 +85,6 @@ namespace Lte.Parameters.Service.Cdma
                     infrastructure.CdmaBtsUpdated++;
                 }
             }
-            _repository.SaveChanges();
         }
     }
 }

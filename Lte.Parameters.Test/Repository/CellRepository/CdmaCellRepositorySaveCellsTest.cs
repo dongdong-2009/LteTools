@@ -15,10 +15,11 @@ namespace Lte.Parameters.Test.Repository.CellRepository
         private readonly Mock<IBtsRepository> btsRepository = new Mock<IBtsRepository>();
         private List<CdmaCellExcel> cellInfos;
 
-        private void TestInitialize()
+        [SetUp]
+        public void TestInitialize()
         {
             Initialize();
-            btsRepository.SetupGet(x => x.Btss).Returns(new List<CdmaBts> 
+            btsRepository.Setup(x => x.GetAll()).Returns(new List<CdmaBts> 
             {
                 new CdmaBts
                 {
@@ -28,6 +29,8 @@ namespace Lte.Parameters.Test.Repository.CellRepository
                     Lattitute = 22.7788
                 }
             }.AsQueryable());
+            btsRepository.Setup(x => x.Count()).Returns(btsRepository.Object.GetAll().Count());
+            btsRepository.Setup(x => x.GetAllList()).Returns(btsRepository.Object.GetAll().ToList());
             cellInfos = new List<CdmaCellExcel>
             {
                 new CdmaCellExcel
@@ -69,7 +72,6 @@ namespace Lte.Parameters.Test.Repository.CellRepository
         [Test]
         public void TestCdmaCellRepositorySaveCells_FirstCell_BtsExist_CellNotExist()
         {
-            TestInitialize();
             Assert.AreEqual(repository.Object.Cells.Count(), 1);
             Assert.AreEqual(repository.Object.Cells.ElementAt(0).Frequency, 64);
             Assert.AreEqual(repository.Object.Cells.ElementAt(0).Frequency1, 283);
@@ -86,7 +88,6 @@ namespace Lte.Parameters.Test.Repository.CellRepository
         [Test]
         public void TestCdmaCellRepositorySaveCells_FirstCell_BtsNotExist()
         {
-            TestInitialize();
             cellInfos[0].BtsId = 2;
             Assert.AreEqual(SaveCells(), 1);
             Assert.AreEqual(repository.Object.Cells.Count(), 2);
@@ -98,7 +99,6 @@ namespace Lte.Parameters.Test.Repository.CellRepository
         [Test]
         public void TestCdmaCellRepositorySaveCells_FirstCell_BtsExist_CellExist()
         {
-            TestInitialize();
             cellInfos[0].SectorId = 0;
             Assert.AreEqual(SaveCells(), 1);
             Assert.AreEqual(repository.Object.Cells.Count(), 2);

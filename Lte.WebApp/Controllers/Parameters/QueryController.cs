@@ -133,7 +133,7 @@ namespace Lte.WebApp.Controllers.Parameters
             if (ParametersContainer.QueryCdmaCells == null) return new List<SectorTriangle>();
             IEnumerable<EvaluationOutdoorCell> outdoorCells =
                 from cell in ParametersContainer.QueryCdmaCells
-                let bts = btsRepository.Btss.FirstOrDefault(x => x.BtsId == cell.BtsId)
+                let bts = btsRepository.GetAll().FirstOrDefault(x => x.BtsId == cell.BtsId)
                 where bts != null
                 select new EvaluationOutdoorCell(bts, cell);
             return outdoorCells.GetSectors();

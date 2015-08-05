@@ -11,19 +11,19 @@ namespace Lte.Parameters.MockOperations
         public static void MockBtsRepositorySaveBts(
             this Mock<IBtsRepository> repository, IEnumerable<CdmaBts> btss)
         {
-            repository.Setup(x => x.AddOneBts(It.IsAny<CdmaBts>())).Callback<CdmaBts>(
-                e => repository.SetupGet(x => x.Btss).Returns(
+            repository.Setup(x => x.Insert(It.IsAny<CdmaBts>())).Callback<CdmaBts>(
+                e => repository.Setup(x => x.GetAll()).Returns(
                     btss.Concat(new List<CdmaBts> { e }).AsQueryable()));
         }
 
         public static void MockBtsRepositorySaveBts(
             this Mock<IBtsRepository> repository)
         {
-            repository.Setup(x => x.AddOneBts(It.IsAny<CdmaBts>())).Callback<CdmaBts>(
+            repository.Setup(x => x.Insert(It.IsAny<CdmaBts>())).Callback<CdmaBts>(
                 e =>
                 {
-                    IEnumerable<CdmaBts> btss = repository.Object.Btss;
-                    repository.SetupGet(x => x.Btss).Returns(
+                    IEnumerable<CdmaBts> btss = repository.Object.GetAll();
+                    repository.Setup(x => x.GetAll()).Returns(
                     btss.Concat(new List<CdmaBts> { e }).AsQueryable());
                 });
         }
@@ -31,26 +31,23 @@ namespace Lte.Parameters.MockOperations
         public static void MockBtsRepositoryDeleteBts(
             this Mock<IBtsRepository> repository, IEnumerable<CdmaBts> btss)
         {
-            repository.Setup(x => x.RemoveOneBts(It.IsAny<CdmaBts>())).Returns(false);
-            repository.Setup(x => x.RemoveOneBts(It.Is<CdmaBts>(e => e != null
+            repository.Setup(x => x.Delete(It.Is<CdmaBts>(e => e != null
                 && btss.FirstOrDefault(y => y == e) != null))
-                ).Returns(true).Callback<CdmaBts>(
-                e => repository.Setup(x => x.Btss).Returns(
+                ).Callback<CdmaBts>(
+                e => repository.Setup(x => x.GetAll()).Returns(
                     btss.Except(new List<CdmaBts> { e }).AsQueryable()));
         }
 
         public static void MockBtsRepositoryDeleteBts(
             this Mock<IBtsRepository> repository)
         {
-            repository.Setup(x => x.RemoveOneBts(It.IsAny<CdmaBts>())).Returns(false);
-
             if (repository.Object != null)
             {
-                IEnumerable<CdmaBts> btss = repository.Object.Btss;
-                repository.Setup(x => x.RemoveOneBts(It.Is<CdmaBts>(e => e != null
+                IEnumerable<CdmaBts> btss = repository.Object.GetAll();
+                repository.Setup(x => x.Delete(It.Is<CdmaBts>(e => e != null
                     && btss.FirstOrDefault(y => y == e) != null))
-                    ).Returns(true).Callback<CdmaBts>(
-                    e => repository.Setup(x => x.Btss).Returns(
+                    ).Callback<CdmaBts>(
+                    e => repository.Setup(x => x.GetAll()).Returns(
                         btss.Except(new List<CdmaBts> { e }).AsQueryable()));
             }
         }

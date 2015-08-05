@@ -1,22 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Lte.Evaluations.Kpi;
 using Lte.Evaluations.ViewHelpers;
 using Lte.Parameters.Abstract;
-using Lte.Parameters.Concrete;
 using Lte.Parameters.Entities;
 using Lte.Parameters.Kpi.Abstract;
-using Lte.Parameters.Kpi.Concrete;
 using Lte.Parameters.Kpi.Entities;
 using Lte.Parameters.Kpi.Service;
 using Lte.Parameters.Region.Abstract;
-using Lte.Parameters.Region.Entities;
 using Lte.Parameters.Region.Service;
-using Lte.WebApp.Models;
 
 namespace Lte.WebApp.Controllers.Kpi
 {
@@ -104,7 +99,7 @@ namespace Lte.WebApp.Controllers.Kpi
             TopDrop2GViewModel viewModel 
                 = topDrop2GRepository.Stats.GenerateView<TopDrop2GViewModel, TopDrop2GCell, TopDrop2GCellView>(
                 postedModel.StatDate, regionNamesService.Query().ToList(),
-                btsRepository.Btss.ToList(), eNodebRepository.GetAllList());
+                btsRepository.GetAllList(), eNodebRepository.GetAllList());
             return View(viewModel);
         }
 
@@ -114,7 +109,7 @@ namespace Lte.WebApp.Controllers.Kpi
                 =topDrop2GDailyRepository.Stats.GenerateView<
                 TopDrop2GDailyViewModel,TopDrop2GCellDaily,TopDrop2GCellDailyView>(
                 postedModel.StatDate, regionNamesService.Query().ToList(),
-                btsRepository.Btss.ToList(), eNodebRepository.GetAllList());
+                btsRepository.GetAllList(), eNodebRepository.GetAllList());
             return View(viewModel);
         }
 
@@ -124,7 +119,7 @@ namespace Lte.WebApp.Controllers.Kpi
                 = topConnection3GRepository.Stats.GenerateView<
                 TopConnection3GViewModel, TopConnection3GCell, TopConnection3GCellView>(
                 postedModel.StatDate, regionNamesService.Query().ToList(),
-                btsRepository.Btss.ToList(), eNodebRepository.GetAllList());
+                btsRepository.GetAllList(), eNodebRepository.GetAllList());
             return View(viewModel);
         }
 

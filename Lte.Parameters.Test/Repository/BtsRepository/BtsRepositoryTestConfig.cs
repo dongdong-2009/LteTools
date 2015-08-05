@@ -37,7 +37,7 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
 
         protected override void Initialize()
         {
-            repository.SetupGet(x => x.Btss).Returns(new List<CdmaBts> 
+            repository.SetupGet(x => x.GetAll()).Returns(new List<CdmaBts> 
             {
                 new CdmaBts()
                 {

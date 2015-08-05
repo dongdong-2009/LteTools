@@ -6,10 +6,7 @@ using Lte.Evaluations.Service;
 using Lte.Evaluations.ViewHelpers;
 using Lte.Parameters.Abstract;
 using Lte.Parameters.Entities;
-using Lte.Parameters.Region;
 using Lte.Parameters.Region.Abstract;
-using Lte.Parameters.Service.Lte;
-using Lte.WebApp.Models;
 
 namespace Lte.WebApp.Controllers.Parameters
 {
@@ -103,11 +100,11 @@ namespace Lte.WebApp.Controllers.Parameters
         [HttpPost]
         public ActionResult UpdateBtsInfo(CdmaBts item)
         {
-            CdmaBts bts = btsRepository.Btss.FirstOrDefault(x => x.ENodebId == item.ENodebId);
+            CdmaBts bts = btsRepository.GetAll().FirstOrDefault(x => x.ENodebId == item.ENodebId);
             if (bts == null) return View("ENodebEdit", new ENodebDetailsViewModel());
             bts.Address = item.Address;
             bts.Name = item.Name;
-            btsRepository.SaveChanges();
+            btsRepository.Update(bts);
             ENodebDetailsViewModel viewModel = new ENodebDetailsViewModel();
             viewModel.Import(bts.ENodebId, eNodebRepository, cellRepository, btsRepository, cdmaCellRepository,
                 photoRepository);

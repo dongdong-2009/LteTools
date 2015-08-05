@@ -48,7 +48,7 @@ namespace Lte.Parameters.Service.Public
             int count = 0;
             foreach (CollegeBtsExcel excel in btsExcels)
             {
-                CdmaBts bts = btsRepository.Btss.FirstOrDefault(x => x.BtsId == excel.BtsId);
+                CdmaBts bts = btsRepository.GetAll().FirstOrDefault(x => x.BtsId == excel.BtsId);
                 if (bts==null) continue;
                 InfrastructureInfo infrastructure = _repository.InfrastructureInfos.FirstOrDefault(x =>
                     x.HotspotName == excel.CollegeName && x.HotspotType == HotspotType.College

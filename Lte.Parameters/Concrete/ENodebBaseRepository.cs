@@ -32,7 +32,7 @@ namespace Lte.Parameters.Concrete
         public ENodebBaseRepository(IBtsRepository inputRepository)
         {
             eNodebBaseList.Clear();
-            foreach (CdmaBts bts in inputRepository.Btss.ToList())
+            foreach (CdmaBts bts in inputRepository.GetAllList())
             {
                 eNodebBaseList.Add(new ENodebBase
                 {

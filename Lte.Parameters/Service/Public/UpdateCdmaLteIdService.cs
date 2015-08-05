@@ -20,7 +20,7 @@ namespace Lte.Parameters.Service.Public
             : this(repository)
         {
             var cdmaLteInfos =
-                (from a in repository.Btss.ToList()
+                (from a in repository.GetAllList()
                     join b in cellRepository.Cells.ToList()
                         on a.BtsId equals b.BtsId
                     where a.ENodebId == -1
@@ -48,13 +48,11 @@ namespace Lte.Parameters.Service.Public
             foreach (BtsENodebIds idDefinition in _eNodebIds)
             {
                 var id = idDefinition.BtsId;
-                CdmaBts bts = _repository.Btss.FirstOrDefault(x => x.BtsId == id);
-                if (bts != null)
-                {
-                    bts.ENodebId = idDefinition.ENodebId;
-                }
+                CdmaBts bts = _repository.GetAll().FirstOrDefault(x => x.BtsId == id);
+                if (bts == null) continue;
+                bts.ENodebId = idDefinition.ENodebId;
+                _repository.Update(bts);
             }
-            _repository.SaveChanges();
         }
     }
 }

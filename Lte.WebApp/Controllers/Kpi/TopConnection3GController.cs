@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Lte.Domain.TypeDefs;
 using Lte.Parameters.Abstract;
-using Lte.Parameters.Kpi;
 using Lte.Parameters.Kpi.Abstract;
 using Lte.Parameters.Kpi.Entities;
-using Lte.Parameters.Service;
 using Lte.Parameters.Service.Public;
 
 namespace Lte.WebApp.Controllers.Kpi
@@ -36,7 +33,7 @@ namespace Lte.WebApp.Controllers.Kpi
             if (stats.Any())
             {
                 CdmaLteNamesService<TopConnection3GCell> service = new CdmaLteNamesService<TopConnection3GCell>(
-                    stats, btsRepository.Btss.ToList(), eNodebRepository.GetAllList());
+                    stats, btsRepository.GetAllList(), eNodebRepository.GetAllList());
                 IEnumerable<TopConnection3GCellView> cellViews
                     = service.Clone<TopConnection3GCellView>();
                 var statCounts = from v in cellViews

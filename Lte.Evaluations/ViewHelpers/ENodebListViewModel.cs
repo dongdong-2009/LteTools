@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
 using Lte.Domain.Geo.Abstract;
-using Lte.Domain.Regular;
 using Lte.Evaluations.Kpi;
 using Lte.Evaluations.Rutrace.Record;
 using Lte.Evaluations.Service;
@@ -93,7 +92,7 @@ namespace Lte.Evaluations.ViewHelpers
                 ENodeb = eNodeb;
                 Cells = cellRepository.Cells.Where(x => x.ENodebId == eNodebId).ToList();
             }
-            CdmaBts bts = btsRepository.Btss.FirstOrDefault(x => x.ENodebId == eNodebId);
+            CdmaBts bts = btsRepository.GetAll().FirstOrDefault(x => x.ENodebId == eNodebId);
             if (bts != null)
             {
                 int btsId = bts.BtsId;

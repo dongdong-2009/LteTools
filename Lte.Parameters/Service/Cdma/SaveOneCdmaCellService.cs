@@ -77,7 +77,7 @@ namespace Lte.Parameters.Service.Cdma
         {
             _cellService
                 = new QueryCdmaCellService(repository, cellInfo.BtsId, cellInfo.SectorId, cellInfo.CellType);
-            _bts = btsRepository.Btss.FirstOrDefault(x => x.BtsId == cellInfo.BtsId);
+            _bts = btsRepository.GetAll().FirstOrDefault(x => x.BtsId == cellInfo.BtsId);
         }
 
         protected override bool SaveWhenBtsNotExisted()
@@ -113,7 +113,7 @@ namespace Lte.Parameters.Service.Cdma
             CdmaCellExcel cellInfo, IBtsRepository btsRepository)
             : base(repository, baseRepository, cellInfo)
         {
-            _bts = btsRepository.Btss.FirstOrDefault(x => x.BtsId == cellInfo.BtsId);
+            _bts = btsRepository.GetAll().FirstOrDefault(x => x.BtsId == cellInfo.BtsId);
         }
 
         protected override bool BtsNotExisted()

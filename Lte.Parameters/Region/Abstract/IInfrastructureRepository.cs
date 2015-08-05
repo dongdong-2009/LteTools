@@ -45,8 +45,7 @@ namespace Lte.Parameters.Region.Abstract
             IEnumerable<int> ids = repository.InfrastructureInfos.Where(x =>
                 x.HotspotName == info.Name && x.InfrastructureType == InfrastructureType.CdmaBts
                 ).Select(x => x.InfrastructureId).ToList();
-            return ids.Select(i => btsRepository.Btss.FirstOrDefault(x => x.Id == i)
-                ).Where(bts => bts != null).ToList();
+            return ids.Select(btsRepository.Get).Where(bts => bts != null).ToList();
         }
 
         public static IEnumerable<CdmaCell> QueryCollegeCdmaCells(this IInfrastructureRepository repository,

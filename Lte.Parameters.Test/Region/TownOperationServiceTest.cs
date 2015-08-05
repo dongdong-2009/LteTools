@@ -74,11 +74,12 @@ namespace Lte.Parameters.Test.Region
                     new ENodeb {Id = 7, TownId = 7}
                 }.AsQueryable());
             eNodebRepository.Setup(x => x.GetAllList()).Returns(eNodebRepository.Object.GetAll().ToList());
-            btsRepository.SetupGet(x => x.Btss).Returns(
+            btsRepository.Setup(x => x.GetAll()).Returns(
                 new List<CdmaBts>
                 {
                     new CdmaBts {Id = 6, TownId = 6}
                 }.AsQueryable());
+            btsRepository.Setup(x => x.GetAllList()).Returns(btsRepository.Object.GetAll().ToList());
             Initialize();
             helper = new TownOperationServiceTestHelper(townRepository.Object);
         }

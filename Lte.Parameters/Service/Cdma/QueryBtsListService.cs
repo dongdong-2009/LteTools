@@ -39,7 +39,7 @@ namespace Lte.Parameters.Service.Cdma
 
         public IEnumerable<CdmaBts> Query()
         {
-            return _repository.Btss.ToList().Where(x =>
+            return _repository.GetAllList().Where(x =>
                 _townList.FirstOrDefault(t => t.Id == x.TownId) != null
                 && (string.IsNullOrEmpty(_btsName) || x.Name.IndexOf(_btsName.Trim(), StringComparison.Ordinal) >= 0)
                 && (string.IsNullOrEmpty(_address) || x.Address.IndexOf(_address.Trim(), StringComparison.Ordinal) >= 0));

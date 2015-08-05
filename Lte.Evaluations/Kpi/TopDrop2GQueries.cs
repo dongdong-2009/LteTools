@@ -3,8 +3,6 @@ using System.Linq;
 using Lte.Domain.Geo.Abstract;
 using Lte.Domain.TypeDefs;
 using Lte.Parameters.Abstract;
-using Lte.Parameters.Kpi.Abstract;
-using Lte.Parameters.Service;
 using Lte.Parameters.Service.Public;
 
 namespace Lte.Evaluations.Kpi
@@ -26,7 +24,7 @@ namespace Lte.Evaluations.Kpi
             where TView : class, IGetTopCellView, new()
         {
             CdmaLteNamesService<TCell> service = new CdmaLteNamesService<TCell>(stats,
-                btsRepository.Btss.ToList(), eNodebRepository.GetAllList());
+                btsRepository.GetAllList(), eNodebRepository.GetAllList());
             IEnumerable<TView> cellViews = service.Clone<TView>();
             IEnumerable<TopStatCount> statCounts = from v in cellViews
                              group v by new { v.CdmaName, v.SectorId, v.Frequency } into g

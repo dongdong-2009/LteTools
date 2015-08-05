@@ -30,7 +30,7 @@ namespace Lte.Parameters.Service.Cdma
 
         public override CdmaBts QueryBts()
         {
-            return _repository.Btss.FirstOrDefault(x => x.TownId == _townId && x.Name == _name);
+            return _repository.GetAll().FirstOrDefault(x => x.TownId == _townId && x.Name == _name);
         }
     }
 }

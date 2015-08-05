@@ -61,8 +61,8 @@ namespace Lte.Parameters.Region.Service
                     eNodebRepository.GetAll().FirstOrDefault(x => x.TownId == town.Id) :
                     null;
             CdmaBts bts
-                = (btsRepository != null && btsRepository.Btss != null)
-                    ? btsRepository.Btss.FirstOrDefault(x => x.TownId == town.Id)
+                = (btsRepository != null && btsRepository.GetAll() != null)
+                    ? btsRepository.GetAll().FirstOrDefault(x => x.TownId == town.Id)
                     : null;
             if (eNodeb == null && bts == null)
             {

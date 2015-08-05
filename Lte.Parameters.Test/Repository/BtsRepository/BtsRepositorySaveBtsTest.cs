@@ -28,16 +28,16 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
         public void AssertOriginalTest()
         {
             AssertOriginalParameters();
-            int expectedSaved = (btsInfos[0].BtsId == repository.Object.Btss.ElementAt(0).BtsId) ? 1 : 2;
+            int expectedSaved = (btsInfos[0].BtsId == repository.Object.GetAll().ElementAt(0).BtsId) ? 1 : 2;
             SaveBtsListService service = new ByExcelInfoSaveBtsListService(
                 repository.Object, btsInfos, townRepository);
             ParametersDumpInfrastructure infrastructure = new ParametersDumpInfrastructure();
             service.Save(infrastructure, true);
-            Assert.AreEqual(repository.Object.Btss.Count(), expectedSaved + 1);
+            Assert.AreEqual(repository.Object.Count(), expectedSaved + 1);
 
-            for (int i = 1; i < repository.Object.Btss.Count(); i++)
+            for (int i = 1; i < repository.Object.Count(); i++)
             {
-                AssertElements(repository.Object.Btss.ElementAt(i), btsInfos[i - expectedSaved + 1]);
+                AssertElements(repository.Object.GetAll().ElementAt(i), btsInfos[i - expectedSaved + 1]);
             }
         }
 
@@ -58,10 +58,10 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
 
         public void AssertOriginalParameters()
         {
-            Assert.AreEqual(repository.Object.Btss.Count(), 1);
-            Assert.AreEqual(repository.Object.Btss.ElementAt(0).BtsId, 1);
-            Assert.AreEqual(repository.Object.Btss.ElementAt(0).Name, "FoshanZhaoming");
-            Assert.AreEqual(repository.Object.Btss.ElementAt(0).ENodebId, -1);
+            Assert.AreEqual(repository.Object.Count(), 1);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(0).BtsId, 1);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(0).Name, "FoshanZhaoming");
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(0).ENodebId, -1);
         }
 
         public void AssertOriginalBtsInfos()
@@ -113,11 +113,11 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
             ParametersDumpInfrastructure infrastructure = new ParametersDumpInfrastructure();
             service.Save(infrastructure, true);
             Assert.AreEqual(infrastructure.CdmaBtsUpdated, 2, "failure");
-            Assert.AreEqual(repository.Object.Btss.Count(), 3);
-            Assert.AreEqual(repository.Object.Btss.ElementAt(0).ENodebId, -1);
-            Assert.AreEqual(repository.Object.Btss.ElementAt(1).TownId, 122);
-            Assert.AreEqual(repository.Object.Btss.ElementAt(1).ENodebId, -1);
-            Assert.AreEqual(repository.Object.Btss.ElementAt(2).ENodebId, -1);
+            Assert.AreEqual(repository.Object.Count(), 3);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(0).ENodebId, -1);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).TownId, 122);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).ENodebId, -1);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(2).ENodebId, -1);
         }
 
         [Test]

@@ -1,31 +1,18 @@
 ﻿using System.Linq;
+using Abp.EntityFramework;
 using Lte.Parameters.Abstract;
 using Lte.Parameters.Entities;
 
 namespace Lte.Parameters.Concrete
 {
-    public class EFBtsRepository : IBtsRepository
+    public class EFBtsRepository : ParametersRepositoryBase<CdmaBts>, IBtsRepository
     {
-        private readonly EFParametersContext context = new EFParametersContext();
-
-        public IQueryable<CdmaBts> Btss
+        public EFBtsRepository(IDbContextProvider<EFParametersContext> dbContextProvider) : base(dbContextProvider)
         {
-            get { return context.Btss.AsQueryable(); }
         }
 
-        public void AddOneBts(CdmaBts bts)
+        public EFBtsRepository() : this(new EFParametersProvider())
         {
-            context.Btss.Add(bts);
-        }
-
-        public bool RemoveOneBts(CdmaBts bts)
-        {
-            return (context.Btss.Remove(bts) != null);
-        }
-
-        public void SaveChanges()
-        {
-            context.SaveChanges();
         }
     }
 

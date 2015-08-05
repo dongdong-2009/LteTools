@@ -75,7 +75,7 @@ namespace Lte.Parameters.Service.Cdma
 
             _validInfos
                 = from d in distinctInfos
-                  join e in btsRepository.Btss
+                  join e in btsRepository.GetAll()
                   on d.BtsId equals e.BtsId
                   select d;
         }

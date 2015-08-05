@@ -33,7 +33,7 @@ namespace Lte.Parameters.Service.Cdma
         public DeleteOneBtsService(IBtsRepository repository, int btsId)
             : this(repository)
         {
-            _bts = repository.Btss.FirstOrDefault(x=>x.BtsId==btsId);
+            _bts = repository.GetAll().FirstOrDefault(x=>x.BtsId==btsId);
         }
 
         public DeleteOneBtsService(IBtsRepository repository, ITownRepository townRepository,
@@ -48,9 +48,8 @@ namespace Lte.Parameters.Service.Cdma
 
         public bool Delete()
         {
-            bool result = (_bts != null) && _repository.RemoveOneBts(_bts);
-            if (!result) return false;
-            _repository.SaveChanges();
+            if (_bts == null) return false;
+            _repository.Delete(_bts);
             return true;
         }
     }

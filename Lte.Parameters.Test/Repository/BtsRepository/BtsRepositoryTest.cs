@@ -41,7 +41,7 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
         [Test]
         public void TestBtsRepository_QueryBtsById()
         {
-            CdmaBts bts = repository.Object.Btss.FirstOrDefault(x => x.BtsId == 1);
+            CdmaBts bts = repository.Object.GetAll().FirstOrDefault(x => x.BtsId == 1);
             Assert.IsNotNull(bts);
             Assert.AreEqual(bts.Name, "FoshanZhaoming");
             Assert.AreEqual(bts.TownId, 122);
@@ -64,33 +64,33 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
         [Test]
         public void TestBtsRepository_SaveBts_AddNewOne_TownExists()
         {
-            Assert.AreEqual(repository.Object.Btss.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
             Assert.IsTrue(SaveOneBts(btsInfo));
-            Assert.AreEqual(repository.Object.Btss.Count(), 2);
-            Assert.AreEqual(repository.Object.Btss.ElementAt(1).TownId, 122);
-            Assert.AreEqual(repository.Object.Btss.ElementAt(1).Longtitute, 112.3344);
-            Assert.AreEqual(repository.Object.Btss.ElementAt(1).Lattitute, 23.5566);
+            Assert.AreEqual(repository.Object.Count(), 2);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).TownId, 122);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).Longtitute, 112.3344);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).Lattitute, 23.5566);
         }
 
         [Test]
         public void TestBtsRepository_SaveBts_AddNewOne_TownExists_UpdateLteInfo()
         {
-            Assert.AreEqual(repository.Object.Btss.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
             Assert.IsTrue(SaveOneBts(btsInfo));
-            Assert.AreEqual(repository.Object.Btss.Count(), 2);
-            Assert.AreEqual(repository.Object.Btss.ElementAt(1).TownId, 122);
-            Assert.AreEqual(repository.Object.Btss.ElementAt(1).Longtitute, 112.3344);
-            Assert.AreEqual(repository.Object.Btss.ElementAt(1).Lattitute, 23.5566);
+            Assert.AreEqual(repository.Object.Count(), 2);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).TownId, 122);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).Longtitute, 112.3344);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).Lattitute, 23.5566);
         }
 
         [Test]
         public void TestBtsRepository_SaveBts_AddNewOne_TownNotExists()
         {
             btsInfo.DistrictName = "Guangzhou";
-            Assert.AreEqual(repository.Object.Btss.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
             Assert.IsTrue(SaveOneBts(btsInfo));
-            Assert.AreEqual(repository.Object.Btss.Count(), 2);
-            Assert.AreEqual(repository.Object.Btss.ElementAt(1).TownId, -1);
+            Assert.AreEqual(repository.Object.Count(), 2);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).TownId, -1);
         }
 
         [Test]
@@ -99,11 +99,11 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
             btsInfo.Name = "FoshanZhaoming";
             Assert.AreEqual(btsInfo.BtsId, 2, "Wrong Id");
             btsInfo.BtsId = 1;
-            Assert.AreEqual(repository.Object.Btss.Count(), 1);
-            Assert.AreEqual(repository.Object.Btss.ElementAt(0).BtsId, 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(0).BtsId, 1);
             Assert.IsFalse(SaveOneBts(btsInfo));
-            Assert.AreEqual(repository.Object.Btss.Count(), 1);
-            Assert.AreEqual(repository.Object.Btss.ElementAt(0).BtsId, 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(0).BtsId, 1);
         }
 
         [Test]
@@ -111,11 +111,11 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
         {
             btsInfo.Name = "FoshanZhaoming";
             Assert.AreEqual(btsInfo.BtsId, 2);
-            Assert.AreEqual(repository.Object.Btss.ElementAt(0).BtsId, 1);
-            Assert.AreEqual(repository.Object.Btss.Count(), 1);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(0).BtsId, 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
             Assert.IsFalse(SaveOneBts(btsInfo));
-            Assert.AreEqual(repository.Object.Btss.Count(), 1);
-            Assert.AreEqual(repository.Object.Btss.ElementAt(0).BtsId, 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(0).BtsId, 1);
         }
 
         [Test]
@@ -123,18 +123,18 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
         {
             Assert.AreEqual(btsInfo.BtsId, 2);
             btsInfo.BtsId = 1;
-            Assert.AreEqual(repository.Object.Btss.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
             Assert.IsFalse(SaveOneBts(btsInfo));
-            Assert.AreEqual(repository.Object.Btss.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
         }
 
         [Test]
         public void TestBtsRepository_DeleteBts_ByBtsId()
         {
             DeleteOneBtsService deleteOneBtsService = new DeleteOneBtsService(repository.Object, 1);
-            Assert.AreEqual(repository.Object.Btss.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
             Assert.IsTrue(deleteOneBtsService.Delete());
-            Assert.AreEqual(repository.Object.Btss.Count(), 0);
+            Assert.AreEqual(repository.Object.Count(), 0);
             repository.MockBtsRepositoryDeleteBts();
             Assert.IsFalse(deleteOneBtsService.Delete());
         }
@@ -142,11 +142,11 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
         [Test]
         public void TestBtsRepository_DeleteBts_ByTownAndName()
         {
-            Assert.AreEqual(repository.Object.Btss.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
             DeleteOneBtsService deleteOneBtsService = new DeleteOneBtsService(repository.Object,
                 townRepository.Object, "Chancheng", "Qinren", "FoshanZhaoming");
             Assert.IsTrue(deleteOneBtsService.Delete());
-            Assert.AreEqual(repository.Object.Btss.Count(), 0);
+            Assert.AreEqual(repository.Object.Count(), 0);
             deleteOneBtsService = new DeleteOneBtsService(repository.Object, 1);
             Assert.IsFalse(deleteOneBtsService.Delete());
         }

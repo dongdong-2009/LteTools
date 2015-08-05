@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Http;
 using Lte.Parameters.Abstract;
-using Lte.Parameters.Concrete;
 using Lte.Parameters.Entities;
 
 namespace Lte.WebApp.Controllers.Parameters
@@ -69,45 +68,43 @@ namespace Lte.WebApp.Controllers.Parameters
 
         public IEnumerable<CdmaBts> Get()
         {
-            return _repository.Btss.ToList();
+            return _repository.GetAllList();
         }
 
         [Route("api/Bts/{id:int}")]
         public CdmaBts Get(int id)
         {
-            return _repository.Btss.FirstOrDefault(x => x.ENodebId == id);
+            return _repository.GetAll().FirstOrDefault(x => x.ENodebId == id);
         }
 
         public IEnumerable<CdmaBts> Get(double west, double east, double south, double north)
         {
-            return _repository.Btss.Where(x =>
+            return _repository.GetAll().Where(x =>
                 x.Longtitute >= west && x.Longtitute <= east && x.Lattitute >= south && x.Lattitute <= north);
         }
 
         public void Put(CdmaBts bts)
         {
-            _repository.AddOneBts(bts);
-            _repository.SaveChanges();
+            _repository.Insert(bts);
         }
 
         public void Post(CdmaBts bts)
         {
-            CdmaBts item = _repository.Btss.FirstOrDefault(x => x.ENodebId == bts.ENodebId);
+            CdmaBts item = _repository.GetAll().FirstOrDefault(x => x.ENodebId == bts.ENodebId);
             if (item != null)
             {
                 item.Name = bts.Name;
                 item.Address = bts.Address;
+                _repository.Update(item);
             }
-            _repository.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            CdmaBts bts = _repository.Btss.FirstOrDefault(x => x.ENodebId == id);
+            CdmaBts bts = _repository.GetAll().FirstOrDefault(x => x.ENodebId == id);
             if (bts != null)
             {
-                _repository.RemoveOneBts(bts);
-                _repository.SaveChanges();
+                _repository.Delete(bts);
             }
         }
     }

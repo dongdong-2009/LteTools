@@ -18,15 +18,8 @@ namespace Lte.Parameters.Abstract
         List<ENodeb> GetAllWithNames(ITownRepository townRepository, ITown town, string eNodebName, string address);
     }
 
-    public interface IBtsRepository
+    public interface IBtsRepository : IRepository<CdmaBts>
     {
-        IQueryable<CdmaBts> Btss { get; }
-
-        void AddOneBts(CdmaBts bts);
-
-        bool RemoveOneBts(CdmaBts bts);
-
-        void SaveChanges();
     }
 
     public interface IENodebPhotoRepository

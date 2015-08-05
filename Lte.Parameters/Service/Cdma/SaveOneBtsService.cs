@@ -43,7 +43,7 @@ namespace Lte.Parameters.Service.Cdma
         public override bool SaveOneBts(bool updateBts)
         {
             CdmaBts bts = _byNameBtsService.QueryBts();
-            CdmaBts existedENodebWithSameId = _repository.Btss.FirstOrDefault(x => x.BtsId == _btsInfo.BtsId);
+            CdmaBts existedENodebWithSameId = _repository.GetAll().FirstOrDefault(x => x.BtsId == _btsInfo.BtsId);
             bool addENodeb = false;
 
             if (bts == null)
@@ -61,7 +61,7 @@ namespace Lte.Parameters.Service.Cdma
             {
                 bts.TownId = _townId;
                 bts.Import(_btsInfo, true);
-                _repository.AddOneBts(bts);
+                _repository.Insert(bts);
             }
             else if (updateBts)
             {
@@ -70,11 +70,11 @@ namespace Lte.Parameters.Service.Cdma
                 {
                     bts.TownId = _townId;
                     bts.Import(_btsInfo, false);
+                    _repository.Update(bts);
                 }
                 else
                 { return false; }
             }
-            _repository.SaveChanges();
             return true;
         }
     }
@@ -116,16 +116,17 @@ namespace Lte.Parameters.Service.Cdma
                 bts.TownId = _townId;
                 bts.Import(_btsInfo, true);
                 bts.ImportLteInfo(_eNodebList);
-                _repository.AddOneBts(bts);
+                _repository.Insert(bts);
                 return true;
             }
             if (!updateBts) return false;
-            bts = _repository.Btss.FirstOrDefault(x => x.BtsId == _btsInfo.BtsId);
+            bts = _repository.GetAll().FirstOrDefault(x => x.BtsId == _btsInfo.BtsId);
             if (bts != null)
             {
                 bts.TownId = _townId;
                 bts.Import(_btsInfo, false);
                 bts.ImportLteInfo(_eNodebList);
+                _repository.Update(bts);
             }
             return true;
         }
