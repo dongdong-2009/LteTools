@@ -11,15 +11,3 @@ affiliates. Other names may be trademarks of their respective
 owners.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-
-尊敬的用户，你的CDB实例外网地址开通成功:
-    实例名:cdb107394
-    内网IP:10.66.150.196
-    内网端口：3306
-    外网域名：55b6e9903afd4.gz.cdb.myqcloud.com
-    外网端口：6416 
-    用户名：cdb_outerroot
-    密码：md@287965
-敏感信息，请妥善保存！
-
-https://console.qcloud.com/cdb
