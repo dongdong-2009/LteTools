@@ -265,6 +265,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\DailyStatListBinder.cs" />
     <Compile Include="Models\EvaluationBinder.cs" />
+    <Compile Include="Models\EvaluationViewModel.cs" />
     <Compile Include="Models\OnlyIfPostedFromButtonAttribute.cs" />
     <Compile Include="Models\ParametersBinder.cs" />
     <Compile Include="Models\SelectListItemsOperations.cs" />

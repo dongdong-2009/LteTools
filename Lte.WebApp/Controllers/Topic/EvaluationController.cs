@@ -17,6 +17,7 @@ using Lte.Parameters.Entities;
 using Lte.Parameters.Region.Abstract;
 using Lte.Parameters.Service.Lte;
 using Lte.Parameters.Service.Public;
+using Lte.WebApp.Models;
 
 namespace Lte.WebApp.Controllers.Topic
 {
