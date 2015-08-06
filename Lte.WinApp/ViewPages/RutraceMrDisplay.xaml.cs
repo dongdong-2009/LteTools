@@ -9,6 +9,7 @@ using Lte.Domain.Regular;
 using Lte.Evaluations.Rutrace.Entities;
 using Lte.Parameters.Abstract;
 using Lte.Parameters.Concrete;
+using Lte.Parameters.Entities;
 using Lte.Parameters.Region.Concrete;
 using Lte.Parameters.Service.Lte;
 using Lte.WinApp.Import;
@@ -58,6 +59,7 @@ namespace Lte.WinApp.ViewPages
             DirectoryDialogWrapper wrapper=new MrDirectoryDialogWrapper();
             if (!wrapper.ShowDialog()) return;
             DirectoryPath.Content = wrapper.Directory;
+            if (GenerateScripts.IsChecked != true) return;
             DirectoryInfo dir = new DirectoryInfo(wrapper.Directory);
             cmd.AppendText("D:\\\n");
             DisplayValue(dir);
@@ -91,29 +93,28 @@ namespace Lte.WinApp.ViewPages
         {
             if (string.IsNullOrEmpty(DirectoryPath.Content.ToString())) return;
             DirectoryInfo dir = new DirectoryInfo(DirectoryPath.Content.ToString());
+            List<ENodeb> eNodebs = _eNodebRepository.GetAllList();
+            ImportMrFilesAsync(dir, eNodebs);
+        }
 
+        private async void ImportMrFilesAsync(DirectoryInfo dir, List<ENodeb> eNodebs)
+        {
             if (ImportMrs.IsChecked == true)
             {
-                foreach (IEnumerable<string> files 
-                    in (from eNodebDir in dir.GetDirectories()
-                        let eNodebId = eNodebDir.Name.ConvertToInt(0)
-                        where _eNodebRepository.GetAll().FirstOrDefault(x => x.ENodebId == eNodebId) != null
-                        select eNodebDir).Select(eNodebDir => eNodebDir.GetFiles().Where(x =>
-                            x.Name.IndexOf("MRS", StringComparison.Ordinal) >= 0 && x.Extension == ".xml")
-                            .Select(x => x.FullName)).Where(files => files.Any()))
+                cmd.AppendText("\n\n========Import MRS Files============");
+                foreach (DirectoryInfo eNodebDir in dir.GetDirectories())
                 {
-                    mrsFilesImporter.Import(files,
-                        path =>
-                        {
-                            MrsRecordSet recordSet;
-                            using (StreamReader reader = new StreamReader(path))
-                            {
-                                recordSet = new MrsRecordSet(reader);
-                            }
-                            return recordSet;
-                        });
+                    int eNodebId = eNodebDir.Name.ConvertToInt(0);
+                    if (eNodebs.FirstOrDefault(x => x.ENodebId == eNodebId) == null)
+                        continue;
+                    IEnumerable<FileInfo> fileInfos = eNodebDir.GetFiles();
+                    IEnumerable<string> fileNames = fileInfos.Where(x =>
+                        x.Name.IndexOf("MRS", StringComparison.Ordinal) >= 0
+                        && x.Extension == ".xml").Select(x => x.FullName).ToList();
+                    if (!fileNames.Any()) continue;
+                    await ImportMrsFiles(fileNames);
+                    cmd.AppendText("\n===Complete reading MRS Files with eNodeB-ID:" + eNodebId);
                 }
-
                 MrCoverage.ItemsSource = null;
                 MrCoverage.ItemsSource = mrsFilesImporter.RsrpStatList;
                 TaDistributions.ItemsSource = null;
@@ -121,30 +122,54 @@ namespace Lte.WinApp.ViewPages
             }
             if (ImportMro.IsChecked == true)
             {
-                foreach (IEnumerable<string> files in (from eNodebDir in dir.GetDirectories() 
-                    let eNodebId = eNodebDir.Name.ConvertToInt(0) 
-                    where _eNodebRepository.GetAll().FirstOrDefault(x=>x.ENodebId==eNodebId) != null 
-                    select eNodebDir).Select(eNodebDir => eNodebDir.GetFiles().Where(x =>
-                        x.Name.IndexOf("MRO", StringComparison.Ordinal) >= 0 && x.Extension == ".xml")
-                        .Select(x => x.FullName)).Where(files => files.Any()))
+                cmd.AppendText("\n\n========Import MRO Files============");
+                foreach (DirectoryInfo eNodebDir in dir.GetDirectories())
                 {
-                    mroFilesImporter.Import(files,
-                        path =>
-                        {
-                            MroRecordSet recordSet;
-                            using (StreamReader reader = new StreamReader(path))
-                            {
-                                recordSet = new MroRecordSet(reader);
-                            }
-                            return recordSet;
-                        });
+                    int eNodebId = eNodebDir.Name.ConvertToInt(0);
+                    if (eNodebs.FirstOrDefault(x => x.ENodebId == eNodebId) == null)
+                        continue;
+                    IEnumerable<FileInfo> fileInfos = eNodebDir.GetFiles();
+                    IEnumerable<string> fileNames = fileInfos.Where(x =>
+                        x.Name.IndexOf("MRO", StringComparison.Ordinal) >= 0
+                        && x.Extension == ".xml").Select(x => x.FullName).ToList();
+                    if (!fileNames.Any()) continue;
+                    await ImportMroFiles(fileNames);
+                    cmd.AppendText("\n===Complete reading MRO Files with eNodeB-ID:" + eNodebId);
                 }
-                
                 RsrpTa.ItemsSource = null;
                 RsrpTa.ItemsSource = mroFilesImporter.RsrpTaStatList;
                 Interference.ItemsSource = null;
                 Interference.ItemsSource = mroFilesImporter.InterferenceStats;
             }
+        }
+
+        private Task ImportMroFiles(IEnumerable<string> files)
+        {
+            return Task.Run(() =>
+                mroFilesImporter.Import(files, path =>
+                {
+                    MroRecordSet recordSet;
+                    using (StreamReader reader = new StreamReader(path))
+                    {
+                        recordSet = new MroRecordSet(reader);
+                    }
+                    return recordSet;
+                }));
+        }
+
+        private Task ImportMrsFiles(IEnumerable<string> files)
+        {
+            return Task.Run(() =>
+                mrsFilesImporter.Import(files,
+                    path =>
+                    {
+                        MrsRecordSet recordSet;
+                        using (StreamReader reader = new StreamReader(path))
+                        {
+                            recordSet = new MrsRecordSet(reader);
+                        }
+                        return recordSet;
+                    }));
         }
 
         private void SaveMrInDb_Click(object sender, RoutedEventArgs e)

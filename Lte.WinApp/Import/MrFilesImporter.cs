@@ -14,29 +14,28 @@ namespace Lte.WinApp.Import
     {
         public List<PureInterferenceStat> InterferenceStats { get; private set; }
         public List<MroRsrpTa> RsrpTaStatList { get; private set; }
-        private readonly ICellRepository _cellRepository;
+        private readonly NearestPciCellRepository _neighborRepository;
         private readonly ILteNeighborCellRepository _neighborCellRepository;
 
         public MroFilesImporter(ICellRepository cellRepository,
             ILteNeighborCellRepository neighborCellRepository)
         {
             RsrpTaStatList = new List<MroRsrpTa>();
-            _cellRepository = cellRepository;
+            InterferenceStats = new List<PureInterferenceStat>();
+            _neighborRepository
+                = new NearestPciCellRepository(cellRepository.Cells.ToList());
             _neighborCellRepository = neighborCellRepository;
         }
 
         public void Import(IEnumerable<string> paths, Func<string, MroRecordSet> recordSetGenerator)
         {
-            NearestPciCellRepository neighborRepository
-                = new NearestPciCellRepository(_cellRepository.Cells.ToList());
-            InterferenceStats = new List<PureInterferenceStat>();
             List<MrRecordSet> mrRecordSets = new List<MrRecordSet>();
 
             foreach (MroRecordSet recordSet in paths.Select(recordSetGenerator))
             {
-                neighborRepository.AddNeighbors(_neighborCellRepository, recordSet.ENodebId);
+                _neighborRepository.AddNeighbors(_neighborCellRepository, recordSet.ENodebId);
                 RsrpTaStatList.Import(recordSet);
-                recordSet.ImportRecordSet(neighborRepository);
+                recordSet.ImportRecordSet(_neighborRepository);
                 mrRecordSets.Add(recordSet);
             }
             InterferenceStats.Import(mrRecordSets);

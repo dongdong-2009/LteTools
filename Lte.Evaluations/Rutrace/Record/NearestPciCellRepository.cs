@@ -40,6 +40,7 @@ namespace Lte.Evaluations.Rutrace.Record
         {
             if (NearestPciCells == null) NearestPciCells = new List<NearestPciCell>();
             if (NearestPciCells.FirstOrDefault(x => x.CellId == eNodebId) != null) return;
+            NearestPciCells = new List<NearestPciCell>();
             NearestPciCells.AddRange(repository.NearestPciCells.Where(x => x.CellId == eNodebId));
         }
 
