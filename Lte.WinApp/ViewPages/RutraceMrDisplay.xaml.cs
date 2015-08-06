@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Lte.Domain.Regular;
@@ -59,14 +60,31 @@ namespace Lte.WinApp.ViewPages
             DirectoryPath.Content = wrapper.Directory;
             DirectoryInfo dir = new DirectoryInfo(wrapper.Directory);
             cmd.AppendText("D:\\\n");
-            foreach (DirectoryInfo eNodebDir in 
-                dir.GetDirectories().Where(eNodebDir => eNodebDir.GetFiles().FirstOrDefault(x => x.Extension == ".zip") 
-                    != null))
+            DisplayValue(dir);
+        }
+
+        private async void DisplayValue(DirectoryInfo dir)
+        {
+            cmd.AppendText(await GenerateExtractScripts(dir));
+        }
+
+        private Task<string> GenerateExtractScripts(DirectoryInfo dir)
+        {
+            return Task.Run(() =>
             {
-                cmd.AppendText("cd " + eNodebDir.FullName + "\n");
-                cmd.AppendText("D:\\安装文件\\WinRAR\\WinRAR e *.zip\n");
-                cmd.AppendText("del *.zip\n");
-            }
+                string message = "";
+                foreach (DirectoryInfo eNodebDir in 
+                    dir.GetDirectories()
+                        .Where(eNodebDir => eNodebDir.GetFiles().FirstOrDefault(x => x.Extension == ".zip")
+                                            != null))
+                {
+                    message += "cd " + eNodebDir.FullName + "\n";
+                    message += "D:\\安装文件\\WinRAR\\WinRAR e *.zip\n";
+                    message += "del *.zip\n";
+                }
+                message += "######The end###############";
+                return message;
+            });
         }
 
         private void OpenMro_OnClick(object sender, RoutedEventArgs e)
