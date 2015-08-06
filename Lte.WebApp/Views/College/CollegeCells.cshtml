@@ -196,16 +196,12 @@
             if (e.drawingMode == BMAP_DRAWING_CIRCLE) {
                 var radius = e.overlay.getRadius();
 
-                $.ajax({
-                    url: "/api/CollegeQuery",
-                    type: "POST",
-                    data: {
-                        id: $("#college-id").attr("id"),
+                $.get("/api/DrawCollegeRegion", {
+                        id: $("#college-id").val(),
                         centerX: e.overlay.getCenter().lng,
                         centerY: e.overlay.getCenter().lat,
                         radius: radius
-                    }
-                });
+                    });
                 return;
             }
             if (e.drawingMode == BMAP_DRAWING_POLYGON || e.drawingMode == BMAP_DRAWING_RECTANGLE) {
@@ -217,28 +213,20 @@
                         info += points[i].lng + ";" + points[i].lat + ";";
                     }
                     info += points[points.length - 1].lng + ";" + points[points.length - 1].lat;
-                    $.ajax({
-                        url: "/api/CollegeQuery",
-                        type: "POST",
-                        data: {
-                            id: $("#college-id").attr("id"),
+                    $.get("/api/DrawCollegeRegion", {
+                            id: $("#college-id").val(),
                             area: area,
                             message: info
-                        }
-                    });
+                        });
                 } else {
-                    $.ajax({
-                        url: "/api/CollegeQuery",
-                        type: "POST",
-                        data: {
-                            id: $("#college-id").attr("id"),
+                    $.get("/api/DrawCollegeRegion", {
+                            id: $("#college-id").val(),
                             area: area,
                             x1: points[0].lng,
                             y1: points[0].lat,
                             x2: points[2].lng,
                             y2: points[2].lat
-                        }
-                    });
+                        });
                 }
             }
         };

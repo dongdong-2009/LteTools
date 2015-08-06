@@ -9,12 +9,17 @@ namespace Lte.Parameters.Region.Concrete
 {
     public class EFCollegeRepository : ParametersRepositoryBase<CollegeInfo>, ICollegeRepository
     {
-        public EFCollegeRepository(IDbContextProvider<EFParametersContext> dbContextProvider) : base(dbContextProvider)
+        private EFCollegeRepository(IDbContextProvider<EFParametersContext> dbContextProvider) : base(dbContextProvider)
         {
         }
 
         public EFCollegeRepository() : this(new EFParametersProvider())
         {
+        }
+
+        public void SaveChanges()
+        {
+            Context.SaveChanges();
         }
     }
 
