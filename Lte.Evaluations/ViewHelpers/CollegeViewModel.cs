@@ -83,8 +83,16 @@ namespace Lte.Evaluations.ViewHelpers
         {
             InfrastructureId = id;
             InfrastructureName = name;
-            CenterLongtitute = ParametersContainer.QueryENodebs.Average(x => x.BaiduLongtitute);
-            CenterLattitute = ParametersContainer.QueryENodebs.Average(x => x.BaiduLattitute);
+            if (ParametersContainer.QueryENodebs.Any())
+            {
+                CenterLongtitute = ParametersContainer.QueryENodebs.Average(x => x.BaiduLongtitute);
+                CenterLattitute = ParametersContainer.QueryENodebs.Average(x => x.BaiduLattitute);
+            }
+            else
+            {
+                CenterLongtitute = 113;
+                CenterLattitute = 23;
+            }
         }
     }
 

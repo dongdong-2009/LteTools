@@ -41,10 +41,10 @@ namespace Lte.Parameters.Service.Coverage
             IEnumerable<IGeoPointReadonly<double>> points, double range)
         {
             if (range <= 0) range = 0.01;
-            double west = points.Min(x => x.Longtitute) - range;
-            double east = points.Max(x => x.Longtitute) + range;
-            double south = points.Min(x => x.Lattitute) - range;
-            double north = points.Max(x => x.Lattitute) + range;
+            double west = points.Any() ? points.Min(x => x.Longtitute) : 113 - range;
+            double east = points.Any() ? points.Max(x => x.Longtitute) : 113 + range;
+            double south = points.Any() ? points.Min(x => x.Lattitute) : 23 - range;
+            double north = points.Any() ? points.Max(x => x.Lattitute) : 23 + range;
             return source.FilterGeoPointList(west, south, east, north);
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
 
 namespace Lte.Parameters.Region.Entities
@@ -28,7 +29,7 @@ namespace Lte.Parameters.Region.Entities
     public class CollegeRegion
     {
         [Key]
-        public int CollegeId { get; set; }
+        public int AreaId { get; set; }
 
         public double Area { get; set; }
 

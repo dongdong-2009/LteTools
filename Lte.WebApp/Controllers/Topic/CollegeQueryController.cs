@@ -33,7 +33,7 @@ namespace Lte.WebApp.Controllers.Topic
                 info.CollegeRegion.Info = message;
                 info.CollegeRegion.RegionType = RegionType.Polygon;
             }
-            _repository.SaveChanges();
+            _repository.Update(info);
             return info.CollegeRegion;
         }
 
@@ -58,7 +58,7 @@ namespace Lte.WebApp.Controllers.Topic
                 info.CollegeRegion.Info = message;
                 info.CollegeRegion.RegionType = RegionType.Circle;
             }
-            _repository.SaveChanges();
+            _repository.Update(info);
             return info.CollegeRegion;
         }
 
@@ -82,7 +82,7 @@ namespace Lte.WebApp.Controllers.Topic
                 info.CollegeRegion.Info = message;
                 info.CollegeRegion.RegionType = RegionType.Rectangle;
             }
-            _repository.SaveChanges();
+            _repository.Update(info);
             return info.CollegeRegion;
         }
     }

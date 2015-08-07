@@ -28,6 +28,5 @@ namespace Lte.Parameters.Region.Abstract
 
     public interface ICollegeRepository : IRepository<CollegeInfo>
     {
-        void SaveChanges();
     }
 }

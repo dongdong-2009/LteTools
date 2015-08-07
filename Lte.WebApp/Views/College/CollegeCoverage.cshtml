@@ -14,8 +14,10 @@
 }
 
 <section>
-    <p>@Html.ActionLink("返回校园网列表","List",null,new{@class="btn btn-primary"})</p>
-    <p>@Html.ActionLink("查看校园小区信息","CollegeCells",new{id=Model.InfrastructureId},new{@class="btn btn-primary"})</p>
+    <div class="btn-group">
+        @Html.ActionLink("返回校园网列表","List",null,new{@class="btn btn-primary"})
+        @Html.ActionLink("查看校园小区信息","CollegeCells",new{id=Model.InfrastructureId},new{@class="btn btn-primary"})
+    </div>
     <div id="radiotabs">
         <ul>
             <li><a href="#coverage-cdma">2/3G覆盖</a></li>

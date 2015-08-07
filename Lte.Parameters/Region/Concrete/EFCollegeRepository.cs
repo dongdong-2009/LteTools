@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using Abp.EntityFramework;
+﻿using System.Data.Entity;
+using System.Linq;
 using Lte.Parameters.Abstract;
 using Lte.Parameters.Concrete;
 using Lte.Parameters.Region.Abstract;
@@ -7,19 +7,11 @@ using Lte.Parameters.Region.Entities;
 
 namespace Lte.Parameters.Region.Concrete
 {
-    public class EFCollegeRepository : ParametersRepositoryBase<CollegeInfo>, ICollegeRepository
+    public class EFCollegeRepository : LightWeightRepositroyBase<CollegeInfo>, ICollegeRepository
     {
-        private EFCollegeRepository(IDbContextProvider<EFParametersContext> dbContextProvider) : base(dbContextProvider)
+        protected override DbSet<CollegeInfo> Entities
         {
-        }
-
-        public EFCollegeRepository() : this(new EFParametersProvider())
-        {
-        }
-
-        public void SaveChanges()
-        {
-            Context.SaveChanges();
+            get { return context.CollegeInfos; }
         }
     }
 
