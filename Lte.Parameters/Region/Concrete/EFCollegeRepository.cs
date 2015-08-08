@@ -13,6 +13,23 @@ namespace Lte.Parameters.Region.Concrete
         {
             get { return context.CollegeInfos; }
         }
+
+        public CollegeRegion GetRegion(int id)
+        {
+            var query = Entities.Select(x => new {College = x, Region = x.CollegeRegion});
+            var firstOrDefault = query.FirstOrDefault(x => x.College.Id == id);
+            return firstOrDefault != null ? firstOrDefault.Region : null;
+        }
+
+        public void UpdateRegion(int id, double area, string message, RegionType type)
+        {
+            var query = Entities.Select(x => new { College = x, Region = x.CollegeRegion });
+            var firstOrDefault = query.FirstOrDefault(x => x.College.Id == id);
+            if (firstOrDefault==null) return;
+            firstOrDefault.Region.Area = area;
+            firstOrDefault.Region.Info = message;
+            firstOrDefault.Region.RegionType = type;
+        }
     }
 
     public class EFInfrastructureRepository : IInfrastructureRepository
