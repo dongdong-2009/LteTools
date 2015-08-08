@@ -1,6 +1,5 @@
 ﻿using Lte.Parameters.Kpi.Abstract;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Lte.Parameters.Kpi;
+using NUnit.Framework;
 
 namespace Lte.Parameters.Test.Kpi
 {

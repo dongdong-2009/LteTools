@@ -26,14 +26,14 @@
 
 [Dd]ebug/
 
-
-[Rr]elease/
-
-[Bb]in/
-
-
 [Oo]bj/
 
+*.obj
+*.pdb
+*.dll
+*.dll.config
+*.exe.config
+*.manifest
 
 
 
@@ -59,7 +59,4 @@ packages/
 
 uploads/
 
-程序设计流程图/
-*.xls
-*.xlsx
 *.rar

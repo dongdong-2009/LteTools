@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
-using Lte.Domain.Geo;
 using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Geo.Entities;
 using Lte.Domain.Geo.Service;
 using Lte.Domain.Measure;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Point
 {
-    [TestClass]
+    [TestFixture]
     public class ImportCellsTest
     {
         protected readonly IList<ILinkBudget<double>> budgetList = new List<ILinkBudget<double>>();
@@ -18,7 +17,7 @@ namespace Lte.Domain.Test.Measure.Point
         protected const double eps = 1E-6;
         protected readonly MeasurePoint measurablePoint = new MeasurePoint();
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             StubGeoPoint point0 = new StubGeoPoint(112, 23);
@@ -28,7 +27,7 @@ namespace Lte.Domain.Test.Measure.Point
 
         }
 
-        [TestMethod]
+        [Test]
         public void TestImportCells_OneCell()
         {
             ImportOneCell();
@@ -56,7 +55,7 @@ namespace Lte.Domain.Test.Measure.Point
             measurablePoint.ImportCells(outdoorCellList, budgetList, model);
         }
 
-        [TestMethod]
+        [Test]
         public void TestImportCells_TwoCells_InOneStation()
         {
             ImportTwoCellsInOneStation();
@@ -80,7 +79,7 @@ namespace Lte.Domain.Test.Measure.Point
             measurablePoint.ImportCells(outdoorCellList, budgetList, model);
         }
 
-        [TestMethod]
+        [Test]
         public void TestImportCells_TwoCells_InOneStation_WithDifferentMods()
         {
             ImportTwoCellsInOneStation_WithDifferentMods();
@@ -106,7 +105,7 @@ namespace Lte.Domain.Test.Measure.Point
             measurablePoint.ImportCells(outdoorCellList, budgetList, model);
         }
 
-        [TestMethod]
+        [Test]
         public void TestImportCells_ThreeCells_InOneStation()
         {
             ImportThreeCellsInOneStation();
@@ -135,7 +134,7 @@ namespace Lte.Domain.Test.Measure.Point
             measurablePoint.ImportCells(outdoorCellList, budgetList, model);
         }
 
-        [TestMethod]
+        [Test]
         public void TestGenerateMeasurableCellList_ThreeCells_TwoInOneStation_OtherInOtherStation()
         {
             ImportThreeCellsInDifferentStations();

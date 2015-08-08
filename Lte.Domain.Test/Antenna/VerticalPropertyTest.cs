@@ -1,13 +1,13 @@
 ﻿using System;
 using Lte.Domain.Measure;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Antenna
 {
-    [TestClass]
+    [TestFixture]
     public class VerticalPropertyTest
     {
-        [TestMethod]
+        [Test]
         public void TestMethod_Default()
         {
             VerticalProperty property = new VerticalProperty();
@@ -18,7 +18,7 @@ namespace Lte.Domain.Test.Antenna
             Assert.AreEqual(property.CalculateFactor(90), 30);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMethod_half10()
         {
             VerticalProperty property = new VerticalProperty(10);

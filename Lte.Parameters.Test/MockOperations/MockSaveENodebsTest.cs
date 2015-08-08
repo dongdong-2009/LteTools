@@ -1,22 +1,21 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Lte.Parameters.MockOperations;
+﻿using Lte.Parameters.MockOperations;
 using Lte.Parameters.Entities;
 using System.Collections.Generic;
-using System.Linq;
+using NUnit.Framework;
 
 namespace Lte.Parameters.Test.MockOperations
 {
-    [TestClass]
+    [TestFixture]
     public class MockSaveENodebsTest : MockENodebTestConfig
     {
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             Initialize();
             eNodebRepository.MockENodebRepositorySaveENodeb();
         }
 
-        [TestMethod]
+        [Test]
         public void TestMockAddSuccessiveENodebs()
         {
             eNodebRepository.MockENodebRepositorySaveENodeb();
@@ -29,7 +28,7 @@ namespace Lte.Parameters.Test.MockOperations
             Assert.AreEqual(eNodebRepository.Object.Count(), 9);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMockSaveSuccessiveENodebs_TownIdExisted()
         {
             Assert.IsTrue(SaveOneENodeb(
@@ -40,7 +39,7 @@ namespace Lte.Parameters.Test.MockOperations
             Assert.AreEqual(eNodebRepository.Object.Count(), 9);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMockSaveENodebs_TwoSuccessiveENodebs()
         {
             Assert.AreEqual(eNodebRepository.Object.Count(), 7);
@@ -52,7 +51,7 @@ namespace Lte.Parameters.Test.MockOperations
             Assert.AreEqual(eNodebRepository.Object.Count(), 9);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMockSaveENodebs_ThreeSuccessiveENodebs()
         {
             Assert.AreEqual(eNodebRepository.Object.Count(), 7);

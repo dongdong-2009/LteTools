@@ -1,20 +1,17 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Lte.Domain.LinqToCsv.Description;
 using Lte.Evaluations.Dingli;
 using Lte.Domain.LinqToCsv.Context;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Dingli
 {
-    [TestClass]
+    [TestFixture]
     public class HandoverSuccessTest : TabCsvReader
     {
         private LogRecordRepository recordRepository;
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             DescriptionInitialize();
@@ -328,7 +325,7 @@ namespace Lte.Evaluations.Test.Dingli
             LogRecordRepository.ThroughputCalculationDelay = 1;
         }
 
-        [TestMethod]
+        [Test]
         public void TestHandoverSuccess()
         {
             List<HandoverInfo> handoverInfoList = recordRepository.GetHandoverInfoList();
@@ -362,7 +359,7 @@ namespace Lte.Evaluations.Test.Dingli
             Assert.AreEqual(handoverInfoList[0].UlThroughputAfter, 188338);
         }
 
-        [TestMethod]
+        [Test]
         public void TestHandoverSuccess_SuccessInSameInstance()
         {
             testInput = @"Index	Time	Longitude	Latitude	eNodeBID	SectorID	PCI	RSRP (dBm)	SINR (dB)	WideBand CQI	MCS Average UL /s	MCS Average DL /s	PDCP Throughput DL (bps)	PDCP Throughput UL (bps)	PDSCH BLER	EARFCN DL	Event	Message Type	

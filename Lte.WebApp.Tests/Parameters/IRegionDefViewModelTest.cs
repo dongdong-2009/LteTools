@@ -3,10 +3,10 @@ using Lte.Evaluations.ViewHelpers;
 using Lte.Parameters.Region.Entities;
 using Lte.Parameters.Region.Service;
 using Lte.WebApp.Tests.ControllerParameters;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
 using Lte.Domain.Regular;
+using NUnit.Framework;
 
 namespace Lte.WebApp.Tests.Parameters
 {
@@ -66,13 +66,13 @@ namespace Lte.WebApp.Tests.Parameters
         }
     }
 
-    [TestClass]
+    [TestFixture]
     public class IRegionDefViewModelTest : ParametersConfig
     {
         private readonly Mock<ITownDefViewModel> mockViewModel = new Mock<ITownDefViewModel>();
         private IRegionDefViewModelTestHelper helper;
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             mockViewModel.BindGetAndSetAttributes(x => x.CityList, (x, v) => x.CityList = v);
@@ -81,31 +81,31 @@ namespace Lte.WebApp.Tests.Parameters
             helper = new IRegionDefViewModelTestHelper(mockViewModel.Object, towns);
         }
 
-        [TestMethod]
+        [Test]
         public void IRegionDefViewModel_Initialize_WithoutAssigningTown()
         {
             helper.AssertTest();
         }
 
-        [TestMethod]
+        [Test]
         public void IRegionDefViewModel_Initialize_WithAssigningTown_1_2_1()
         {
             helper.AssertTest("City1", "District2", "Town1");
         }
 
-        [TestMethod]
+        [Test]
         public void IRegionDefViewModel_Initialize_WithAssigningTown_1_3_5()
         {
             helper.AssertTest("City1", "District3", "Town5");
         }
 
-        [TestMethod]
+        [Test]
         public void IRegionDefViewModel_Initialize_WithAssigningTown_2_4_6()
         {
             helper.AssertTest("City2", "District4", "Town6");
         }
 
-        [TestMethod]
+        [Test]
         public void IRegionDefViewModel_Initialize_WithAssigningTown_1_2_4()
         {
             helper.AssertTest("City1", "District2", "Town4");

@@ -1,16 +1,16 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Lte.Domain.Test.Ipv4;
 using Lte.Domain.TypeDefs;
+using NUnit.Framework;
 
-namespace Lte.Domain.Test.Ipv4
+namespace Lte.Domain.Test.TypeDefs
 {
-    [TestClass]
+    [TestFixture]
     public class IpAddressTest
     {
-        [TestMethod]
+        [Test]
         public void TestIpAddress_GetString()
         {
-            IIpAddress address = new StubIpAddress()
+            IIpAddress address = new StubIpAddress
             {
                 IpByte1 = 0,
                 IpByte2 = 1,
@@ -22,7 +22,7 @@ namespace Lte.Domain.Test.Ipv4
             Assert.AreEqual(address.GetString(), "0.201.27.255");
         }
 
-        [TestMethod]
+        [Test]
         public void TestIpAddress_GetAddress()
         {
             IIpAddress address = new StubIpAddress();
@@ -44,7 +44,7 @@ namespace Lte.Domain.Test.Ipv4
             Assert.AreEqual(address.IpByte4, 255);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIpAddress_AddressValue()
         {
             Assert.AreEqual((new IpAddress("0.0.0.0")).AddressValue, 0);
@@ -53,10 +53,10 @@ namespace Lte.Domain.Test.Ipv4
             Assert.AreEqual((new IpAddress("0.1.0.0")).AddressValue, 65536);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIpAddress_SetAddressValue()
         {
-            IpAddress ipAddress = new IpAddress()
+            IpAddress ipAddress = new IpAddress
             {
                 AddressValue = 3 * 256 * 256 * 256 + 2 * 256 * 256 + 7 * 256 + 6
             };
@@ -64,7 +64,7 @@ namespace Lte.Domain.Test.Ipv4
 
             for (int i = -1; i > -128888888; i -= 254)
             {
-                ipAddress = new IpAddress() { AddressValue = i };
+                ipAddress = new IpAddress { AddressValue = i };
                 Assert.AreEqual(ipAddress.AddressValue, i);
             }
         }

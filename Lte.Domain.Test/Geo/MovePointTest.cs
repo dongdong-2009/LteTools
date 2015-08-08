@@ -1,19 +1,14 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Lte.Domain.Geo.Abstract;
+﻿using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Geo.Entities;
 using Lte.Domain.Geo.Service;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Lte.Domain.Geo;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Geo
 {
-    [TestClass]
+    [TestFixture]
     public class MovePointTest
     {
-        [TestMethod]
+        [Test]
         public void TestMovePoint_50m_Northeast()
         {
             GeoPoint origin = new GeoPoint(112.1, 23.1);
@@ -22,7 +17,7 @@ namespace Lte.Domain.Test.Geo
             Assert.AreEqual(point.Lattitute, 23.101086, 1E-6);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMovePoint_50m_Southeast()
         {
             GeoPoint origin = new GeoPoint(112.1, 23.1);
@@ -31,7 +26,7 @@ namespace Lte.Domain.Test.Geo
             Assert.AreEqual(point.Lattitute, 23.098914, 1E-6);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMovePoint_50m_Southwest()
         {
             GeoPoint origin = new GeoPoint(112.1, 23.1);
@@ -40,7 +35,7 @@ namespace Lte.Domain.Test.Geo
             Assert.AreEqual(point.Lattitute, 23.098914, 1E-6);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMovePoint_50m_Northwest()
         {
             GeoPoint origin = new GeoPoint(112.1, 23.1);

@@ -2,20 +2,20 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Domain.LinqToCsv.Description;
 using Lte.Evaluations.Dingli;
 using Lte.Domain.Regular;
 using Lte.Domain.LinqToCsv.Context;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Dingli
 {
-    [TestClass]
+    [TestFixture]
     public class CoverageStatListTest : TabCsvReader
     {
         private List<CoverageStat> coverageStatList;
 
-        [TestMethod]
+        [Test]
         public void TestCoverageStatList_Dingli()
         {
             DescriptionInitialize();
@@ -49,7 +49,7 @@ namespace Lte.Evaluations.Test.Dingli
             Assert.AreEqual(chart.StatList[6].Sinr, 13.4);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCoverageStatList_Hugeland()
         {
             HugelandDescriptionInitialize();

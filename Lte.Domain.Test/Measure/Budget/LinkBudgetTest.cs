@@ -1,28 +1,28 @@
 ﻿using Lte.Domain.Measure;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Budget
 {
-    [TestClass]
+    [TestFixture]
     public class LinkBudgetTest
     {
         private ILinkBudget<double> budget;
         const double eps = 1E-6;
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             IBroadcastModel model = new BroadcastModel();
             budget = new LinkBudget(model);
         }
 
-        [TestMethod]
+        [Test]
         public void TestBudgetModel()
         {
             Assert.IsNotNull(budget.Model);
         }
 
-        [TestMethod]
+        [Test]
         public void TestBudgetCalculate()
         {
             double x = budget.CalculateReceivedPower(1, 1);

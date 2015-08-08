@@ -1,17 +1,17 @@
 ﻿using System.Linq;
 using Lte.Parameters.Entities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Evaluations.Infrastructure;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Infrastructure
 {
-    [TestClass]
+    [TestFixture]
     public class EvaluationAddCellTest
     {
         private readonly EvaluationInfrastructure infrastructure
             = new EvaluationInfrastructure();
 
-        [TestMethod]
+        [Test]
         public void TestEvaluationAddCell_AddOneCell()
         {
             infrastructure.AddCell(new EvaluationOutdoorCell

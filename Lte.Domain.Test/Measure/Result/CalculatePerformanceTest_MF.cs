@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
-using Lte.Domain.Geo;
 using Lte.Domain.Geo.Entities;
 using Lte.Domain.Measure;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Result
 {
-    [TestClass]
+    [TestFixture]
     public class CalculatePerformanceTestMf
     {
         private List<MeasurableCell> _cellList;
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             _cellList = new List<MeasurableCell>{
@@ -26,7 +25,7 @@ namespace Lte.Domain.Test.Measure.Result
             };
         }
 
-        [TestMethod]
+        [Test]
         public void TestCalculatePerformance_MFMeasurePointResult()
         {
             MeasurableCellRepository repository = new MeasurableCellRepository
@@ -45,7 +44,7 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.AreEqual(result.NominalSinr, 9.586073, 1E-6);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCalculatePerformance_MFMeasurePointResult_NoSameFrequencySameModCell()
         {
             _cellList[1].Cell.Cell.Frequency = 1825;
@@ -65,7 +64,7 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.AreEqual(result.NominalSinr, 20);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCalculatePerformance_MFMeasurePointResult_NoSameFrequencySameModCellOrDiffModCell()
         {
             _cellList[1].Cell.Cell.Frequency = 1825;

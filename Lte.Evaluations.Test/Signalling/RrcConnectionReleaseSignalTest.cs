@@ -1,14 +1,12 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Lte.Domain.Regular;
-using Lte.Evaluations.Signalling;
+﻿using Lte.Evaluations.Signalling;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Signalling
 {
-    [TestClass]
+    [TestFixture]
     public class RrcConnectionReleaseSignalTest
     {
-        [TestMethod]
+        [Test]
         public void TestRrcConnectionReleaseSignal_2a02()
         {
             RrcConnectionReleaseSignal signal = new RrcConnectionReleaseSignal("2a02");
@@ -16,7 +14,7 @@ namespace Lte.Evaluations.Test.Signalling
             Assert.AreEqual(signal.ReleaseCause, RrcConnectionReleaseCause.Other);
         }
 
-        [TestMethod]
+        [Test]
         public void TestRrcConnectionReleaseSignal_2c02()
         {
             RrcConnectionReleaseSignal signal = new RrcConnectionReleaseSignal("2c02");

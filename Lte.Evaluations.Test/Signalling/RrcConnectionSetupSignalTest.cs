@@ -1,19 +1,14 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Lte.Domain.Regular;
-using Lte.Evaluations.Signalling;
+﻿using Lte.Evaluations.Signalling;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Signalling
 {
-    [TestClass]
+    [TestFixture]
     public class RrcConnectionSetupSignalTest
     {
-        private string signalString = "6813980a1dce0183c0ba007e131ffa211f0c288d980002e808000960";
+        private const string signalString = "6813980a1dce0183c0ba007e131ffa211f0c288d980002e808000960";
 
-        [TestMethod]
+        [Test]
         public void TestRrcConnectionSetupSignal_BasicParameters()
         {
             RrcConnectionSetupSignal signal = new RrcConnectionSetupSignal(signalString);

@@ -1,23 +1,20 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Lte.Evaluations.Dingli;
 
 namespace Lte.Evaluations.Test.Dingli
 {
-    [TestClass]
+    [TestFixture]
     public class CoverageStatTest
     {
         private LogRecord record;
         private HugelandRecord hRecord;
         private CoverageStat stat;
 
-        [TestMethod]
+        [Test]
         public void TestCoverageStat()
         {
-            record = new LogRecord()
+            record = new LogRecord
             {
                 Pci = 111,
                 Sinr = 12,
@@ -31,7 +28,7 @@ namespace Lte.Evaluations.Test.Dingli
                 SectorId = 1,
                 Earfcn =100
             };
-            hRecord = new HugelandRecord()
+            hRecord = new HugelandRecord
             {
                 Pci = 111,
                 Sinr = 12,

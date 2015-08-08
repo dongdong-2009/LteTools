@@ -1,13 +1,11 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 using System.Collections.Generic;
-using Lte.Domain.Geo;
 using Lte.Domain.Regular;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Regular
 {
-    [TestClass]
+    [TestFixture]
     public class SumOfPowerLevelTest
     {
         private class LevelObject
@@ -15,17 +13,17 @@ namespace Lte.Domain.Test.Regular
             public double Value { get; set; }
         }
 
-        private IList<LevelObject> levelList = new List<LevelObject>();
+        private readonly IList<LevelObject> levelList = new List<LevelObject>();
         const double eps = 1E-6;
 
-        [TestMethod]
+        [Test]
         public void TestMethod_EmptyList()
         {
             double sum = levelList.SumOfPowerLevel(x => x.Value);
             Assert.AreEqual(sum, Double.MinValue);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMethod_OneItem()
         {
             for (int a = 0; a < 10; a++)
@@ -37,7 +35,7 @@ namespace Lte.Domain.Test.Regular
             }
         }
 
-        [TestMethod]
+        [Test]
         public void TestMethod_TwoSameItems()
         {
             for (int a = 0; a < 10; a++)

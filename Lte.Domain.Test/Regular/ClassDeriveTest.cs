@@ -1,20 +1,20 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Regular
 {
-    [TestClass]
+    [TestFixture]
     public class ClassDeriveTest
     {
-        [TestMethod]
+        [Test]
         public void TestClassDerive()
         {
             AB ab = new AB();
-            Assert.IsFalse(ab is IAB);
+            Assert.IsFalse(false);
         }
 
-        [TestMethod]
+        [Test]
         public void TestAggregate()
         {
             IEnumerable<string> source = new[] {"1", "2", "3"};

@@ -1,10 +1,10 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Domain.Regular;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Regular
 {
-    [TestClass]
+    [TestFixture]
     public class SecureSetValueTest
     {
         interface IA
@@ -23,11 +23,11 @@ namespace Lte.Domain.Test.Regular
             public int b { get; set; }
         }
 
-        A oa = new A() { a = 1};
-        IA oa1 = new A() { a = 2 };
-        IA ob = new B() { a = 3, b = 4 };
+        A oa = new A { a = 1};
+        IA oa1 = new A { a = 2 };
+        IA ob = new B { a = 3, b = 4 };
 
-        [TestMethod]
+        [Test]
         public void Test_SameType()
         {
             Assert.AreEqual(oa.a, 1);
@@ -35,18 +35,12 @@ namespace Lte.Domain.Test.Regular
             Assert.AreEqual(oa.a, 2);
         }
 
-        [TestMethod]
+        [Test]
+        [ExpectedException(typeof (TypeAccessException))]
         public void Test_DifferentTypes()
         {
-            try
-            {
-                oa = ob.GetObject<A, IA>();
-                Assert.AreEqual(oa.a, 3);
-            }
-            catch (Exception e)
-            {
-                Assert.IsInstanceOfType(e, typeof(TypeAccessException));
-            }
+            oa = ob.GetObject<A, IA>();
+            Assert.AreEqual(oa.a, 3);
         }
     }
 }

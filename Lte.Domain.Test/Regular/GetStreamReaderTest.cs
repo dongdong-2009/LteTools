@@ -1,19 +1,17 @@
-﻿using System;
-using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.IO;
 using Lte.Domain.Regular;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Regular
 {
-    [TestClass]
+    [TestFixture]
     public class GetStreamReaderTest
     {
 
-        [TestMethod]
+        [Test]
         public void TestStreamReaderFromString()
         {
-            string input =
-@"Id,Name,Last Name,Age,City
+            const string input = @"Id,Name,Last Name,Age,City
 1,John,Doe,15,Washington";
 
             StreamReader sReader = input.GetStreamReader();

@@ -2,7 +2,7 @@
 using System.Globalization;
 using Lte.Domain.LinqToCsv;
 using Lte.Domain.LinqToCsv.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.LinqToCsv.Product
 {

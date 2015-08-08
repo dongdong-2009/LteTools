@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Globalization;
-using Lte.Domain.Geo;
 using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Geo.Entities;
 using Lte.Domain.Geo.Service;
 using Lte.Domain.Measure;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Comparable
 {
-    [TestClass]
+    [TestFixture]
     public class ComparableCell_OnePointTest
     {
         private FakeComparableCell[] cellList;
         const double eps = 1E-6;
 
-        [TestMethod]
+        [Test]
         public void TestComparableCell_OnePoint()
         {
             cellList = new FakeComparableCell[1];
@@ -27,14 +26,14 @@ namespace Lte.Domain.Test.Measure.Comparable
             Assert.AreEqual(cellList[0].AzimuthAngle, 165, 1E-6);
         }
 
-        [TestMethod]
+        [Test]
         public void TestComparableCell_OneCell_Distance()
         {
             ComparableCell c = new ComparableCell(0.5, 0);
             Assert.AreEqual(c.Distance, 0.5);
         }
 
-        [TestMethod]
+        [Test]
         public void TestComparableCell_OneCell_With0azimuth_Metric()
         {
             FakeComparableCell c = FakeComparableCell.Parse(new ComparableCell(0.5, 0));
@@ -43,7 +42,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             Assert.AreEqual(c.MetricCalculate(), metric);
         }
 
-        [TestMethod]
+        [Test]
         public void TestComparableCell_TwoCells()
         {
             cellList = new FakeComparableCell[2];
@@ -55,7 +54,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             Assert.AreEqual(cellList[1].AzimuthAngle, 0);
         }
 
-        [TestMethod]
+        [Test]
         public void TestComparableCell_FourCells()
         {
             cellList = new FakeComparableCell[4];

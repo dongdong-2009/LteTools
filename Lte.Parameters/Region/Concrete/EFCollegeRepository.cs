@@ -13,6 +13,11 @@ namespace Lte.Parameters.Region.Concrete
         {
             get { return context.CollegeInfos; }
         }
+
+        public CollegeRegion GetRegion(int id)
+        {
+            return Get(id).CollegeRegion;
+        }
     }
 
     public class EFInfrastructureRepository : IInfrastructureRepository

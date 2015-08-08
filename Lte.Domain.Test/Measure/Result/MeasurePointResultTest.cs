@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Lte.Domain.Measure;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Result
 {
-    [TestClass]
+    [TestFixture]
     public class MeasurePointResultTest
     {
-        private MeasurePointResult result = new StubMeasurePointResult();
+        private readonly MeasurePointResult result = new StubMeasurePointResult();
         private List<MeasurableCell> _cellList = new List<MeasurableCell>();
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             result.StrongestCell = new MeasurableCell
@@ -21,7 +21,7 @@ namespace Lte.Domain.Test.Measure.Result
             };
         }
 
-        [TestMethod]
+        [Test]
         public void TestUpdateSameModInterference_EmptyList()
         {
             IEnumerable<MeasurableCell> sameModInterference = result.UpdateSameModInterference(_cellList);
@@ -31,7 +31,7 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.AreEqual(result.DifferentModInterferenceLevel, double.MinValue);
         }
 
-        [TestMethod]
+        [Test]
         public void TestUpdateDifferentModInterference_EmptyList()
         {
             IEnumerable<MeasurableCell> diffModInterference = result.UpdateDifferentModInterference(_cellList);
@@ -41,7 +41,7 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.AreEqual(result.SameModInterferenceLevel, double.MinValue);
         }
 
-        [TestMethod]
+        [Test]
         public void TestUpdateSameModInterference_OneCell_CellList()
         {
             _cellList = StubMeasurePointResult.CellListOneSameModCell;
@@ -55,7 +55,7 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.AreEqual(sameModInterference.Count(), 0);
         }
 
-        [TestMethod]
+        [Test]
         public void TestUpdateDifferentModInterference_OneCell_CellList()
         {
             _cellList = StubMeasurePointResult.CellListOneSameModCell;
@@ -70,7 +70,7 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.AreEqual(result.DifferentModInterferenceLevel, -90);
         }
 
-        [TestMethod]
+        [Test]
         public void TestUpdateSameModInterference_TwoCells()
         {
             _cellList = StubMeasurePointResult.CellListTwoSameModCells;
@@ -89,7 +89,7 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.AreEqual(result.SameModInterferenceLevel, -90);
         }
 
-        [TestMethod]
+        [Test]
         public void TestUpdateDifferentModInterference_TwoCells()
         {
             _cellList = StubMeasurePointResult.CellListTwoSameModCells;

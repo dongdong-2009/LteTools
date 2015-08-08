@@ -1,14 +1,13 @@
-﻿using Lte.Domain.Geo;
-using Lte.Domain.Geo.Abstract;
+﻿using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Geo.Entities;
 using Lte.Domain.Geo.Service;
 using Lte.Domain.Measure;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Point
 {
-    [TestClass]
+    [TestFixture]
     public class GenerateMeasurableCellListTest
     {
         private readonly MeasurePoint measurablePoint = new MeasurePoint();
@@ -16,7 +15,7 @@ namespace Lte.Domain.Test.Measure.Point
         private ComparableCell[] compCells;
         const double eps = 1E-6;
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             StubGeoPoint point0 = new StubGeoPoint(112, 23);
@@ -26,7 +25,7 @@ namespace Lte.Domain.Test.Measure.Point
 
         }
 
-        [TestMethod]
+        [Test]
         public void TestGenerateMeasurableCellList_OneCell()
         {
             Mock<IOutdoorCell> outdoorCell = new Mock<IOutdoorCell>();
@@ -51,7 +50,7 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(measurablePoint.CellRepository.CellList[0].TiltAngle, 2.939795, eps);
         }
 
-        [TestMethod]
+        [Test]
         public void TestGenerateMeasurableCellList_TwoCells_InOneStation()
         {
             Mock<IOutdoorCell> outdoorCell1 = new Mock<IOutdoorCell>();
@@ -74,7 +73,7 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(measurablePoint.CellRepository.CellList[1].TiltAngle, 2.939795, eps);
         }
 
-        [TestMethod]
+        [Test]
         public void TestGenerateMeasurableCellList_ThreeCells_InOneStation()
         {
             Mock<IOutdoorCell> outdoorCell1 = new Mock<IOutdoorCell>();
@@ -102,7 +101,7 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(measurablePoint.CellRepository.CellList[2].TiltAngle, 2.939795, eps);
         }
 
-        [TestMethod]
+        [Test]
         public void TestGenerateMeasurableCellList_ThreeCells_TwoInOneStation_OtherInOtherStation()
         {
             Mock<IOutdoorCell> outdoorCell1 = new Mock<IOutdoorCell>();

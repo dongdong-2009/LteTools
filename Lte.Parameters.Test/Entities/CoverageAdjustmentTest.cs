@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
 using Lte.Parameters.Region.Entities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Lte.Parameters.Test.Entities
 {
-    [TestClass]
+    [TestFixture]
     public class CoverageAdjustmentTest
     {
         private void TestAjustFactor(CoverageAdjustment ca, double azimuth, double factor,
@@ -17,7 +14,7 @@ namespace Lte.Parameters.Test.Entities
             Assert.AreEqual(property(ca), factor);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCoverageAdjustment()
         {
             CoverageAdjustment ca = new CoverageAdjustment();

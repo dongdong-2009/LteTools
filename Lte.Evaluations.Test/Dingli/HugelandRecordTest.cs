@@ -1,18 +1,14 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Lte.Evaluations.Dingli;
+﻿using Lte.Evaluations.Dingli;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Dingli
 {
-    [TestClass]
+    [TestFixture]
     public class HugelandRecordTest
     {
         private HugelandRecord record;
 
-        [TestMethod]
+        [Test]
         public void TestHugelandRecord()
         {
             record = new HugelandRecord

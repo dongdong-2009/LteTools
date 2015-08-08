@@ -1,25 +1,21 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Domain.LinqToCsv.Description;
 using Lte.Evaluations.Dingli;
 using Lte.Domain.LinqToCsv.Context;
-using Lte.Domain.LinqToCsv.Mapper;
 using Lte.Domain.Regular;
-using System.Reflection;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Dingli
 {
-    [TestClass]
+    [TestFixture]
     public class LogRecordsMergeTest
     {
         private CsvFileDescription fileDescription_namesUs;
         private string testInput;
         private List<LogRecord> originalLogs;
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             fileDescription_namesUs = new CsvFileDescription
@@ -61,14 +57,14 @@ namespace Lte.Evaluations.Test.Dingli
             originalLogs = CsvContext.ReadString<LogRecord>(testInput, fileDescription_namesUs).ToList();
         }
 
-        [TestMethod]
+        [Test]
         public void TestLogRecordsMerge_BeforeMerge()
         {
             Assert.IsNotNull(originalLogs);
             Assert.AreEqual(originalLogs.Count, 26);
         }
 
-        [TestMethod]
+        [Test]
         public void TestLogRecordsMerge_AfterMerge()
         {
             List<LogRecord> resultRecords = originalLogs.Merge();

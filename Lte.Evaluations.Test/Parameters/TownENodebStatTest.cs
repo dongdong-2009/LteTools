@@ -5,18 +5,18 @@ using Lte.Parameters.Abstract;
 using Lte.Parameters.Entities;
 using Lte.Parameters.Region.Abstract;
 using Lte.Parameters.Region.Entities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Parameters
 {
-    [TestClass]
+    [TestFixture]
     public class TownENodebStatTest
     {
         private readonly Mock<IENodebRepository> repository = new Mock<IENodebRepository>();
         private readonly Mock<IRegionRepository> regionRepository = new Mock<IRegionRepository>();
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             repository.Setup(x => x.GetAll()).Returns(
@@ -27,7 +27,7 @@ namespace Lte.Evaluations.Test.Parameters
                 }.AsQueryable());
         }
 
-        [TestMethod]
+        [Test]
         public void TestTownENodebStat()
         {
             TownENodebStat stat = new TownENodebStat(

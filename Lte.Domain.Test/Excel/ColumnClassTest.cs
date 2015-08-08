@@ -1,17 +1,17 @@
 ﻿using Lte.Domain.Regular;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Lte.Domain.TypeDefs;
 using System.Reflection;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Excel
 {
-    [TestClass]
+    [TestFixture]
     public class ColumnClassTest
     {
         readonly MemberInfo[] members = (typeof(ColumnClass)).GetMembers();
 
-        [TestMethod]
+        [Test]
         public void TestColumnClass_Members()
         {
             Assert.AreEqual(members.Length, 14);
@@ -31,7 +31,7 @@ namespace Lte.Domain.Test.Excel
             Assert.AreEqual(members[13].Name, "NoAttributeField");
         }
 
-        [TestMethod]
+        [Test]
         public void TestColumnClass_PropertyMemebes()
         {
             PropertyInfo[] properties = (typeof(ColumnClass)).GetProperties();
@@ -48,7 +48,7 @@ namespace Lte.Domain.Test.Excel
             Assert.IsNull(attribute);
         }
 
-        [TestMethod]
+        [Test]
         public void TestColumnClass_FirstField()
         {
             MemberInfo firstFieldMember = (typeof(ColumnClass)).GetMember("FirstField")[0];
@@ -59,7 +59,7 @@ namespace Lte.Domain.Test.Excel
             Assert.IsTrue((attribute as ColumnAttribute).CanBeNull);
         }
 
-        [TestMethod]
+        [Test]
         public void TestColumnClass_FirstField_InvokeMethods()
         {
             PropertyInfo firstFieldProperty = (typeof(ColumnClass)).GetProperty("FirstField");
@@ -73,7 +73,7 @@ namespace Lte.Domain.Test.Excel
             Assert.AreEqual(result2, 2);
         }
 
-        [TestMethod]
+        [Test]
         public void TestColumnClass_SetFirstField_InvokeMethods()
         {
             PropertyInfo firstFieldProperty = (typeof(ColumnClass)).GetProperty("FirstField");
@@ -86,14 +86,14 @@ namespace Lte.Domain.Test.Excel
             Assert.AreEqual(instance.FirstField, 3);
         }
 
-        [TestMethod]
+        [Test]
         public void TestColumnClass_Methods()
         {
             MethodInfo[] methods = (typeof(ColumnClass)).GetMethods();
             Assert.AreEqual(methods.Length, 10);
         }
 
-        [TestMethod]
+        [Test]
         public void TestColumnClass_FirstField_Attributes()
         {
             MethodInfo firstFieldMethod = (typeof(ColumnClass)).GetMethod("get_FirstField");

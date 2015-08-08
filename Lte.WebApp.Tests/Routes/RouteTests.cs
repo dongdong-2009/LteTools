@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Web;
 using System.Web.Routing;
 using Moq;
 using System.Reflection;
+using NUnit.Framework;
 
 namespace Lte.WebApp.Tests.Routes
 {
-    [TestClass]
+    [TestFixture]
     public class RouteTests
     {
         private HttpContextBase CreateHttpContext(string targetUrl = null,
@@ -38,27 +36,18 @@ namespace Lte.WebApp.Tests.Routes
         private bool TestIncomingRouteResult(RouteData routeResult,
             string controller, string action, object propertySet = null)
         {
-            Func<object, object, bool> valCompare = (v1, v2) =>
-                {
-                    return StringComparer.InvariantCultureIgnoreCase.Compare(v1, v2) == 0;
-                };
+            Func<object, object, bool> valCompare = (v1, v2) => StringComparer.InvariantCultureIgnoreCase.Compare(v1, v2) == 0;
 
             bool result = valCompare(routeResult.Values["controller"], controller)
                 && valCompare(routeResult.Values["action"], action);
 
-            if (propertySet != null)
+            if (propertySet == null) return result;
+            PropertyInfo[] propInfo = propertySet.GetType().GetProperties();
+            if (propInfo.Any(pi => !(routeResult.Values.ContainsKey(pi.Name)
+                                     && valCompare(routeResult.Values[pi.Name],
+                                         pi.GetValue(propertySet, null)))))
             {
-                PropertyInfo[] propInfo = propertySet.GetType().GetProperties();
-                foreach (PropertyInfo pi in propInfo)
-                {
-                    if (!(routeResult.Values.ContainsKey(pi.Name)
-                        && valCompare(routeResult.Values[pi.Name],
-                        pi.GetValue(propertySet, null))))
-                    {
-                        result = false;
-                        break;
-                    }
-                }
+                result = false;
             }
 
             return result;
@@ -93,7 +82,7 @@ namespace Lte.WebApp.Tests.Routes
             Assert.IsTrue(result == null || result.Route == null);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIncomingRoutes()
         {
             TestRouteMatch("~/Dingli/GetData", "Dingli", "GetData");

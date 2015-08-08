@@ -1,16 +1,15 @@
 ﻿using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Geo.Entities;
 using Lte.Domain.Geo.Service;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Lte.Domain.Geo;
 using Moq;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Geo
 {
-    [TestClass]
+    [TestFixture]
     public class GetSectorPointsTest
     {
-        [TestMethod]
+        [Test]
         public void TestGetSectorPoints()
         {
             Mock<IOutdoorCell> mockCell = new Mock<IOutdoorCell>();

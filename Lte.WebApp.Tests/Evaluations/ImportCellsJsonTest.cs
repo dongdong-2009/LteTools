@@ -5,12 +5,12 @@ using Lte.Evaluations.Infrastructure;
 using Lte.Parameters.Abstract;
 using Lte.Parameters.Entities;
 using Lte.WebApp.Controllers.Topic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Moq;
 
 namespace Lte.WebApp.Tests.Evaluations
 {
-    [TestClass]
+    [TestFixture]
     public class ImportCellsJsonTest
     {
         private readonly Mock<ICellRepository> cellRepository = new Mock<ICellRepository>();
@@ -19,7 +19,7 @@ namespace Lte.WebApp.Tests.Evaluations
         private readonly EvaluationInfrastructure infrastructure 
             = new EvaluationInfrastructure();
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             eNodebRepository.SetupGet(x => x.GetAll()).Returns(new List<ENodeb> 
@@ -44,40 +44,17 @@ namespace Lte.WebApp.Tests.Evaluations
             controller.ResetENodebList();
         }
 
-        [TestMethod]
-        public void TestImportCellsJson_FullIdList()
+        [TestCase("1,2,3,", 9)]
+        [TestCase("4,5,6,", 0)]
+        [TestCase("2,5,6,", 3)]
+        public void TestImportCellsJson_FullIdList(string message, int length)
         {
-            
-            string message = "1,2,3,";
             JsonResult results = controller.ImportCells(infrastructure, message);
             Assert.IsNotNull(results.Data);
             object[] cellInfo = results.Data as object[];
             Assert.IsNotNull(cellInfo);
-            Assert.AreEqual(cellInfo.Length, 9);
+            Assert.AreEqual(cellInfo.Length, length);
         }
 
-        [TestMethod]
-        public void TestImportCellsJson_NoneIdMatched()
-        {
-            
-            string message = "4,5,6,";
-            JsonResult results = controller.ImportCells(infrastructure, message);
-            Assert.IsNotNull(results);
-            object[] cellInfo = results.Data as object[];
-            Assert.IsNotNull(cellInfo);
-            Assert.AreEqual(cellInfo.Length, 0);
-        }
-
-        [TestMethod]
-        public void TestImportCellsJson_OneIdMatched()
-        {
-            infrastructure.CellList.Clear();
-            string message = "2,5,6,";
-            JsonResult results = controller.ImportCells(infrastructure, message);
-            Assert.IsNotNull(results);
-            object[] cellInfo = results.Data as object[];
-            Assert.IsNotNull(cellInfo);
-            Assert.AreEqual(cellInfo.Length, 3);
-        }
     }
 }

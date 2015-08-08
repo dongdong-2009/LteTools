@@ -1,20 +1,17 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Lte.Domain.LinqToCsv.Description;
 using Lte.Evaluations.Dingli;
 using Lte.Domain.LinqToCsv.Context;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Dingli
 {
-    [TestClass]
+    [TestFixture]
     public class HandoverFailTest : TabCsvReader
     {
         private LogRecordRepository recordRepository;
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             DescriptionInitialize();
@@ -259,7 +256,7 @@ namespace Lte.Evaluations.Test.Dingli
             LogRecordRepository.ThroughputCalculationDelay = 1;
         }
 
-        [TestMethod]
+        [Test]
         public void TestHandoverFail()
         {
             List<HandoverInfo> handoverInfoList = recordRepository.GetHandoverInfoList();

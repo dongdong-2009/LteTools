@@ -1,29 +1,27 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
-using Lte.Domain.Geo;
 using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Geo.Entities;
 using Lte.Domain.Geo.Service;
-using Lte.Domain.Measure;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Comparable
 {
-    [TestClass]
+    [TestFixture]
     public class ComparableCell_TwoPointsTest
     {
         IGeoPoint<double> p;
         FakeComparableCell[] cellList;
         const double eps = 1E-6;
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             p = new StubGeoPoint(112, 23);
         }
 
-        [TestMethod]
+        [Test]
         public void TestTwoPoints_SamePoint()
         {
             IGeoPoint<double> op = new StubGeoPoint(p, 0.01, 45);
@@ -47,7 +45,7 @@ namespace Lte.Domain.Test.Measure.Comparable
 
         }
 
-        [TestMethod]
+        [Test]
         public void TestTwoPoints_SameRing()
         {
             IOutdoorCell[] cl =

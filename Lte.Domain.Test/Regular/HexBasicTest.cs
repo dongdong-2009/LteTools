@@ -1,13 +1,13 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Globalization;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Regular
 {
-    [TestClass]
+    [TestFixture]
     public class HexBasicTest
     {
-        [TestMethod]
+        [Test]
         public void TestParseHexString()
         {
             Assert.AreEqual(Int32.Parse("8E2", NumberStyles.HexNumber), 2274);
@@ -17,7 +17,7 @@ namespace Lte.Domain.Test.Regular
             Assert.AreEqual(Int64.Parse("00002A02", NumberStyles.HexNumber), 10754);
         }
 
-        [TestMethod]
+        [Test]
         public void TestHexNumberShift()
         {
             int a = 1 << 15 | 1 << 14 | 1 << 13 | 1 << 12 | 1 << 11;

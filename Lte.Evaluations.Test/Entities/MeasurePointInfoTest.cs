@@ -1,20 +1,19 @@
 ﻿using Lte.Domain.Geo.Entities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Domain.Measure;
 using Lte.Evaluations.Entities;
-using Lte.Domain.Geo;
 using Lte.Evaluations.Test.Kml;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Entities
 {
-    [TestClass]
+    [TestFixture]
     public class MeasurePointInfoTest
     {
         private MeasurePoint _point;
-        private StatValueField statValueField = KmlTestInfrastructure.StatValueField;
+        private readonly StatValueField statValueField = KmlTestInfrastructure.StatValueField;
         private MeasurePointInfo _info;
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             
@@ -30,7 +29,7 @@ namespace Lte.Evaluations.Test.Entities
             };
         }
 
-        [TestMethod]
+        [Test]
         public void TestMeasurePointInfo_SameModInterference()
         {
             statValueField.FieldName = "同模干扰电平";
@@ -40,7 +39,7 @@ namespace Lte.Evaluations.Test.Entities
             Assert.AreEqual(_info.CoordinatesInfo, "112.05,23.15,10 112.15,23.15,10 112.15,23.25,10 112.05,23.25,10");
         }
 
-        [TestMethod]
+        [Test]
         public void TestMeasurePointInfo_DiffModInterference()
         {
             statValueField.FieldName = "不同模干扰电平";
@@ -50,7 +49,7 @@ namespace Lte.Evaluations.Test.Entities
             Assert.AreEqual(_info.CoordinatesInfo, "112.05,23.15,10 112.15,23.15,10 112.15,23.25,10 112.05,23.25,10");
         }
 
-        [TestMethod]
+        [Test]
         public void TestMeasurePointInfo_TotalInterference()
         {
             statValueField.FieldName = "总干扰电平";
@@ -60,7 +59,7 @@ namespace Lte.Evaluations.Test.Entities
             Assert.AreEqual(_info.CoordinatesInfo, "112.05,23.15,10 112.15,23.15,10 112.15,23.25,10 112.05,23.25,10");
         }
 
-        [TestMethod]
+        [Test]
         public void TestMeasurePointInfo_NominalSinr()
         {
             statValueField.FieldName = "标称SINR";

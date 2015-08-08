@@ -4,8 +4,8 @@ using Lte.Domain.Geo.Abstract;
 using Lte.Evaluations.ViewHelpers;
 using Lte.Parameters.Region.Entities;
 using Lte.Parameters.Region.Service;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Web.Mvc;
+using NUnit.Framework;
 
 namespace Lte.WebApp.Tests.Parameters
 {

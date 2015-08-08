@@ -2,8 +2,8 @@
 using Lte.Evaluations.ViewHelpers;
 using Lte.Parameters.Abstract;
 using Lte.Parameters.Region.Abstract;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Parameters
 {
@@ -24,55 +24,55 @@ namespace Lte.Evaluations.Test.Parameters
         }
     }
 
-    [TestClass]
+    [TestFixture]
     public class ENodebListViewModelTest : ParametersConfig
     {
         private readonly Mock<IENodebRepository> eNodebRepository = new Mock<IENodebRepository>();
         private readonly ENodebListViewModelTestHelper helper = new ENodebListViewModelTestHelper();
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             eNodebRepository.SetupGet(x => x.GetAll()).Returns(lotsOfENodebs.AsQueryable());
         }
 
-        [TestMethod]
+        [Test]
         public void TestENodebListViewModel_TownId1_Page1_PageSize2_Expected4()
         {
             helper.AssertTest(eNodebRepository.Object, 1, 1, 2, 4);
         }
 
-        [TestMethod]
+        [Test]
         public void TestENodebListViewModel_TownId2_Page1_PageSize2_Expected2()
         {
             helper.AssertTest(eNodebRepository.Object, 2, 1, 2, 2);
         }
 
-        [TestMethod]
+        [Test]
         public void TestENodebListViewModel_TownId1_Page2_PageSize2_Expected4()
         {
             helper.AssertTest(eNodebRepository.Object, 1, 2, 2, 4);
         }
 
-        [TestMethod]
+        [Test]
         public void TestENodebListViewModel_TownId5_Page1_PageSize2_Expected6()
         {
             helper.AssertTest(eNodebRepository.Object, 5, 1, 2, 6);
         }
 
-        [TestMethod]
+        [Test]
         public void TestENodebListViewModel_TownId7_Page1_PageSize2_Expected3()
         {
             helper.AssertTest(eNodebRepository.Object, 7, 1, 2, 3);
         }
 
-        [TestMethod]
+        [Test]
         public void TestENodebListViewModel_TownId7_Page2_PageSize2_Expected3()
         {
             helper.AssertTest(eNodebRepository.Object, 7, 2, 2, 3);
         }
 
-        [TestMethod]
+        [Test]
         public void TestENodebListViewModel_TownId5_Page2_PageSize4_Expected6()
         {
             helper.AssertTest(eNodebRepository.Object, 5, 2, 4, 6);

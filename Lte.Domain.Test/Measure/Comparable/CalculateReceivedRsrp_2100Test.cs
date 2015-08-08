@@ -2,12 +2,12 @@
 using Lte.Domain.Measure;
 using Lte.Domain.Test.Broadcast;
 using Lte.Domain.TypeDefs;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Comparable
 {
-    [TestClass]
+    [TestFixture]
     public class CalculateReceivedRsrp_2100Test
     {
         private readonly ComparableCell ccell = new ComparableCell();
@@ -16,7 +16,7 @@ namespace Lte.Domain.Test.Measure.Comparable
         private readonly Mock<IBroadcastModel> model = new Mock<IBroadcastModel>();
         const double eps = 1E-6;
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             model.MockFrequencyType(FrequencyBandType.Downlink2100);
@@ -29,7 +29,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             ccell.Cell = ocell.Object;           
         }
 
-        [TestMethod]
+        [Test]
         public void TestMethod_10mDistance()
         {   
             ccell.Distance = 0.01;
@@ -37,7 +37,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             Assert.AreEqual(rsrp, -41.048422, eps);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMethod_20mDistance()
         {
             ccell.Distance = 0.02;
@@ -45,7 +45,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             Assert.AreEqual(rsrp, -45.951366, eps);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMethod_50mDistance()
         {
             ccell.Distance = 0.05;
@@ -53,7 +53,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             Assert.AreEqual(rsrp, -65.651985, eps);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMethod_100mDistance()
         {
             ccell.Distance = 0.1;
@@ -61,7 +61,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             Assert.AreEqual(rsrp, -75.554929, eps);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMethod_200mDistance()
         {
             ccell.Distance = 0.2;
@@ -69,7 +69,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             Assert.AreEqual(rsrp, -87.457873, eps);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMethod_500mDistance()
         {
             ccell.Distance = 0.5;
