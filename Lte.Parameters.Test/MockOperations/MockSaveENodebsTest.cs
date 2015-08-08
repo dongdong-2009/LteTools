@@ -1,8 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Lte.Parameters.MockOperations;
+﻿using Lte.Parameters.MockOperations;
 using Lte.Parameters.Entities;
 using System.Collections.Generic;
-using System.Linq;
+using NUnit.Framework;
 
 namespace Lte.Parameters.Test.MockOperations
 {

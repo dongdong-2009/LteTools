@@ -1,12 +1,12 @@
 ﻿using Lte.Evaluations.ViewHelpers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Lte.WebApp.Tests.Parameters
 {
-    [TestClass]
+    [TestFixture]
     public class RegionViewModelMessageTest
     {
-        [TestMethod]
+        [Test]
         public void TestRegionViewModel_DeleteTownSuccessMessage()
         {
             RegionViewModel viewModel = new RegionViewModel("")
@@ -22,7 +22,7 @@ namespace Lte.WebApp.Tests.Parameters
                 "删除镇街:Foshan-Chancheng-Nanzhuang成功");
         }
 
-        [TestMethod]
+        [Test]
         public void TestRegionViewModel_DeleteTownFailMessage()
         {
             RegionViewModel viewModel = new RegionViewModel("")

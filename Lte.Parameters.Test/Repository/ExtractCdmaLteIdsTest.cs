@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Lte.Parameters.Service.Public;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Parameters.Entities;
+using NUnit.Framework;
 
 namespace Lte.Parameters.Test.Repository
 {

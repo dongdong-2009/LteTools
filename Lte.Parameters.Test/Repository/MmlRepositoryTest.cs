@@ -1,6 +1,6 @@
 ﻿using Lte.Parameters.Concrete;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Domain.Regular;
+using NUnit.Framework;
 
 namespace Lte.Parameters.Test.Repository
 {

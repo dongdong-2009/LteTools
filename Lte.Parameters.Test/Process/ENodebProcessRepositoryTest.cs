@@ -1,17 +1,12 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Lte.Parameters.Abstract;
-using Lte.Parameters.Entities;
+﻿using System.Linq;
+using NUnit.Framework;
 
 namespace Lte.Parameters.Test.Process
 {
     [TestFixture]
     public class ENodebProcessRepositoryTest
     {
-        private StubENodebProcessRepository repository = new StubENodebProcessRepository();
+        private readonly StubENodebProcessRepository repository = new StubENodebProcessRepository();
 
         [Test]
         public void TestENodebProcessRepository_BasicParameters()

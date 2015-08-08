@@ -5,8 +5,8 @@ using Lte.Parameters.Region.Abstract;
 using Lte.Parameters.Region.Entities;
 using Lte.Parameters.Region.Service;
 using Lte.WebApp.Tests.ControllerParameters;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NUnit.Framework;
 
 namespace Lte.WebApp.Tests.Parameters
 {
@@ -47,45 +47,45 @@ namespace Lte.WebApp.Tests.Parameters
         }
     }
 
-    [TestClass]
+    [TestFixture]
     public class ENodebQueryViewModelTest : ParametersConfig
     {
         private readonly ENodebQueryViewModel viewModel = new ENodebQueryViewModel();
         private ENodebQueryViewModelTestHelper helper;
         private readonly Mock<ITownRepository> mockTownRepository = new Mock<ITownRepository>();
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             mockTownRepository.SetupGet(x => x.Towns).Returns(towns.AsQueryable());
             helper = new ENodebQueryViewModelTestHelper(towns, viewModel);
         }
 
-        [TestMethod]
+        [Test]
         public void TestENodebQueryViewModel()
         {
             helper.AssertTest(mockTownRepository.Object);
         }
 
-        [TestMethod]
+        [Test]
         public void TestRegionViewModelInitialize_NotNullTown()
         {
             helper.AssertTest(mockTownRepository.Object, "City1", "District1", "Town1");
         }
 
-        [TestMethod]
+        [Test]
         public void TestRegionViewModelInitialize_InexistedTown_1_3_5()
         {
             helper.AssertTest(mockTownRepository.Object, "City1", "District3", "Town5");
         }
 
-        [TestMethod]
+        [Test]
         public void TestRegionViewModelInitialize_InexistedTown_2_4_6()
         {
             helper.AssertTest(mockTownRepository.Object, "City2", "District4", "Town6");
         }
 
-        [TestMethod]
+        [Test]
         public void TestRegionViewModelInitialize_ExistedTown_1_2_4()
         {
             helper.AssertTest(mockTownRepository.Object, "City1", "District2", "Town4");

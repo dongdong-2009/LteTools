@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Web;
 using System.Web.Routing;
 using Moq;
 using System.Reflection;
+using NUnit.Framework;
 
 namespace Lte.WebApp.Tests.Routes
 {
-    [TestClass]
+    [TestFixture]
     public class RouteTests
     {
         private HttpContextBase CreateHttpContext(string targetUrl = null,
@@ -93,7 +90,7 @@ namespace Lte.WebApp.Tests.Routes
             Assert.IsTrue(result == null || result.Route == null);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIncomingRoutes()
         {
             TestRouteMatch("~/Dingli/GetData", "Dingli", "GetData");

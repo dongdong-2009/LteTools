@@ -1,6 +1,6 @@
 ﻿using Lte.Parameters.Concrete;
 using Lte.Parameters.Entities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Lte.Parameters.Test.Repository.CellRepository
 {

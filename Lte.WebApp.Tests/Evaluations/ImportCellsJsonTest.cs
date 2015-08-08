@@ -5,12 +5,12 @@ using Lte.Evaluations.Infrastructure;
 using Lte.Parameters.Abstract;
 using Lte.Parameters.Entities;
 using Lte.WebApp.Controllers.Topic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NUnit.Framework;
 
 namespace Lte.WebApp.Tests.Evaluations
 {
-    [TestClass]
+    [TestFixture]
     public class ImportCellsJsonTest
     {
         private readonly Mock<ICellRepository> cellRepository = new Mock<ICellRepository>();
@@ -19,7 +19,7 @@ namespace Lte.WebApp.Tests.Evaluations
         private readonly EvaluationInfrastructure infrastructure 
             = new EvaluationInfrastructure();
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             eNodebRepository.SetupGet(x => x.GetAll()).Returns(new List<ENodeb> 
@@ -44,11 +44,11 @@ namespace Lte.WebApp.Tests.Evaluations
             controller.ResetENodebList();
         }
 
-        [TestMethod]
+        [Test]
         public void TestImportCellsJson_FullIdList()
         {
             
-            string message = "1,2,3,";
+            const string message = "1,2,3,";
             JsonResult results = controller.ImportCells(infrastructure, message);
             Assert.IsNotNull(results.Data);
             object[] cellInfo = results.Data as object[];
@@ -56,11 +56,11 @@ namespace Lte.WebApp.Tests.Evaluations
             Assert.AreEqual(cellInfo.Length, 9);
         }
 
-        [TestMethod]
+        [Test]
         public void TestImportCellsJson_NoneIdMatched()
         {
             
-            string message = "4,5,6,";
+            const string message = "4,5,6,";
             JsonResult results = controller.ImportCells(infrastructure, message);
             Assert.IsNotNull(results);
             object[] cellInfo = results.Data as object[];
@@ -68,11 +68,11 @@ namespace Lte.WebApp.Tests.Evaluations
             Assert.AreEqual(cellInfo.Length, 0);
         }
 
-        [TestMethod]
+        [Test]
         public void TestImportCellsJson_OneIdMatched()
         {
             infrastructure.CellList.Clear();
-            string message = "2,5,6,";
+            const string message = "2,5,6,";
             JsonResult results = controller.ImportCells(infrastructure, message);
             Assert.IsNotNull(results);
             object[] cellInfo = results.Data as object[];
