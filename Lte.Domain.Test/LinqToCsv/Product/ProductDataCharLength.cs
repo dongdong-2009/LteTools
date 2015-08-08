@@ -1,7 +1,7 @@
 ﻿using System;
 using Lte.Domain.LinqToCsv;
 using Lte.Domain.LinqToCsv.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.LinqToCsv.Product
 {
@@ -13,7 +13,7 @@ namespace Lte.Domain.Test.LinqToCsv.Product
         [CsvColumn(FieldIndex = 1, CharLength = 8)]
         public string Name
         {
-            get { return name; }
+            private get { return name; }
             set { name = value; }
         }
 
@@ -24,15 +24,13 @@ namespace Lte.Domain.Test.LinqToCsv.Product
         [CsvColumn(FieldIndex = 3, OutputFormat = "MM/dd/yy", CharLength = 8)]
         public DateTime StartDate
         {
-            get { return startDate; }
+            private get { return startDate; }
             set { startDate = value; }
         }
 
         // Can use both fields and properties
         [CsvColumn(FieldIndex = 2, CanBeNull = false, CharLength = 6)]
-        public double Weight { get; set; }
-
-#pragma warning restore 0169, 0414, 0649
+        public double Weight { private get; set; }
 
         public void AssertEqual(ProductDataCharLength other)
         {

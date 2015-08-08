@@ -1,21 +1,19 @@
-﻿using System;
-using Lte.Domain.Regular;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Lte.Domain.Regular;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Activation;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Excel
 {
-    [TestClass]
+    [TestFixture]
     public class ExcelImporterTest
     {
-        [TestMethod]
+        [Test]
         public void TestExcelImporter()
         {
-            ExcelImporterService service;
             var kernel = new StandardKernel(new ExcelImporterModule());
-            service = kernel.Get<ExcelImporterService>();
+            ExcelImporterService service = kernel.Get<ExcelImporterService>();
 
             IExcelImporter importer = service.Importer;
             Assert.IsNotNull(importer["基站级"]);
@@ -24,16 +22,16 @@ namespace Lte.Domain.Test.Excel
         }
     }
 
-    public class ExcelImporterService
+    public abstract class ExcelImporterService
     {
-        IExcelImporter importer;
+        readonly IExcelImporter importer;
 
         public IExcelImporter Importer
         {
             get { return importer; }
         }
 
-        public ExcelImporterService(IExcelImporter importer)
+        protected ExcelImporterService(IExcelImporter importer)
         {
             this.importer = importer;
         }

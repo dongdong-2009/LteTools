@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Lte.Domain.LinqToCsv.Description;
 using Lte.Domain.Test.LinqToCsv.Product;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.LinqToCsv
 {
-    [TestClass]
+    [TestFixture]
     public class CsvContextWriteTests : Test
     {
-        [TestMethod]
+        [Test]
         public void GoodFileCommaDelimitedNamesInFirstLineNLnl()
         {
             // Arrange
