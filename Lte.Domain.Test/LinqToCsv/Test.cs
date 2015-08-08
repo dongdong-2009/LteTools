@@ -4,7 +4,7 @@ using System.Linq;
 using Lte.Domain.LinqToCsv.Context;
 using Lte.Domain.LinqToCsv.Description;
 using Lte.Domain.LinqToCsv.Test;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.LinqToCsv
 {
@@ -21,14 +21,14 @@ namespace Lte.Domain.Test.LinqToCsv
             }
         }
 
-        public void AssertRead<T>(string testInput, CsvFileDescription fileDescription, IEnumerable<T> expected)
+        protected void AssertRead<T>(string testInput, CsvFileDescription fileDescription, IEnumerable<T> expected)
             where T : class, IAssertable<T>, new()
         {
             List<T> actual = CsvContext.ReadString<T>(testInput, fileDescription).ToList();
             AssertCollectionsEqual<T>(actual, expected);
         }
 
-        public string TestWrite<T>(IEnumerable<T> values, CsvFileDescription fileDescription) where T : class
+        private string TestWrite<T>(IEnumerable<T> values, CsvFileDescription fileDescription) where T : class
         {
             TextWriter stream = new StringWriter();
             CsvContext.Write(values, stream, fileDescription);

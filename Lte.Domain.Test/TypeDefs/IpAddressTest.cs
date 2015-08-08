@@ -4,10 +4,10 @@ using Lte.Domain.TypeDefs;
 
 namespace Lte.Domain.Test.Ipv4
 {
-    [TestClass]
+    [TestFixture]
     public class IpAddressTest
     {
-        [TestMethod]
+        [Test]
         public void TestIpAddress_GetString()
         {
             IIpAddress address = new StubIpAddress()
@@ -22,7 +22,7 @@ namespace Lte.Domain.Test.Ipv4
             Assert.AreEqual(address.GetString(), "0.201.27.255");
         }
 
-        [TestMethod]
+        [Test]
         public void TestIpAddress_GetAddress()
         {
             IIpAddress address = new StubIpAddress();
@@ -44,7 +44,7 @@ namespace Lte.Domain.Test.Ipv4
             Assert.AreEqual(address.IpByte4, 255);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIpAddress_AddressValue()
         {
             Assert.AreEqual((new IpAddress("0.0.0.0")).AddressValue, 0);
@@ -53,7 +53,7 @@ namespace Lte.Domain.Test.Ipv4
             Assert.AreEqual((new IpAddress("0.1.0.0")).AddressValue, 65536);
         }
 
-        [TestMethod]
+        [Test]
         public void TestIpAddress_SetAddressValue()
         {
             IpAddress ipAddress = new IpAddress()

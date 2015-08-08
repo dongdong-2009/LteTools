@@ -7,10 +7,10 @@ using Lte.Domain.TypeDefs;
 
 namespace Lte.Domain.Test.TypeDefs
 {
-    [TestClass]
+    [TestFixture]
     public class FrequencyBandTest
     {
-        [TestMethod]
+        [Test]
         public void TestFrequencyBand_2100()
         {
             double frequency = 2120;
@@ -22,7 +22,7 @@ namespace Lte.Domain.Test.TypeDefs
             Assert.AreEqual(frequency, 2120);
         }
 
-        [TestMethod]
+        [Test]
         public void TestFrequencyBand_1800()
         {
             double frequency = 1867.5;

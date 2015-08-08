@@ -7,10 +7,10 @@ using Lte.Domain.Regular;
 
 namespace Lte.Domain.Test.Regular
 {
-    [TestClass]
+    [TestFixture]
     public class GeneralTextTest
     {
-        [TestMethod]
+        [Test]
         public void TestGetSubStringInFirstBracket_OneBracket()
         {
             string line = "123(456)234";
@@ -18,28 +18,28 @@ namespace Lte.Domain.Test.Regular
 
         }
 
-        [TestMethod]
+        [Test]
         public void TestGetSubStringInFirstBracket_TwoBrackets()
         {
             string line = "12(34)56(789)0";
             Assert.AreEqual(line.GetSubStringInFirstBracket(), "34");
         }
 
-        [TestMethod]
+        [Test]
         public void TestGetSubStringInFirstBracket_OnlyFirstHalfBracket()
         {
             string line = "12(34567";
             Assert.AreEqual(line.GetSubStringInFirstBracket(), "34567");
         }
 
-        [TestMethod]
+        [Test]
         public void TestGetSubStringInFirstBracket_OnlySecondHalfBracket()
         {
             string line = "12345)67";
             Assert.AreEqual(line.GetSubStringInFirstBracket(), "12345");
         }
 
-        [TestMethod]
+        [Test]
         public void TestGetSubStringInFirstBracket_NoBrackets()
         {
             string line = "12345";

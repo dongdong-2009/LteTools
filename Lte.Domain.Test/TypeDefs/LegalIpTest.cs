@@ -4,45 +4,45 @@ using Lte.Domain.Regular;
 
 namespace Lte.Domain.Test.Regular
 {
-    [TestClass]
+    [TestFixture]
     public class LegalIpTest
     {
-        [TestMethod]
+        [Test]
         public void TestLegalIp_AllZeros_Legal()
         {
             string address = "0.0.0.0";
             Assert.IsTrue(address.IsLegalIp());
         }
 
-        [TestMethod]
+        [Test]
         public void TestLegalIp_AllOnes_Legal()
         {
             string address = "1.1.1.1";
             Assert.IsTrue(address.IsLegalIp());
         }
 
-        [TestMethod]
+        [Test]
         public void TestLegalIp_All127_Legal()
         {
             string address = "127.127.127.127";
             Assert.IsTrue(address.IsLegalIp());
         }
 
-        [TestMethod]
+        [Test]
         public void TestLegalIp_All255_Legal()
         {
             string address = "255.255.255.255";
             Assert.IsTrue(address.IsLegalIp());
         }
 
-        [TestMethod]
+        [Test]
         public void TestLegalIp_LocalMachine_Legal()
         {
             string address = "127.0.0.1";
             Assert.IsTrue(address.IsLegalIp());
         }
 
-        [TestMethod]
+        [Test]
         public void TestLegalIp_AType_Legal()
         {
             string address = "10.17.165.100";
@@ -53,7 +53,7 @@ namespace Lte.Domain.Test.Regular
             Assert.IsTrue(address2.IsLegalIp());
         }
 
-        [TestMethod]
+        [Test]
         public void TestLegalIp_BType_Legal()
         {
             string address = "172.16.165.100";
@@ -64,7 +64,7 @@ namespace Lte.Domain.Test.Regular
             Assert.IsTrue(address2.IsLegalIp());
         }
 
-        [TestMethod]
+        [Test]
         public void TestLegalIp_CType_Legal()
         {
             string address = "192.168.202.177";
@@ -75,7 +75,7 @@ namespace Lte.Domain.Test.Regular
             Assert.IsTrue(address2.IsLegalIp());
         }
 
-        [TestMethod]
+        [Test]
         public void TestLegalIp_Multicast_Legal()
         {
             string address = "224.0.0.2";
@@ -86,7 +86,7 @@ namespace Lte.Domain.Test.Regular
             Assert.IsTrue(address2.IsLegalIp());
         }
 
-        [TestMethod]
+        [Test]
         public void TestLegalIp_TooManyDigits_Illegal()
         {
             string address = "12.33.45.2.1";
@@ -97,7 +97,7 @@ namespace Lte.Domain.Test.Regular
             Assert.IsFalse(address2.IsLegalIp());
         }
 
-        [TestMethod]
+        [Test]
         public void TestLegalIp_TooLessDigits_Illegal()
         {
             string address = "12.33.45";
@@ -108,7 +108,7 @@ namespace Lte.Domain.Test.Regular
             Assert.IsFalse(address2.IsLegalIp());
         }
 
-        [TestMethod]
+        [Test]
         public void TestLegalIp_TooLargeDigits_Illegal()
         {
             string address = "12.33.45.256";
@@ -119,7 +119,7 @@ namespace Lte.Domain.Test.Regular
             Assert.IsFalse(address2.IsLegalIp());
         }
 
-        [TestMethod]
+        [Test]
         public void TestLegalIp_TooLargeDigits2_Illegal()
         {
             string address = "12.331.45.252";
@@ -130,7 +130,7 @@ namespace Lte.Domain.Test.Regular
             Assert.IsFalse(address2.IsLegalIp());
         }
 
-        [TestMethod]
+        [Test]
         public void TestLegalIp_OtherChars_Illegal()
         {
             string address = "12a.33.45.2e1";

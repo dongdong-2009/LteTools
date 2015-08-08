@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
-using Lte.Domain.Geo;
 using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Geo.Entities;
 using Lte.Domain.Geo.Service;
 using Lte.Domain.Measure;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Point
 {
-    [TestClass]
+    [TestFixture]
     public class MeasurePointConstructionTest
     {
         private readonly IGeoPoint<double> position = new GeoPoint(112, 23);
@@ -19,14 +18,14 @@ namespace Lte.Domain.Test.Measure.Point
         private readonly List<IOutdoorCell> cellList = new List<IOutdoorCell>();
         const double eps = 1E-6;
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             measurePoint = new MeasurePoint(position);
             budget = new LinkBudget(model);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMeasurePointConstruction_MockOneOutdoorCell()
         {
             Mock<IOutdoorCell> oc = new Mock<IOutdoorCell>();

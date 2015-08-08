@@ -7,7 +7,7 @@ using Lte.Domain.Regular;
 
 namespace Lte.Domain.Test.Regular
 {
-    [TestClass]
+    [TestFixture]
     public class SumOfPowerLevelTest
     {
         private class LevelObject
@@ -18,15 +18,15 @@ namespace Lte.Domain.Test.Regular
         private IList<LevelObject> levelList = new List<LevelObject>();
         const double eps = 1E-6;
 
-        [TestMethod]
-        public void TestMethod_EmptyList()
+        [Test]
+        public void Test_EmptyList()
         {
             double sum = levelList.SumOfPowerLevel(x => x.Value);
             Assert.AreEqual(sum, Double.MinValue);
         }
 
-        [TestMethod]
-        public void TestMethod_OneItem()
+        [Test]
+        public void Test_OneItem()
         {
             for (int a = 0; a < 10; a++)
             {
@@ -37,8 +37,8 @@ namespace Lte.Domain.Test.Regular
             }
         }
 
-        [TestMethod]
-        public void TestMethod_TwoSameItems()
+        [Test]
+        public void Test_TwoSameItems()
         {
             for (int a = 0; a < 10; a++)
             {

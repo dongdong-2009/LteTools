@@ -2,16 +2,16 @@
 using System.Linq;
 using Lte.Domain.Measure;
 using Lte.Domain.TypeDefs;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Point
 {
-    [TestClass]
+    [TestFixture]
     public class MeasurePointListOperationsTest
     {
         private readonly IList<MeasurePoint> mesurePointList = new List<MeasurePoint>();
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             MeasurePoint point = new MeasurePoint();
@@ -28,7 +28,7 @@ namespace Lte.Domain.Test.Measure.Point
             mesurePointList.Add(point);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMeasurePointListOperations_IntializeProperties()
         {
             Assert.AreEqual(4, mesurePointList.Count);
@@ -38,7 +38,7 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(-301, mesurePointList[3].Result.TotalInterferencePower);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMeasurePointListOperations_FilterNormalPoints_DefaultFilter_NominalSinr()
         {
             IEnumerable<MeasurePoint> resultList = 
@@ -47,7 +47,7 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(resultList.ElementAt(0).Result.StrongestCell.ReceivedRsrp, -3000);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMeasurePointListOperations_FilterNormalPoints_DefaultFilter_StrongestCellRsrp()
         {
             IEnumerable<MeasurePoint> resultList =
@@ -56,7 +56,7 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(resultList.ElementAt(1).Result.NominalSinr, -20);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMeasurePointListOperations_FilterNormalPoints_DefaultFilter_StrongestInterferenceRsrp()
         {
             IEnumerable<MeasurePoint> resultList =
@@ -65,7 +65,7 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(resultList.ElementAt(1).Result.TotalInterferencePower, -98);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMeasurePointListOperations_FilterNormalPoints_CustomFilter_StrongestInterferenceRsrp()
         {
             double[] filterThreshold = { -30, -200, -301, -200 };
@@ -76,7 +76,7 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(resultList.ElementAt(1).Result.TotalInterferencePower, -98);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMeasurePointListOperations_FilterNormalPoints_CustomFilter_TotalInterferencePower()
         {
             double[] filterThreshold = { -30, -200, -301, -200 };

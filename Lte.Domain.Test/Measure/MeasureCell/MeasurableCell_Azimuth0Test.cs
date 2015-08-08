@@ -1,12 +1,11 @@
-﻿using Lte.Domain.Geo;
-using Lte.Domain.Geo.Abstract;
+﻿using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Geo.Entities;
 using Lte.Domain.Measure;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.MeasureCell
 {
-    [TestClass]
+    [TestFixture]
     public class MeasurableCellAzimuth0Test
     {
         private readonly IGeoPoint<double> point = new GeoPoint(112, 23);
@@ -28,8 +27,8 @@ namespace Lte.Domain.Test.Measure.MeasureCell
             cell = new MeasurableCell(ccell, point, budget);
         }
 
-        [TestMethod]
-        public void TestMethod_Distance10m()
+        [Test]
+        public void Test_Distance10m()
         {
             TestInitialize(0.00008993);
             Assert.AreEqual(cell.Cell.Cell.Azimuth, 225);
@@ -41,8 +40,8 @@ namespace Lte.Domain.Test.Measure.MeasureCell
             Assert.AreEqual(cell.ReceivedRsrp, -65.218534, eps);
         }
 
-        [TestMethod]
-        public void TestMethod_Distance20m()
+        [Test]
+        public void Test_Distance20m()
         {
             TestInitialize(0.00017986);
             Assert.AreEqual(cell.Cell.Distance, 0.02, eps);
@@ -51,8 +50,8 @@ namespace Lte.Domain.Test.Measure.MeasureCell
             Assert.AreEqual(cell.ReceivedRsrp, -70.61971, eps);
         }
 
-        [TestMethod]
-        public void TestMethod_Distance50m()
+        [Test]
+        public void Test_Distance50m()
         {
             TestInitialize(0.00044966);
             Assert.AreEqual(cell.Cell.Distance, 0.05, eps);
@@ -61,8 +60,8 @@ namespace Lte.Domain.Test.Measure.MeasureCell
             Assert.AreEqual(cell.ReceivedRsrp, -73.693636, eps);
         }
 
-        [TestMethod]
-        public void TestMethod_Distance100m()
+        [Test]
+        public void Test_Distance100m()
         {
             TestInitialize(0.00089932);
             Assert.AreEqual(cell.Cell.Cell.Azimuth, 225);
@@ -74,8 +73,8 @@ namespace Lte.Domain.Test.Measure.MeasureCell
             Assert.AreEqual(cell.ReceivedRsrp, -76.825993, eps);
         }
 
-        [TestMethod]
-        public void TestMethod_Distance200m()
+        [Test]
+        public void Test_Distance200m()
         {
             TestInitialize(0.00179865);
             Assert.AreEqual(cell.Cell.Distance, 0.2, eps);
@@ -84,8 +83,8 @@ namespace Lte.Domain.Test.Measure.MeasureCell
             Assert.AreEqual(cell.ReceivedRsrp, -82.687086, eps);
         }
 
-        [TestMethod]
-        public void TestMethod_Distance500m()
+        [Test]
+        public void Test_Distance500m()
         {
             TestInitialize(0.0044966);
             Assert.AreEqual(cell.Cell.Distance, 0.5, eps);

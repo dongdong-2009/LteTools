@@ -1,23 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Lte.Domain.Geo;
 using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Geo.Entities;
 using Lte.Domain.Geo.Service;
 using Lte.Domain.Measure;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Comparable
 {
-    [TestClass]
+    [TestFixture]
     public class ComparableCell_NewTest
     {
         private readonly IList<ILinkBudget<double>> budgetList = new List<ILinkBudget<double>>();
         private readonly IBroadcastModel model = new BroadcastModel();
         const double eps = 1E-6;
         
-        [TestMethod]
+        [Test]
         public void TestComparableCell_OnePoint()
         {
             Mock<IOutdoorCell> outdoorCell = new Mock<IOutdoorCell>();
@@ -34,7 +33,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             Assert.AreEqual(budgetList.ElementAt(0), comparableCell.Budget);
         }
 
-        [TestMethod]
+        [Test]
         public void TestComparableCell_TwoPoints_WithSameCell()
         {
             Mock<IOutdoorCell> outdoorCell = new Mock<IOutdoorCell>();
@@ -57,7 +56,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             Assert.AreEqual(budgetList.ElementAt(0), comparableCell2.Budget);
         }
 
-        [TestMethod]
+        [Test]
         public void TestComparableCell_TwoPoints_WithDifferentCells_SameBudget()
         {
             Mock<IOutdoorCell> outdoorCell1 = new Mock<IOutdoorCell>();
@@ -82,7 +81,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             Assert.AreEqual(budgetList.ElementAt(0), comparableCell2.Budget);
         }
 
-        [TestMethod]
+        [Test]
         public void TestComparableCell_TwoPoints_WithDifferentCells_DifferentBudgets()
         {
             Mock<IOutdoorCell> outdoorCell1 = new Mock<IOutdoorCell>();

@@ -2,12 +2,12 @@
 using Lte.Domain.Measure;
 using Lte.Domain.Test.Broadcast;
 using Lte.Domain.TypeDefs;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Comparable
 {
-    [TestClass]
+    [TestFixture]
     public class CalculateReceivedRsrp_2100Test
     {
         private readonly ComparableCell ccell = new ComparableCell();
@@ -16,7 +16,7 @@ namespace Lte.Domain.Test.Measure.Comparable
         private readonly Mock<IBroadcastModel> model = new Mock<IBroadcastModel>();
         const double eps = 1E-6;
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             model.MockFrequencyType(FrequencyBandType.Downlink2100);
@@ -29,48 +29,48 @@ namespace Lte.Domain.Test.Measure.Comparable
             ccell.Cell = ocell.Object;           
         }
 
-        [TestMethod]
-        public void TestMethod_10mDistance()
+        [Test]
+        public void Test_10mDistance()
         {   
             ccell.Distance = 0.01;
             double rsrp = ccell.CalculateReceivedRsrp(budget.Object, 20);
             Assert.AreEqual(rsrp, -41.048422, eps);
         }
 
-        [TestMethod]
-        public void TestMethod_20mDistance()
+        [Test]
+        public void Test_20mDistance()
         {
             ccell.Distance = 0.02;
             double rsrp = ccell.CalculateReceivedRsrp(budget.Object, 10);
             Assert.AreEqual(rsrp, -45.951366, eps);
         }
 
-        [TestMethod]
-        public void TestMethod_50mDistance()
+        [Test]
+        public void Test_50mDistance()
         {
             ccell.Distance = 0.05;
             double rsrp = ccell.CalculateReceivedRsrp(budget.Object, 10);
             Assert.AreEqual(rsrp, -65.651985, eps);
         }
 
-        [TestMethod]
-        public void TestMethod_100mDistance()
+        [Test]
+        public void Test_100mDistance()
         {
             ccell.Distance = 0.1;
             double rsrp = ccell.CalculateReceivedRsrp(budget.Object, 5);
             Assert.AreEqual(rsrp, -75.554929, eps);
         }
 
-        [TestMethod]
-        public void TestMethod_200mDistance()
+        [Test]
+        public void Test_200mDistance()
         {
             ccell.Distance = 0.2;
             double rsrp = ccell.CalculateReceivedRsrp(budget.Object, 2);
             Assert.AreEqual(rsrp, -87.457873, eps);
         }
 
-        [TestMethod]
-        public void TestMethod_500mDistance()
+        [Test]
+        public void Test_500mDistance()
         {
             ccell.Distance = 0.5;
             double rsrp = ccell.CalculateReceivedRsrp(budget.Object, 0);

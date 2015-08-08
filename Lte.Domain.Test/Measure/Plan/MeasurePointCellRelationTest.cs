@@ -1,12 +1,11 @@
 ﻿using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Geo.Entities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Domain.Measure;
-using Lte.Domain.Geo;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Plan
 {
-    [TestClass]
+    [TestFixture]
     public class MeasurePointCellRelationTest
     {
         private MeasurePlanCellRelation mpcRelation;
@@ -15,7 +14,7 @@ namespace Lte.Domain.Test.Measure.Plan
         private readonly IOutdoorCell otherCell2 = new StubOutdoorCell(112, 22, 160);
         private readonly IOutdoorCell otherCell3 = new StubOutdoorCell(112.1, 22, 200);
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             MeasurePoint mPoint =
@@ -27,7 +26,7 @@ namespace Lte.Domain.Test.Measure.Plan
             mpcRelation = mPoint.GenerateMeasurePlanCellRelation(0.1);
         }
 
-        [TestMethod]
+        [Test]
         public void TestGerateMeasurePlanCellRelation()
         {
             Assert.AreEqual(mpcRelation.TrafficLoad, 0.1);
@@ -38,7 +37,7 @@ namespace Lte.Domain.Test.Measure.Plan
             Assert.AreEqual(mpcRelation.InterferenceCells[0].Cell.Azimuth, 70);
         }
 
-        [TestMethod]
+        [Test]
         public void TestImportMeasurePoint_DifferentMainCell()
         {
             MeasurePoint mPoint =
@@ -53,7 +52,7 @@ namespace Lte.Domain.Test.Measure.Plan
             Assert.AreEqual(mpcRelation.InterferenceCells[0].Cell.Azimuth, 70);
         }
 
-        [TestMethod]
+        [Test]
         public void TestImportMeasurePoint_MainCellIsNotStrongest()
         {
             MeasurePoint mPoint =
@@ -68,7 +67,7 @@ namespace Lte.Domain.Test.Measure.Plan
             Assert.AreEqual(mpcRelation.InterferenceCells[0].Cell.Azimuth, 70);
         }
 
-        [TestMethod]
+        [Test]
         public void TestImportMeasurePoint_SameCells()
         {
             MeasurePoint mPoint =
@@ -84,7 +83,7 @@ namespace Lte.Domain.Test.Measure.Plan
             Assert.AreEqual(mpcRelation.InterferenceCells[0].ReceivePower, 0.126191, 1E-6);
         }
 
-        [TestMethod]
+        [Test]
         public void TestImportMeasurePoint_SameMainCell_DifferentOtherCells()
         {
             MeasurePoint mPoint =

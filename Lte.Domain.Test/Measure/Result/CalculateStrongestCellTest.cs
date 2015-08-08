@@ -4,13 +4,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lte.Domain.Test.Measure.Result
 {
-    [TestClass]
+    [TestFixture]
     public class CalculateStrongestCellTest
     {
         private IMeasurePointResult result = new SfMeasurePointResult();
         private List<MeasurableCell> cellList = new List<MeasurableCell>();
 
-        [TestMethod]
+        [Test]
         public void TestStrongestCell_EmptyList()
         {
             MeasurableCellRepository repository = new MeasurableCellRepository
@@ -21,7 +21,7 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.IsNull(result.StrongestCell);
         }
 
-        [TestMethod]
+        [Test]
         public void TestStrongestCell_OneElement()
         {
             MeasurableCell mcell = new MeasurableCell();
@@ -38,7 +38,7 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.AreEqual(result.StrongestCell.ReceivedRsrp, 1.2345);
         }
 
-        [TestMethod]
+        [Test]
         public void TestStrongestCell_TwoElements()
         {
             MeasurableCell mcell1 = new MeasurableCell();
@@ -57,7 +57,7 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.AreEqual(result.StrongestCell.ReceivedRsrp, 2.2345);
         }
 
-        [TestMethod]
+        [Test]
         public void TestStrongestCell_ThreeElements()
         {
             MeasurableCell mcell1 = new MeasurableCell();

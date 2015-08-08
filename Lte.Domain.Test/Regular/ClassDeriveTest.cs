@@ -4,17 +4,17 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lte.Domain.Test.Regular
 {
-    [TestClass]
+    [TestFixture]
     public class ClassDeriveTest
     {
-        [TestMethod]
-        public void TestClassDerive()
+        [Test]
+        public void TestFixtureDerive()
         {
             AB ab = new AB();
             Assert.IsFalse(ab is IAB);
         }
 
-        [TestMethod]
+        [Test]
         public void TestAggregate()
         {
             IEnumerable<string> source = new[] {"1", "2", "3"};

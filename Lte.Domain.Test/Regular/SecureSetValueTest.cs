@@ -4,7 +4,7 @@ using Lte.Domain.Regular;
 
 namespace Lte.Domain.Test.Regular
 {
-    [TestClass]
+    [TestFixture]
     public class SecureSetValueTest
     {
         interface IA
@@ -27,7 +27,7 @@ namespace Lte.Domain.Test.Regular
         IA oa1 = new A() { a = 2 };
         IA ob = new B() { a = 3, b = 4 };
 
-        [TestMethod]
+        [Test]
         public void Test_SameType()
         {
             Assert.AreEqual(oa.a, 1);
@@ -35,7 +35,7 @@ namespace Lte.Domain.Test.Regular
             Assert.AreEqual(oa.a, 2);
         }
 
-        [TestMethod]
+        [Test]
         public void Test_DifferentTypes()
         {
             try

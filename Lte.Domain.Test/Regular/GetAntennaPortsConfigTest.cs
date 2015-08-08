@@ -8,10 +8,10 @@ using Lte.Domain.TypeDefs;
 
 namespace Lte.Domain.Test.Regular
 {
-    [TestClass]
+    [TestFixture]
     public class GetAntennaPortsConfigTest
     {
-        [TestMethod]
+        [Test]
         public void TestGetAntennaPortsConfig()
         {
             Assert.AreEqual(("2t2r").GetAntennaPortsConfig(), AntennaPortsConfigure.Antenna2T2R);

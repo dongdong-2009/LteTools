@@ -4,10 +4,10 @@ using Lte.Domain.Regular;
 
 namespace Lte.Domain.Test.Regular
 {
-    [TestClass]
+    [TestFixture]
     public class HexOperationsTest
     {
-        [TestMethod]
+        [Test]
         public void TestHexStringToInt()
         {
             Assert.AreEqual(("A").HexStringToInt(), 10);
@@ -15,14 +15,14 @@ namespace Lte.Domain.Test.Regular
             Assert.AreEqual(("0012B").HexStringToInt(), 299);
         }
 
-        [TestMethod]
+        [Test]
         public void TestHex_GenerateMask()
         {
             Assert.AreEqual(HexOperations.GenerateMask(1), 1);
             Assert.AreEqual(HexOperations.GenerateMask(3), 7);
         }
 
-        [TestMethod]
+        [Test]
         public void TestHex_GetFieldContent_FullLength()
         {
             string hexString = "105A2C33";
@@ -32,7 +32,7 @@ namespace Lte.Domain.Test.Regular
             Assert.AreEqual(hexString.GetFieldContent(10, 12), 1675);
         }
 
-        [TestMethod]
+        [Test]
         public void TestHex_GetFieldContent_ShortLength()
         {
             string hexString = "733E5";
@@ -41,7 +41,7 @@ namespace Lte.Domain.Test.Regular
             Assert.AreEqual(hexString.GetFieldContent(3, 4), 9);
         }
 
-        [TestMethod]
+        [Test]
         public void TestHex_GetFieldContent_RRCConnectionRelease()
         {
             string signal = "2a02";

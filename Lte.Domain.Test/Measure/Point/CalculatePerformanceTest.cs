@@ -1,16 +1,15 @@
 ﻿using System;
-using Lte.Domain.Geo;
 using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Geo.Service;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Point
 {
-    [TestClass]
+    [TestFixture]
     public class CalculatePerformanceTest : ImportCellsTest
     {
-        [TestMethod]
+        [Test]
         public void TestCalculatePerformance_OneCell()
         {
             this.ImportOneCell();
@@ -25,7 +24,7 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(measurablePoint.Result.NominalSinr, 100);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCalculatePerformance_TwoCells_InOneStation_WithSamePci()
         {
             this.ImportTwoCellsInOneStation();
@@ -41,7 +40,7 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(measurablePoint.Result.NominalSinr, 23.364763, eps);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCalculatePerformance_TwoCells_InOneStation_WithDifferentPcis()
         {
             this.ImportTwoCellsInOneStation_WithDifferentMods();
@@ -57,7 +56,7 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(measurablePoint.Result.NominalSinr, 33.364763, eps);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCalculatePerformance_ThreeCells_InOneStation_WithSameMods()
         {
             this.ImportThreeCellsInOneStation();
@@ -89,7 +88,7 @@ namespace Lte.Domain.Test.Measure.Point
             measurablePoint.ImportCells(outdoorCellList, budgetList, model);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCalculatePerformance_ThreeCells_InOneStation_AllInterferenceWithDifferentMods()
         {
             this.ImportThreeCellsInOneStation_AllInterferenceWithDifferentModsFromStrongestCell();
@@ -121,7 +120,7 @@ namespace Lte.Domain.Test.Measure.Point
             measurablePoint.ImportCells(outdoorCellList, budgetList, model);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCalculatePerformance_ThreeCells_InOneStation_OneInterferenceSameMod_OtherDifferentMod()
         {
             this.ImportThreeCellsInOneStation_OneInterferenceSameMod_OtherInterferenceDifferentMod();
@@ -138,7 +137,7 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(measurablePoint.Result.NominalSinr, 16.439583, eps);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCalculatePerformance_ThreeCells_DifferentStations_SameMod()
         {
             this.ImportThreeCellsInDifferentStations();
@@ -170,7 +169,7 @@ namespace Lte.Domain.Test.Measure.Point
             measurablePoint.ImportCells(outdoorCellList, budgetList, model);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCalculatePerformance_ThreeCells_DifferentStations_OneSameModInterferenceAndOneDifferentMod()
         {
             this.ImportThreeCellsInDifferentStations_OneDifferentModInterference_OneSameModInterference();

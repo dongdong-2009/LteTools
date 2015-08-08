@@ -7,7 +7,7 @@ namespace Lte.Domain.Test.Antenna
     public class VerticalPropertyTest
     {
         [Test]
-        public void TestMethod_Default()
+        public void Test_Default()
         {
             VerticalProperty property = new VerticalProperty();
             Assert.AreEqual(property.CalculateFactor(0), 0);
@@ -18,7 +18,7 @@ namespace Lte.Domain.Test.Antenna
         }
 
         [Test]
-        public void TestMethod_half10()
+        public void Test_half10()
         {
             VerticalProperty property = new VerticalProperty(10);
             Assert.AreEqual(property.CalculateFactor(0), 0);

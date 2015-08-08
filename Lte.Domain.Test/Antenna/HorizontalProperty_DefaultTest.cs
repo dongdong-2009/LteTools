@@ -15,13 +15,13 @@ namespace Lte.Domain.Test.Antenna
         [TestCase(90, 30)]
         [TestCase(91, 30)]
         [TestCase(120, 30)]
-        public void TestMethod_azimuth0(double parameter, double factor)
+        public void Test_azimuth0(double parameter, double factor)
         {
             Assert.AreEqual(property.CalculateFactor(parameter), factor, eps);
         }
 
         [Test]
-        public void TestMethod_azimuth_89()
+        public void Test_azimuth_89()
         {
             Assert.IsTrue(property.CalculateFactor(89) < 30);
         }

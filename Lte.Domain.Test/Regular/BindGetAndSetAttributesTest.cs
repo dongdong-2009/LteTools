@@ -14,13 +14,13 @@ namespace Lte.Domain.Test.Regular
         List<int> MyListAttribute { get; set; }
     }
          
-    [TestClass]
+    [TestFixture]
     public class BindGetAndSetAttributesTest
     {
            
         private Mock<IMyClass> mock = new Mock<IMyClass>();
 
-        [TestMethod]
+        [Test]
         public void TestBindGetAndSetAttributes_DoubleAttribute()
         {
             Expression<Func<IMyClass, double>> getter = x => x.MyDoubleAttribute;
@@ -31,7 +31,7 @@ namespace Lte.Domain.Test.Regular
             Assert.AreEqual(mock.Object.MyDoubleAttribute, 1.1);
         }
 
-        [TestMethod]
+        [Test]
         public void TestBindGetAndSetAttributes_ListAttribute()
         {
             mock.BindGetAndSetAttributes<IMyClass, List<int>>(x => x.MyListAttribute,

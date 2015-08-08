@@ -5,14 +5,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lte.Domain.Test.Measure.Result
 {
-    [TestClass]
+    [TestFixture]
     public class UpdateTotalInterferenceTest
     {
         private IMeasurePointResult result = new SfMeasurePointResult();
         private List<MeasurableCell> _rsInterference;
         private List<MeasurableCell> _trafficInterference;
 
-        [TestMethod]
+        [Test]
         public void TestUpdateTotalInterference_BothNullInterferenceList()
         {
             _rsInterference = null;
@@ -22,7 +22,7 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.AreEqual(result.TotalInterferencePower, Double.MinValue);
         }
 
-        [TestMethod]
+        [Test]
         public void TestUpdateTotalInterference_rsNull_trafficEmpty()
         {
             _rsInterference = null;
@@ -32,7 +32,7 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.AreEqual(result.TotalInterferencePower, Double.MinValue);
         }
 
-        [TestMethod]
+        [Test]
         public void TestUpdateTotalInterference_rsEmpty_trafficNull()
         {
             _rsInterference = new List<MeasurableCell>();
@@ -42,7 +42,7 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.AreEqual(result.TotalInterferencePower, Double.MinValue);
         }
 
-        [TestMethod]
+        [Test]
         public void TestUpdateTotalInterference_rsEmpty_trafficEmpty()
         {
             _rsInterference = new List<MeasurableCell>();
@@ -51,7 +51,7 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.AreEqual(result.TotalInterferencePower, Double.MinValue);
         }
 
-        [TestMethod]
+        [Test]
         public void TestUpdateTotalInterference_rsOneElement_trafficEmpty()
         {
             _rsInterference = new List<MeasurableCell>();
@@ -63,7 +63,7 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.AreEqual(result.TotalInterferencePower, -12.3);
         }
 
-        [TestMethod]
+        [Test]
         public void TestUpdateTotalInterference_rsEmpty_trafficOneElement()
         {
             _rsInterference = new List<MeasurableCell>();           
@@ -75,7 +75,7 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.AreEqual(result.TotalInterferencePower, -22.3);
         }
 
-        [TestMethod]
+        [Test]
         public void TestUpdateTotalInterference_rsOneElement_trafficOneElement()
         {
             _rsInterference = new List<MeasurableCell>();

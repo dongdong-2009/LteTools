@@ -7,10 +7,10 @@ using Lte.Domain.Regular;
 
 namespace Lte.Domain.Test.Regular
 {
-    [TestClass]
+    [TestFixture]
     public class SecureConversionTest
     {
-        [TestMethod]
+        [Test]
         public void TestSecureConversion()
         {
             Assert.AreEqual(("2").ConvertToByte(1), 2);

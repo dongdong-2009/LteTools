@@ -5,7 +5,7 @@ using Lte.Domain.Regular;
 
 namespace Lte.Domain.Test.Regular
 {
-    [TestClass]
+    [TestFixture]
     public class CloneAttributeTest
     {
         class A
@@ -33,7 +33,7 @@ namespace Lte.Domain.Test.Regular
             public int M2 { get; set; }
         }
 
-        [TestMethod]
+        [Test]
         public void TestCloneSelf()
         {
             A a = new A { M1 = 11, M2 = 22 };
@@ -43,7 +43,7 @@ namespace Lte.Domain.Test.Regular
             Assert.AreEqual(a2.M2, 22);
         }
 
-        [TestMethod]
+        [Test]
         public void TestClone_InterClass_NoProtection()
         {
             A a = new A { M1 = 11, M2 = 22 };
@@ -57,7 +57,7 @@ namespace Lte.Domain.Test.Regular
             Assert.AreEqual(b.M2, 22);
         }
 
-        [TestMethod]
+        [Test]
         public void TestClone_InterClass_Protection()
         {
             A1 a = new A1 { M1 = 11, M2 = 22 };

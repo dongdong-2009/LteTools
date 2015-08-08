@@ -16,7 +16,7 @@ namespace Lte.Domain.Test.Broadcast
         }
 
         [Test]
-        public void TestMethod_ModelIsNotNull()
+        public void Test_ModelIsNotNull()
         {
             Assert.IsNotNull(model);
             model = new BroadcastModel(FrequencyBandType.Downlink1800, UrbanType.Middle);
@@ -24,7 +24,7 @@ namespace Lte.Domain.Test.Broadcast
         }
 
         [Test]
-        public void TestMethod_Contruct_Kvalue()
+        public void Test_Contruct_Kvalue()
         {
             Assert.AreEqual(model.K1, 69.55);
             Assert.AreEqual(model.K4, 44.9);
@@ -39,7 +39,7 @@ namespace Lte.Domain.Test.Broadcast
         }
 
         [Test]
-        public void TestMethod_Contruct_Frequency()
+        public void Test_Contruct_Frequency()
         {
             Assert.AreEqual(model.Frequency, 2120);
             model = new BroadcastModel(FrequencyBandType.Downlink1800);
@@ -53,7 +53,7 @@ namespace Lte.Domain.Test.Broadcast
         }
 
         [Test]
-        public void TestMethod_Construct_Earfcn()
+        public void Test_Construct_Earfcn()
         {
             model = new BroadcastModel(100);
             Assert.AreEqual(model.Frequency, 2120);
@@ -64,7 +64,7 @@ namespace Lte.Domain.Test.Broadcast
         }
 
         [Test]
-        public void TestMethod_SetKvalue()
+        public void Test_SetKvalue()
         {
             Assert.AreEqual(model.UrbanType, UrbanType.Large);
             model.SetKvalue(UrbanType.Dense);
@@ -78,7 +78,7 @@ namespace Lte.Domain.Test.Broadcast
         }
 
         [Test]
-        public void TestMethod_SetFrequency()
+        public void Test_SetFrequency()
         {
             model.SetFrequencyBand(FrequencyBandType.Downlink1800);
             Assert.AreEqual(model.Frequency, 1860);

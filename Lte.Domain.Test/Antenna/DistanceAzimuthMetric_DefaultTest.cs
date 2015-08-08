@@ -48,7 +48,7 @@ namespace Lte.Domain.Test.Antenna
         [TestCase(0.01, 10, -30)]
         [TestCase(0.1, 0, -20)]
         [TestCase(0.1, 10, -10)]
-        public void TestMethod_distance0_azimuthFactor0(double distance, double azimuthFactor, double result)
+        public void Test_distance0_azimuthFactor0(double distance, double azimuthFactor, double result)
         {
             Assert.AreEqual(metric.Calculate(distance, azimuthFactor), result, Eps);
         }

@@ -5,11 +5,11 @@ using Lte.Domain.Regular;
 
 namespace Lte.Domain.Test.Regular
 {
-    [TestClass]
+    [TestFixture]
     public class GetStreamReaderTest
     {
 
-        [TestMethod]
+        [Test]
         public void TestStreamReaderFromString()
         {
             string input =
