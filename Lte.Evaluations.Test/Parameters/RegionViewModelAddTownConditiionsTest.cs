@@ -1,13 +1,13 @@
 ﻿using Lte.Evaluations.ViewHelpers;
 using Lte.Parameters.Region.Entities;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lte.Evaluations.Test.Parameters
 {
-    [TestFixture]
+    [TestClass]
     public class RegionViewModelAddTownConditionsTest
     {
-        [Test]
+        [TestMethod]
         public void TestRegionViewModelAddTownConditions_EmptyNewNames()
         {
             RegionViewModel viewModel = new RegionViewModel("")
@@ -25,7 +25,7 @@ namespace Lte.Evaluations.Test.Parameters
             Assert.AreEqual(town.TownName, "");
         }
 
-        [Test]
+        [TestMethod]
         public void TestRegionViewModelAddTownConditions_NewTown()
         {
             RegionViewModel viewModel = new RegionViewModel("")
@@ -43,7 +43,7 @@ namespace Lte.Evaluations.Test.Parameters
             Assert.AreEqual(town.TownName, "Chengqu");
         }
 
-        [Test]
+        [TestMethod]
         public void TestRegionViewModelAddTownConditions_NewDistrict()
         {
             RegionViewModel viewModel = new RegionViewModel("")
@@ -61,7 +61,7 @@ namespace Lte.Evaluations.Test.Parameters
             Assert.AreEqual(town.TownName, "Chengqu");
         }
 
-        [Test]
+        [TestMethod]
         public void TestRegionViewModelAddTownConditions_NewCity()
         {
             RegionViewModel viewModel = new RegionViewModel("")

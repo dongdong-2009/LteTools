@@ -139,19 +139,19 @@
       <publishTime>07/16/2015 08:46:38</publishTime>
     </File>
     <File Include="bin/Lte.Domain.dll">
-      <publishTime>08/07/2015 06:08:00</publishTime>
+      <publishTime>08/04/2015 10:19:38</publishTime>
     </File>
     <File Include="bin/Lte.Evaluations.dll">
-      <publishTime>08/07/2015 21:01:28</publishTime>
+      <publishTime>08/06/2015 13:30:04</publishTime>
     </File>
     <File Include="bin/Lte.Parameters.dll">
-      <publishTime>08/07/2015 21:01:27</publishTime>
+      <publishTime>08/05/2015 22:38:56</publishTime>
     </File>
     <File Include="bin/Lte.ViewModels.dll">
       <publishTime>06/06/2015 17:19:19</publishTime>
     </File>
     <File Include="bin/Lte.WebApp.dll">
-      <publishTime>08/07/2015 21:01:30</publishTime>
+      <publishTime>08/06/2015 16:57:41</publishTime>
     </File>
     <File Include="bin/Microsoft.Data.Edm.dll">
       <publishTime>08/03/2015 08:34:16</publishTime>
@@ -1210,16 +1210,16 @@
       <publishTime>08/02/2015 08:33:24</publishTime>
     </File>
     <File Include="Views/College/CollegeCells.cshtml">
-      <publishTime>08/06/2015 21:22:34</publishTime>
+      <publishTime>08/05/2015 21:13:47</publishTime>
     </File>
     <File Include="Views/College/CollegeCoverage.cshtml">
-      <publishTime>08/07/2015 20:23:37</publishTime>
+      <publishTime>08/02/2015 08:33:24</publishTime>
     </File>
     <File Include="Views/College/CollegeDetails.cshtml">
       <publishTime>08/02/2015 08:33:24</publishTime>
     </File>
     <File Include="Views/College/List.cshtml">
-      <publishTime>08/07/2015 20:23:37</publishTime>
+      <publishTime>08/02/2015 08:33:24</publishTime>
     </File>
     <File Include="Views/Coverage/CoverageImport.cshtml">
       <publishTime>08/02/2015 08:33:24</publishTime>
@@ -1270,7 +1270,7 @@
       <publishTime>08/02/2015 08:33:24</publishTime>
     </File>
     <File Include="Views/Evaluation/RegionDef.cshtml">
-      <publishTime>08/07/2015 06:29:54</publishTime>
+      <publishTime>08/02/2015 08:33:24</publishTime>
     </File>
     <File Include="Views/Home/About.cshtml">
       <publishTime>02/11/2015 10:27:55</publishTime>
@@ -1582,7 +1582,7 @@
       <publishTime>08/02/2015 08:33:24</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/07/2015 21:01:31</publishTime>
+      <publishTime>08/06/2015 20:23:46</publishTime>
     </File>
   </ItemGroup>
 </Project>

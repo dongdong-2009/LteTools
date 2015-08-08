@@ -1,13 +1,17 @@
-﻿using Lte.Domain.Regular;
+﻿using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Lte.Domain.Regular;
 using Lte.Domain.TypeDefs;
-using NUnit.Framework;
 
 namespace Lte.Domain.Test.Regular
 {
-    [TestFixture]
+    [TestClass]
     public class GetAntennaPortsConfigTest
     {
-        [Test]
+        [TestMethod]
         public void TestGetAntennaPortsConfig()
         {
             Assert.AreEqual(("2t2r").GetAntennaPortsConfig(), AntennaPortsConfigure.Antenna2T2R);

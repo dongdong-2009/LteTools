@@ -1,17 +1,17 @@
 ﻿using System;
 using Lte.Domain.Regular;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Data;
 using System.Collections.Generic;
-using NUnit.Framework;
 
 namespace Lte.Domain.Test.Excel
 {
-    [TestFixture]
+    [TestClass]
     public class DataTableExtensionsTest
     {
-        private readonly List<ColumnClass> myColumnList = new List<ColumnClass>();
+        private List<ColumnClass> myColumnList = new List<ColumnClass>();
 
-        [SetUp]
+        [TestInitialize]
         public void TestInitialize()
         {
             myColumnList.Add(new ColumnClass
@@ -34,7 +34,7 @@ namespace Lte.Domain.Test.Excel
             });
         }
 
-        [Test]
+        [TestMethod]
         public void TestDataTableExtensions()
         {
             DataTable myTable = myColumnList.ListToDataTable("myTable");

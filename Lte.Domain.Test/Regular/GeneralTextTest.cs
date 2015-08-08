@@ -1,43 +1,48 @@
-﻿using Lte.Domain.Regular;
-using NUnit.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Lte.Domain.Regular;
 
 namespace Lte.Domain.Test.Regular
 {
-    [TestFixture]
+    [TestClass]
     public class GeneralTextTest
     {
-        [Test]
+        [TestMethod]
         public void TestGetSubStringInFirstBracket_OneBracket()
         {
-            const string line = "123(456)234";
+            string line = "123(456)234";
             Assert.AreEqual(line.GetSubStringInFirstBracket(), "456");
+
         }
 
-        [Test]
+        [TestMethod]
         public void TestGetSubStringInFirstBracket_TwoBrackets()
         {
-            const string line = "12(34)56(789)0";
+            string line = "12(34)56(789)0";
             Assert.AreEqual(line.GetSubStringInFirstBracket(), "34");
         }
 
-        [Test]
+        [TestMethod]
         public void TestGetSubStringInFirstBracket_OnlyFirstHalfBracket()
         {
-            const string line = "12(34567";
+            string line = "12(34567";
             Assert.AreEqual(line.GetSubStringInFirstBracket(), "34567");
         }
 
-        [Test]
+        [TestMethod]
         public void TestGetSubStringInFirstBracket_OnlySecondHalfBracket()
         {
-            const string line = "12345)67";
+            string line = "12345)67";
             Assert.AreEqual(line.GetSubStringInFirstBracket(), "12345");
         }
 
-        [Test]
+        [TestMethod]
         public void TestGetSubStringInFirstBracket_NoBrackets()
         {
-            const string line = "12345";
+            string line = "12345";
             Assert.AreEqual(line.GetSubStringInFirstBracket(), "12345");
         }
     }

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Lte.Domain.LinqToCsv.Description;
 using Lte.Domain.Test.LinqToCsv.Product;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lte.Domain.Test.LinqToCsv
 {
-    [TestFixture]
+    [TestClass]
     public class CsvContextWriteTests : Test
     {
-        [Test]
+        [TestMethod]
         public void GoodFileCommaDelimitedNamesInFirstLineNLnl()
         {
             // Arrange
@@ -48,7 +48,8 @@ namespace Lte.Domain.Test.LinqToCsv
                 FileCultureName = "nl-Nl" // default is the current culture
             };
 
-            const string expected = @"Name,StartDate,LaunchTime,Weight,ShopsAvailable,Code,Price,Onsale,Description,NbrAvailable,UnusedField
+            string expected =
+@"Name,StartDate,LaunchTime,Weight,ShopsAvailable,Code,Price,Onsale,Description,NbrAvailable,UnusedField
 Wooden toy,1-2-2008,01 jan 00:00:00,""000,000"",,0,""€ 4,59"",False,,67,
 ,1-1-0001,01 jan 00:00:00,""004,030"",Ashfield,0,""€ 0,00"",True,"""",0,
 Metal box,1-1-0001,05 nov 04:50:00,""000,000"",,0,""€ 0,00"",False,""Great

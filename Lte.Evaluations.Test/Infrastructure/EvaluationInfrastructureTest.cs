@@ -2,20 +2,20 @@
 using System.Linq;
 using Lte.Domain.Geo.Entities;
 using Lte.Parameters.Entities;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Evaluations.Infrastructure;
 using Lte.Domain.Measure;
-using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Infrastructure
 {
-    [TestFixture]
+    [TestClass]
     public class EvaluationInfrastructureTest
     {
         private EvaluationInfrastructure infrastructure;
         private List<EvaluationOutdoorCell> cellList = new List<EvaluationOutdoorCell>();
         private const double eps = 1E-6;
 
-        [SetUp]
+        [TestInitialize]
         public void TestInitialize()
         {
             cellList.Add(new EvaluationOutdoorCell
@@ -80,7 +80,7 @@ namespace Lte.Evaluations.Test.Infrastructure
             });
         }
 
-        [Test]
+        [TestMethod]
         public void TestEvaluationInfrastructure_DefaultConstructor()
         {
             infrastructure = new EvaluationInfrastructure(
@@ -96,7 +96,7 @@ namespace Lte.Evaluations.Test.Infrastructure
             Assert.AreEqual(infrastructure.Region[5].CellRepository.CellList[0].Cell.Cell.Longtitute, 113.001);
         }
 
-        [Test]
+        [TestMethod]
         public void TestEvaluationInfrastructure_DefaultConstructor_CalculatePerformance()
         {
             infrastructure = new EvaluationInfrastructure(
@@ -119,7 +119,7 @@ namespace Lte.Evaluations.Test.Infrastructure
             Assert.AreEqual(infrastructure.MeasurePointList.Select(x => x.Result.NominalSinr).Min(), 0.314985, eps);
         }
 
-        [Test]
+        [TestMethod]
         public void TestEvaluationInfrastructure_CellConstructor()
         {
             infrastructure = new EvaluationInfrastructure();
@@ -136,7 +136,7 @@ namespace Lte.Evaluations.Test.Infrastructure
             Assert.AreEqual(infrastructure.Region.DegreeInterval, 0.00045, eps);
         }
 
-        [Test]
+        [TestMethod]
         public void TestEvaluationInfrastructure_CellConstructor_CalculatePerformance()
         {
             infrastructure = new EvaluationInfrastructure();

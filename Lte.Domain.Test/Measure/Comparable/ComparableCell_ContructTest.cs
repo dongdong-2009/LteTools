@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Lte.Domain.Geo;
 using Lte.Domain.Geo.Entities;
 using Lte.Domain.Measure;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lte.Domain.Test.Measure.Comparable
 {
-    [TestFixture]
+    [TestClass]
     public class ComparableCell_ContructTest
     {
         private readonly IList<ILinkBudget<double>> budgetList = new List<ILinkBudget<double>>();
         const double eps = 1E-6;
 
-        [Test]
+        [TestMethod]
         public void TestComparableCell_ConstructOnePoint()
         {
             StubOutdoorCell cell = new StubOutdoorCell(112, 23)
@@ -35,7 +36,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             Assert.AreEqual(budgetList.ElementAt(0), comparableCell.Budget);
         }
 
-        [Test]
+        [TestMethod]
         public void TestComparableCell_ConstructTwoPoints_WithSameCell()
         {
             StubOutdoorCell cell = new StubOutdoorCell(112, 23)
@@ -63,7 +64,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             Assert.AreEqual(budgetList.ElementAt(0), comparableCell2.Budget);
         }
 
-        [Test]
+        [TestMethod]
         public void TestComparableCell_ConstructTwoPoints_WithDifferentCells_SameBudget()
         {
             StubOutdoorCell cell1 = new StubOutdoorCell(112, 23)
@@ -98,7 +99,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             Assert.AreEqual(budgetList.ElementAt(0), comparableCell2.Budget);
         }
 
-        [Test]
+        [TestMethod]
         public void TestComparableCell_ConstructTwoPoints_WithDifferentCells_DifferentRsPower()
         {
             StubOutdoorCell cell1 = new StubOutdoorCell(112, 23)
@@ -133,7 +134,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             Assert.AreEqual(budgetList.ElementAt(1), comparableCell2.Budget);
         }
 
-        [Test]
+        [TestMethod]
         public void TestComparableCell_ConstructTwoPoints_WithDifferentCells_DifferentAntennaGain()
         {
             StubOutdoorCell cell1 = new StubOutdoorCell(112, 23)
@@ -168,7 +169,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             Assert.AreEqual(budgetList.ElementAt(1), comparableCell2.Budget);
         }
 
-        [Test]
+        [TestMethod]
         public void TestComparableCell_ConstructTwoPoints_WithDifferentCells_DifferentFrequency()
         {
             StubOutdoorCell cell1 = new StubOutdoorCell(112, 23)
@@ -203,7 +204,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             Assert.AreEqual(budgetList.ElementAt(1), comparableCell2.Budget);
         }
 
-        [Test]
+        [TestMethod]
         public void TestComparableCell_ConstructTwoPoints_WithDifferentCells_DifferentPci()
         {
             StubOutdoorCell cell1 = new StubOutdoorCell(112, 23)

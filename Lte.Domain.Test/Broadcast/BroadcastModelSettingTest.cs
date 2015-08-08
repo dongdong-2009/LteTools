@@ -1,22 +1,22 @@
 ﻿using System;
 using Lte.Domain.Measure;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Domain.TypeDefs;
-using NUnit.Framework;
 
 namespace Lte.Domain.Test.Broadcast
 {
-    [TestFixture]
+    [TestClass]
     public class BroadcastModelSettingTest
     {
         private IBroadcastModel model;
 
-        [SetUp]
+        [TestInitialize]
         public void TestInitialize()
         {
             model = new BroadcastModel();
         }
 
-        [Test]
+        [TestMethod]
         public void TestMethod_ModelIsNotNull()
         {
             Assert.IsNotNull(model);
@@ -24,7 +24,7 @@ namespace Lte.Domain.Test.Broadcast
             Assert.IsNotNull(model);
         }
 
-        [Test]
+        [TestMethod]
         public void TestMethod_Contruct_Kvalue()
         {
             Assert.AreEqual(model.K1, 69.55);
@@ -39,7 +39,7 @@ namespace Lte.Domain.Test.Broadcast
             Assert.AreEqual(model.K4, 60);
         }
 
-        [Test]
+        [TestMethod]
         public void TestMethod_Contruct_Frequency()
         {
             Assert.AreEqual(model.Frequency, 2120);
@@ -53,7 +53,7 @@ namespace Lte.Domain.Test.Broadcast
             Assert.AreEqual(model.Frequency, 2645);
         }
 
-        [Test]
+        [TestMethod]
         public void TestMethod_Construct_Earfcn()
         {
             model = new BroadcastModel(100);
@@ -64,7 +64,7 @@ namespace Lte.Domain.Test.Broadcast
             Assert.AreEqual(model.Frequency, 1860);
         }
 
-        [Test]
+        [TestMethod]
         public void TestMethod_SetKvalue()
         {
             Assert.AreEqual(model.UrbanType, UrbanType.Large);
@@ -78,7 +78,7 @@ namespace Lte.Domain.Test.Broadcast
             Assert.AreEqual(model.K4, 44.9);
         }
 
-        [Test]
+        [TestMethod]
         public void TestMethod_SetFrequency()
         {
             model.SetFrequencyBand(FrequencyBandType.Downlink1800);

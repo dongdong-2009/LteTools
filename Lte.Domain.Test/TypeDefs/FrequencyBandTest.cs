@@ -1,12 +1,16 @@
-﻿using Lte.Domain.TypeDefs;
-using NUnit.Framework;
+﻿using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Lte.Domain.TypeDefs;
 
 namespace Lte.Domain.Test.TypeDefs
 {
-    [TestFixture]
+    [TestClass]
     public class FrequencyBandTest
     {
-        [Test]
+        [TestMethod]
         public void TestFrequencyBand_2100()
         {
             double frequency = 2120;
@@ -18,7 +22,7 @@ namespace Lte.Domain.Test.TypeDefs
             Assert.AreEqual(frequency, 2120);
         }
 
-        [Test]
+        [TestMethod]
         public void TestFrequencyBand_1800()
         {
             double frequency = 1867.5;

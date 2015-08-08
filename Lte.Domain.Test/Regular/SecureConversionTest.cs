@@ -1,12 +1,16 @@
-﻿using Lte.Domain.Regular;
-using NUnit.Framework;
+﻿using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Lte.Domain.Regular;
 
 namespace Lte.Domain.Test.Regular
 {
-    [TestFixture]
+    [TestClass]
     public class SecureConversionTest
     {
-        [Test]
+        [TestMethod]
         public void TestSecureConversion()
         {
             Assert.AreEqual(("2").ConvertToByte(1), 2);

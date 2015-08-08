@@ -1,24 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Text;
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Lte.Domain.LinqToCsv.Description;
 using Lte.Evaluations.Dingli;
+using Lte.Domain.Regular;
 using Lte.Domain.LinqToCsv.Context;
-using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Dingli
 {
-    [TestFixture]
+    [TestClass]
     public class HugelandRateStatListTest : TabCsvReader
     {
         private List<RateStat> rateStatList;
 
-        [SetUp]
+        [TestInitialize]
         public void TestInitialize()
         {
             HugelandDescriptionInitialize();
 
         }
 
-        [Test]
+        [TestMethod]
         public void TestHugelandRateStatList()
         {
             testInput = @"Index,Device,Time,Lon,Lat,Events,UE Timestamp,Extra Info,Direction,Signaling,Signaling Data,eNodeB ID,Cell ID,Frequency DL(MHz),PCI,CRS RSRP,CRS SINR,DL BLER(%),CQI Average,UL MCS Value # Average,DL MCS Value # Average,PDCP Thr'put UL(kb/s),PDCP Thr'put DL(kb/s),PHY Thr'put DL(kb/s),MAC Thr'put DL(kb/s),PUSCH Rb Num/s,PDSCH Rb Num/s,PUSCH TB Size Ave(bits),PDSCH TB Size Ave(bits)
@@ -43,7 +47,7 @@ namespace Lte.Evaluations.Test.Dingli
             Assert.AreEqual(rateStatList[3].Time.ToString("HH:mm:ss.fff"), "01:11:49.500");
         }
 
-        [Test]
+        [TestMethod]
         public void TestHugelandRateStatList_2()
         {
             testInput = TabCsvReader.HugelandRecordExample;

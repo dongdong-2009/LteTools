@@ -13,10 +13,10 @@ namespace Lte.WebApp.Controllers.Kpi
 {
     public class TopDrop2GController : Controller
     {
-        private readonly ITopCellRepository<TopDrop2GCell> _statRepository;
-        private readonly ITopCellRepository<TopDrop2GCellDaily> _dailyStatRepository;
-        private readonly IBtsRepository _btsRepository;
-        private readonly IENodebRepository _eNodebRepository;
+        private readonly ITopCellRepository<TopDrop2GCell> statRepository;
+        private readonly ITopCellRepository<TopDrop2GCellDaily> dailyStatRepository;
+        private readonly IBtsRepository btsRepository;
+        private readonly IENodebRepository eNodebRepository;
 
         public TopDrop2GController(
             ITopCellRepository<TopDrop2GCell> statRepository,
@@ -24,20 +24,20 @@ namespace Lte.WebApp.Controllers.Kpi
             IBtsRepository btsRepository,
             IENodebRepository eNodebRepository)
         {
-            _statRepository = statRepository;
-            _dailyStatRepository = dailyStatRepository;
-            _btsRepository = btsRepository;
-            _eNodebRepository = eNodebRepository;
+            this.statRepository = statRepository;
+            this.dailyStatRepository = dailyStatRepository;
+            this.btsRepository = btsRepository;
+            this.eNodebRepository = eNodebRepository;
         }
 
         public JsonResult Query(DateTime begin, DateTime end, string city, int topCounts = 20)
         {
             DateTime endDate = end.AddDays(1);
-            IEnumerable<TopDrop2GCell> stats = _statRepository.Stats.QueryTimeStats(begin, endDate, city).ToList();
+            IEnumerable<TopDrop2GCell> stats = statRepository.Stats.QueryTimeStats(begin, endDate, city).ToList();
             if (stats.Any())
             {
                 return Json(
-                    stats.QueryTopCounts<TopDrop2GCell, TopDrop2GCellView>(_btsRepository, _eNodebRepository, topCounts), 
+                    stats.QueryTopCounts<TopDrop2GCell, TopDrop2GCellView>(btsRepository, eNodebRepository, topCounts), 
                     JsonRequestBehavior.AllowGet);
             }
             return Json(new List<int>(), JsonRequestBehavior.AllowGet);
@@ -46,11 +46,11 @@ namespace Lte.WebApp.Controllers.Kpi
         public JsonResult QueryDaily(DateTime begin, DateTime end, int topCounts = 20)
         {
             DateTime endDate = end.AddDays(1);
-            IEnumerable<TopDrop2GCellDaily> stats = _dailyStatRepository.Stats.QueryTimeStats(begin, endDate).ToList();
+            IEnumerable<TopDrop2GCellDaily> stats = dailyStatRepository.Stats.QueryTimeStats(begin, endDate).ToList();
             if (stats.Any())
             {
                 return Json(
-                    stats.QueryTopCounts<TopDrop2GCellDaily, TopDrop2GCellDailyView>(_btsRepository, _eNodebRepository, topCounts), 
+                    stats.QueryTopCounts<TopDrop2GCellDaily, TopDrop2GCellDailyView>(btsRepository, eNodebRepository, topCounts), 
                     JsonRequestBehavior.AllowGet);
             }
             return Json(new List<int>(), JsonRequestBehavior.AllowGet);
@@ -63,23 +63,25 @@ namespace Lte.WebApp.Controllers.Kpi
             IEnumerable<TopDrop2GCell> cells = new List<TopDrop2GCell>();
             while (cells.Count() < 3 && beginDate > endDate.AddDays(-300))
             {
-                cells = _statRepository.Stats.Where(
+                cells = statRepository.Stats.Where(
                     x => x.StatTime >= beginDate && x.StatTime < endDate
                     && x.CellId == cellId && x.SectorId == sectorId && x.Frequency == frequency).ToList();
                 beginDate = beginDate.AddDays(-days);
             }
             return Json(cells.OrderBy(x => x.StatTime).Select(x => new
             {
-                StatDate = x.StatTime.Date.ToShortDateString(), x.Drops,
+                StatDate = x.StatTime.Date.ToShortDateString(),
+                Drops = x.Drops,
                 MoCalls = x.MoAssignmentSuccess,
-                MtCalls = x.MtAssignmentSuccess, x.DropRate
+                MtCalls = x.MtAssignmentSuccess,
+                DropRate = x.DropRate
             }),
                 JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult QueryDistanceDistribution(int cellId, byte sectorId, short frequency, DateTime end)
         {
-            QueryTopDrop2GService service = new QueryTopDrop2GService(_dailyStatRepository,
+            QueryTopDrop2GService service = new QueryTopDrop2GService(dailyStatRepository,
                 cellId, sectorId, frequency, end);
 
             List<DistanceDistribution> result = service.GenerateDistanceDistribution();
@@ -89,7 +91,7 @@ namespace Lte.WebApp.Controllers.Kpi
         public JsonResult QueryCoverageInterferenceDistribution(
             int cellId, byte sectorId, short frequency, DateTime end)
         {
-            QueryTopDrop2GService service = new QueryTopDrop2GService(_dailyStatRepository,
+            QueryTopDrop2GService service = new QueryTopDrop2GService(dailyStatRepository,
                 cellId, sectorId, frequency, end);
 
             List<CoverageInterferenceDistribution> result = service.GenerateCoverageInterferenceDistribution();
@@ -98,7 +100,7 @@ namespace Lte.WebApp.Controllers.Kpi
 
         public JsonResult QueryDropsHourDistribution(int cellId, byte sectorId, short frequency, DateTime end)
         {
-            QueryTopDrop2GService service = new QueryTopDrop2GService(_dailyStatRepository,
+            QueryTopDrop2GService service = new QueryTopDrop2GService(dailyStatRepository,
                 cellId, sectorId, frequency, end);
 
             List<DropsHourDistribution> result = service.GenerateDropsHourDistribution();
@@ -107,7 +109,7 @@ namespace Lte.WebApp.Controllers.Kpi
 
         public JsonResult QueryAlarmHourDistribution(int cellId, byte sectorId, short frequency, DateTime end)
         {
-            QueryTopDrop2GService service = new QueryTopDrop2GService(_dailyStatRepository,
+            QueryTopDrop2GService service = new QueryTopDrop2GService(dailyStatRepository,
                cellId, sectorId, frequency, end);
 
             AlarmHourDistribution distribution = service.GenerateAlarmHourDistribution();
@@ -125,7 +127,7 @@ namespace Lte.WebApp.Controllers.Kpi
             IEnumerable<TopDrop2GCellDaily> cells = new List<TopDrop2GCellDaily>();
             while (cells.Count() < 3 && beginDate > endDate.AddDays(-300))
             {
-                cells = _dailyStatRepository.Stats.Where(
+                cells = dailyStatRepository.Stats.Where(
                     x => x.StatTime >= beginDate && x.StatTime < endDate
                     && x.CellId == cellId && x.SectorId == sectorId && x.Frequency == frequency).ToList();
                 beginDate = beginDate.AddDays(-days);

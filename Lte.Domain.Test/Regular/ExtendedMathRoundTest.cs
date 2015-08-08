@@ -1,28 +1,29 @@
-﻿using Lte.Domain.Regular;
-using NUnit.Framework;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Lte.Domain.Regular;
 
 namespace Lte.Domain.Test.Regular
 {
-    [TestFixture]
+    [TestClass]
     public class ExtendedMathRoundTest
     {
         const double eps = 1E-6;
 
-        [Test]
+        [TestMethod]
         public void TestDecPowerPositive()
         {
             Assert.AreEqual(ExtendedMath.DecPowerPositive(2, 2), 200);
             Assert.AreEqual(ExtendedMath.DecPowerPositive(1.2223, 2), 122.23, eps);
         }
 
-        [Test]
+        [TestMethod]
         public void TestDecPowerNegative()
         {
             Assert.AreEqual(ExtendedMath.DecPowerNegative(2, 2), 0.02);
             Assert.AreEqual(ExtendedMath.DecPowerNegative(2.1, 3), 0.0021, eps);
         }
 
-        [Test]
+        [TestMethod]
         public void TestExtendedMathCeiling()
         {
             Assert.AreEqual(ExtendedMath.Ceiling(2.1, 2), 2.1, eps);
@@ -30,7 +31,7 @@ namespace Lte.Domain.Test.Regular
             Assert.AreEqual(ExtendedMath.Ceiling(1.22, 2), 1.22, eps);
         }
 
-        [Test]
+        [TestMethod]
         public void TestExtendeMathFloor()
         {
             Assert.AreEqual(ExtendedMath.Floor(2.1, 2), 2.1, eps);
@@ -38,7 +39,7 @@ namespace Lte.Domain.Test.Regular
             Assert.AreEqual(ExtendedMath.Floor(1.223, 3), 1.223, eps);
         }
 
-        [Test]
+        [TestMethod]
         public void TestExtentedMathRound()
         {
             Assert.AreEqual(ExtendedMath.Round(2.1, 2), 2.1, eps);

@@ -1,13 +1,13 @@
 ﻿using Lte.Domain.Geo.Service;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Domain.Geo;
-using NUnit.Framework;
 
 namespace Lte.Domain.Test.Geo
 {
-    [TestFixture]
+    [TestClass]
     public class AngleBetweenAzimuthsTest
     {
-        [Test]
+        [TestMethod]
         public void TestBasicAngle()
         {
             Assert.AreEqual(30 % 360, 30);
@@ -20,7 +20,7 @@ namespace Lte.Domain.Test.Geo
             Assert.AreEqual(-361 % 360, -1);
         }
 
-        [Test]
+        [TestMethod]
         public void TestAngleBetweenAzimuths_zero()
         {
             double angle = GeoMath.AngleBetweenAzimuths(163, 163);
@@ -29,7 +29,7 @@ namespace Lte.Domain.Test.Geo
             Assert.AreEqual(angle, 0);
         }
 
-        [Test]
+        [TestMethod]
         public void TestAngleBetweenAzimuths_positive()
         {
             double angle1 = GeoMath.AngleBetweenAzimuths(270, 30);
@@ -45,7 +45,7 @@ namespace Lte.Domain.Test.Geo
 
         }
 
-        [Test]
+        [TestMethod]
         public void TestAngleBetweenAzimuths_negative()
         {
             double angle3 = GeoMath.AngleBetweenAzimuths(30, 270);
@@ -59,7 +59,7 @@ namespace Lte.Domain.Test.Geo
             Assert.AreEqual(angle4, -160);
         }
 
-        [Test]
+        [TestMethod]
         public void TestAngleBetweenAzimuths_large()
         {
             double a1 = GeoMath.AngleBetweenAzimuths(720, 20);

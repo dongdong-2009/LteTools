@@ -1,12 +1,12 @@
 ﻿using Lte.Parameters.Abstract;
 using Lte.Parameters.Kpi.Abstract;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
-using NUnit.Framework;
 
 namespace Lte.Parameters.Test.Import
 {
-    [TestFixture]
+    [TestClass]
     public class DumpFromImportedDataTest
     {
         private readonly Mock<IExcelBtsImportRepository<ImportClass>> importBtsRepository
@@ -21,7 +21,7 @@ namespace Lte.Parameters.Test.Import
         private readonly Mock<ICellDumpRepository<ImportClass>> dumpCellRepository
             = new Mock<ICellDumpRepository<ImportClass>>();
 
-        [SetUp]
+        [TestInitialize]
         public void TestInitialize()
         {
             importBtsRepository.SetupGet(x => x.BtsExcelList).Returns((List<ImportClass>)null);
@@ -42,14 +42,14 @@ namespace Lte.Parameters.Test.Import
 
         }
 
-        [Test]
+        [TestMethod]
         public void TestDumpFromImportedData_OriginalValues()
         {
             Assert.IsNull(importBtsRepository.Object.BtsExcelList);
             Assert.IsNull(importCellRepository.Object.CellExcelList);
         }
 
-        [Test]
+        [TestMethod]
         public void TestDumpFromImportedData_OriginalValues_ImportRepositoryNull()
         {
             ((IExcelBtsImportRepository<ImportClass>)null).DumpFromImportedData(
@@ -60,7 +60,7 @@ namespace Lte.Parameters.Test.Import
             Assert.IsNull(importCellRepository.Object.CellExcelList);
         }
 
-        [Test]
+        [TestMethod]
         public void TestDumpFromImportedData_OriginalValues_ImportRepository_NotNull()
         {
             importBtsRepository.Object.DumpFromImportedData(dumpBtsRepository.Object);

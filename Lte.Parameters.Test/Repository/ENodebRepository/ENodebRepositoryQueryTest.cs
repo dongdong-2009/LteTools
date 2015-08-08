@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using Lte.Parameters.Entities;
+using Lte.Parameters.Service.Lte;
 using NUnit.Framework;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace Lte.Parameters.Test.Repository.ENodebRepository
 {

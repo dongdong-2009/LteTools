@@ -1,14 +1,14 @@
-﻿using Lte.Evaluations.Entities;
-using NUnit.Framework;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Lte.Evaluations.Entities;
 
 namespace Lte.Evaluations.Test.Entities
 {
-    [TestFixture]
+    [TestClass]
     public class StatValueIntervalTest
     {
         private StatValueInterval _statValueInterval;
 
-        [SetUp]
+        [TestInitialize]
         public void TestInitialize()
         {
             _statValueInterval = new StatValueInterval
@@ -25,13 +25,13 @@ namespace Lte.Evaluations.Test.Entities
             };
         }
 
-        [Test]
+        [TestMethod]
         public void TestStatValueInterval_ColorStringForKml()
         {
             Assert.AreEqual(_statValueInterval.Color.ColorStringForKml, "7A11C990");
         }
 
-        [Test]
+        [TestMethod]
         public void TestStatValueInterval_XElement()
         {
             Assert.AreEqual(_statValueInterval.XElement.ToString(),@"<Interval>

@@ -1,14 +1,19 @@
-﻿using System.Linq;
-using NUnit.Framework;
+﻿using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Lte.Parameters.Abstract;
+using Lte.Parameters.Entities;
 
 namespace Lte.Parameters.Test.Process
 {
-    [TestFixture]
+    [TestClass]
     public class CellProcessRepositoryTest
     {
-        private readonly StubCellProcessRepository repository = new StubCellProcessRepository();
+        private StubCellProcessRepository repository = new StubCellProcessRepository();
 
-        [Test]
+        [TestMethod]
         public void TestCellProcessRepository_BasicParameters()
         {
             Assert.AreEqual(repository.Cells.Count(), 1);
@@ -16,7 +21,7 @@ namespace Lte.Parameters.Test.Process
             Assert.AreEqual(repository.Cells.ElementAt(0).SectorId, 2);
         }
 
-        [Test]
+        [TestMethod]
         public void TestCellProcessRepository_CurrentProgress_0()
         {
             Assert.AreEqual(repository.CurrentProgress, 0);
@@ -26,7 +31,7 @@ namespace Lte.Parameters.Test.Process
             Assert.AreEqual(repository.CurrentProgress, 2);
         }
 
-        [Test]
+        [TestMethod]
         public void TestCellProcessRepository_CurrentProgress_5()
         {
             Assert.AreEqual(repository.CurrentProgress, 0);

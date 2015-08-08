@@ -1,26 +1,28 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Evaluations.Dingli;
-using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Dingli
 {
-    [TestFixture]
+    [TestClass]
     public class RateStatMergeTest
     {
-        [SetUp]
+        [TestInitialize]
         public void TestInitialize()
         {
             LogsOperations.RateEvaluationInterval = 1;
         }
 
-        [TearDown]
+        [TestCleanup]
         public void TestCleanup()
         {
             LogsOperations.RateEvaluationInterval = 0.5;
         }
 
-        [Test]
+        [TestMethod]
         public void TestRateStatMerge_ContinuousTime()
         {
             List<RateStat> stats = new List<RateStat>{
@@ -40,7 +42,7 @@ namespace Lte.Evaluations.Test.Dingli
             Assert.AreEqual(basicStats[2].Rsrp, -101);
         }
 
-        [Test]
+        [TestMethod]
         public void TestRateStatMerge_DiscontinuousTime()
         {
             List<RateStat> stats = new List<RateStat>{

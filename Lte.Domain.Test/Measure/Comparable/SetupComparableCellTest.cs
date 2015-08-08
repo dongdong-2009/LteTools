@@ -1,20 +1,21 @@
-﻿using Lte.Domain.Geo.Abstract;
+﻿using Lte.Domain.Geo;
+using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Geo.Service;
 using Lte.Domain.Measure;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Comparable
 {
-    [TestFixture]
+    [TestClass]
     public class SetupComparableCellTest
     {
-        readonly ComparableCell mockCC = new ComparableCell();
-        readonly Mock<IGeoPoint<double>> mockPoint = new Mock<IGeoPoint<double>>();
-        readonly Mock<IOutdoorCell> mockCell = new Mock<IOutdoorCell>();
+        ComparableCell mockCC = new ComparableCell();
+        Mock<IGeoPoint<double>> mockPoint = new Mock<IGeoPoint<double>>();
+        Mock<IOutdoorCell> mockCell = new Mock<IOutdoorCell>();
         const double eps = 1E-6;
 
-        [SetUp]
+        [TestInitialize]
         public void TestInitialize()
         {
             mockPoint.SetupGet(x => x.Longtitute).Returns(113);
@@ -23,7 +24,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             mockCell.SetupGet(x => x.Lattitute).Returns(23.01);
         }
 
-        [Test]
+        [TestMethod]
         public void TestSetupComparableCell_Azimuth_180()
         {
             mockCell.SetupGet(x => x.Azimuth).Returns(180);
@@ -33,7 +34,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             Assert.AreEqual(mockCC.AzimuthAngle, 45, eps);
         }
 
-        [Test]
+        [TestMethod]
         public void TestSetupComparableCell_Azimuth_OtherAngles()
         {
             mockCell.SetupGet(x => x.Azimuth).Returns(200);

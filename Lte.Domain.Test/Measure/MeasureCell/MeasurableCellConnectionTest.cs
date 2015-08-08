@@ -1,12 +1,13 @@
-﻿using Lte.Domain.Geo.Abstract;
+﻿using Lte.Domain.Geo;
+using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Geo.Entities;
 using Lte.Domain.Measure;
 using Lte.Domain.TypeDefs;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lte.Domain.Test.Measure.MeasureCell
 {
-    [TestFixture]
+    [TestClass]
     public class MeasurableCellConnectionTest
     {
         private IOutdoorCell _cell;
@@ -14,7 +15,7 @@ namespace Lte.Domain.Test.Measure.MeasureCell
         private MeasurableCell _mCell;
         const double Eps = 1E-6;
 
-        [SetUp]
+        [TestInitialize]
         public void TestInitialize()
         { 
             _point = new StubGeoPoint(112, 23);
@@ -34,7 +35,7 @@ namespace Lte.Domain.Test.Measure.MeasureCell
             };
         }
 
-        [Test]
+        [TestMethod]
         public void TestMeasurableCellConnection_2_1G_Angle165()
         {
             _mCell = new MeasurableCell(_point, _cell);
@@ -52,7 +53,7 @@ namespace Lte.Domain.Test.Measure.MeasureCell
             Assert.AreEqual(_mCell.ReceivedRsrp, -145.286797, Eps);
         }
 
-        [Test]
+        [TestMethod]
         public void TestMeasurableCellConnection_2_1G_Angle15()
         {
             _cell.Longtitute = 111.99;

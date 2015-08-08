@@ -5,17 +5,17 @@ using Lte.Evaluations.Dingli;
 using Lte.Domain.LinqToCsv.Context;
 using Lte.Domain.LinqToCsv.Mapper;
 using Lte.Domain.Regular;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lte.Evaluations.Test.Dingli
 {
-    [TestFixture]
+    [TestClass]
     public class LogRecordTest
     {
         private CsvFileDescription _fileDescriptionNamesUs;
         private string _testInput;
 
-        [SetUp]
+        [TestInitialize]
         public void TestInitialize()
         {
             _fileDescriptionNamesUs = new CsvFileDescription
@@ -31,7 +31,7 @@ namespace Lte.Evaluations.Test.Dingli
 0	13:58:08:359	-9999	-9999	491308	48	49130848	276	-102.18	10.10	9.60	10	17	14	10749096	223680		Inherit Params Set(Event)";
         }
 
-        [Test]
+        [TestMethod]
         public void TestLogRecord_FullFields()
         {
            
@@ -74,7 +74,7 @@ namespace Lte.Evaluations.Test.Dingli
 
         }
 
-        [Test]
+        [TestMethod]
         public void TestLogRecord_FullFields_2()
         {
 
@@ -105,7 +105,7 @@ namespace Lte.Evaluations.Test.Dingli
             Assert.AreEqual(records[0].DlThroughput, 10749096);
         }
 
-        [Test]
+        [TestMethod]
         public void TestLogRecord_SomeEmptyFields()
         {
             _testInput = @"Index	Time	Longitude	Latitude	eNodeBID	SectorID	Cell ID	PCI	RSRP (dBm)	SINR (dB)	PDSCH BLER	WideBand CQI	MCS Average UL /s	MCS Average DL /s	PDCP Throughput DL (bps)	PDCP Throughput UL (bps)	Event	Message Type	
@@ -117,7 +117,7 @@ namespace Lte.Evaluations.Test.Dingli
             Assert.AreEqual(records[0].Rsrp, -9999);
         }
 
-        [Test]
+        [TestMethod]
         public void TestLogRecord_EmptyPci()
         {
             _testInput = @"Index	Time	Longitude	Latitude	eNodeBID	SectorID	Cell ID	PCI	RSRP (dBm)	SINR (dB)	PDSCH BLER	WideBand CQI	MCS Average UL /s	MCS Average DL /s	PDCP Throughput DL (bps)	PDCP Throughput UL (bps)	Event	Message Type	
@@ -129,7 +129,7 @@ namespace Lte.Evaluations.Test.Dingli
             Assert.AreEqual(records[0].Rsrp, -9999);
         }
 
-        [Test]
+        [TestMethod]
         public void TestLogRecord_RbScheduled()
         {
             _testInput = @"Index	Time	Longitude	Latitude	PUSCH RB Count /s	PDSCH RB Count /s	PUSCH Scheduled slot Count /s	PDSCH Scheduled slot Count /s	SINR (dB)	PCI	RSRP (dBm)	WideBand CQI	MCS Average UL /s	MCS Average DL /s	PDCP Throughput DL (bps)	PDCP Throughput UL (bps)	Event	Message Type	

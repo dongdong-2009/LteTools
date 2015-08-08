@@ -1,17 +1,20 @@
 ﻿using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Evaluations.Dingli;
-using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Dingli
 {
-    [TestFixture]
+    [TestClass]
     public class RateStatTest
     {
         private LogRecord record;
         private HugelandRecord hRecord;
         private RateStat stat;
 
-        [Test]
+        [TestMethod]
         public void TestRateStat_1()
         {
             record = new LogRecord()
@@ -46,7 +49,7 @@ namespace Lte.Evaluations.Test.Dingli
             Assert.AreEqual(stat.Time.ToLongDateString(), "2012年11月22日");
         }
 
-        [Test]
+        [TestMethod]
         public void TestRateStat_2()
         {
             record = new LogRecord()

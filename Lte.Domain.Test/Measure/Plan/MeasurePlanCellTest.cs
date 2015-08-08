@@ -1,15 +1,18 @@
-﻿using Lte.Domain.Geo.Entities;
+﻿using System;
+using Lte.Domain.Geo.Entities;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Domain.Measure;
-using NUnit.Framework;
+using Moq;
+using Lte.Domain.Geo;
 
 namespace Lte.Domain.Test.Measure.Plan
 {
-    [TestFixture]
+    [TestClass]
     public class MeasurePlanCellTest
     {
         private MeasurePlanCell smpCell;
 
-        [SetUp]
+        [TestInitialize]
         public void TestIntialize()
         {
             FakeMeasurableCell mmCell = new FakeMeasurableCell
@@ -22,7 +25,7 @@ namespace Lte.Domain.Test.Measure.Plan
             smpCell = new MeasurePlanCell(mmCell);
         }
 
-        [Test]
+        [TestMethod]
         public void TestGenerateMeasurePlanCell()
         {
             Assert.AreEqual(smpCell.Cell.Azimuth, 10);
@@ -30,10 +33,10 @@ namespace Lte.Domain.Test.Measure.Plan
             Assert.AreEqual(smpCell.ReceivePower, 0.1);
         }
 
-        [Test]
+        [TestMethod]
         public void TestUpdateRsrp_MeasurePlanCell()
         {
-            FakeMeasurableCell mmCell = new FakeMeasurableCell
+            FakeMeasurableCell mmCell = new FakeMeasurableCell()
             {
                 ReceivedRsrp = -10
             };

@@ -1,16 +1,16 @@
-﻿using Lte.Evaluations.Kml;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Lte.Evaluations.Kml;
 using System.Xml;
-using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Kml
 {
-    [TestFixture]
+    [TestClass]
     public class StyleKmlElementTest : FrameworkWriter
     {
         private XmlDocument _doc;
         private StyleKmlElement _element;
 
-        [Test]
+        [TestMethod]
         public void TestStyleKmlElement_EmptyDoc()
         {
             Assert.AreEqual(KmlTestInfrastructure.StatValueField.IntervalList[0].Color.ColorStringForKml,
@@ -26,7 +26,7 @@ namespace Lte.Evaluations.Test.Kml
                 "800A0C80", "end");
         }
 
-        [Test]
+        [TestMethod]
         public void TestStyleKmlElement_NewDoc()
         {
             Assert.AreEqual(KmlTestInfrastructure.StatValueField.IntervalList[0].Color.ColorStringForKml,

@@ -1,15 +1,16 @@
-﻿using Lte.Domain.Regular;
+﻿using System;
+using Lte.Domain.Regular;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Activation;
-using NUnit.Framework;
 
 namespace Lte.Domain.Test.Excel
 {
-    [TestFixture]
+    [TestClass]
     public class ExcelImporterTest
     {
-        [Test]
+        [TestMethod]
         public void TestExcelImporter()
         {
             ExcelImporterService service;
@@ -23,16 +24,16 @@ namespace Lte.Domain.Test.Excel
         }
     }
 
-    public abstract class ExcelImporterService
+    public class ExcelImporterService
     {
-        readonly IExcelImporter importer;
+        IExcelImporter importer;
 
         public IExcelImporter Importer
         {
             get { return importer; }
         }
 
-        protected ExcelImporterService(IExcelImporter importer)
+        public ExcelImporterService(IExcelImporter importer)
         {
             this.importer = importer;
         }

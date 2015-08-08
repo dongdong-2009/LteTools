@@ -1,14 +1,18 @@
-﻿using Lte.Evaluations.Signalling;
-using NUnit.Framework;
+﻿using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Lte.Evaluations.Signalling;
 
 namespace Lte.Evaluations.Test.Signalling
 {
-    [TestFixture]
+    [TestClass]
     public class RadioResourceConfigDedicatedTest
     {
-        private const string signalString = "13980a1dce0183c0ba007e131ffa211f0c288d980002e808000960";
+        private string signalString = "13980a1dce0183c0ba007e131ffa211f0c288d980002e808000960";
 
-        [Test]
+        [TestMethod]
         public void TestRadioResourceConfigDedicated_Switchs()
         {
             RadioResourceConfigDedicated signal = new RadioResourceConfigDedicated(signalString);

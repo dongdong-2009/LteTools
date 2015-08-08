@@ -1,15 +1,18 @@
-﻿using System.Data.Entity;
-using System.Linq;
+﻿using System.Linq;
+using Abp.EntityFramework;
 using Lte.Parameters.Abstract;
 using Lte.Parameters.Entities;
 
 namespace Lte.Parameters.Concrete
 {
-    public class EFBtsRepository : LightWeightRepositroyBase<CdmaBts>, IBtsRepository
+    public class EFBtsRepository : ParametersRepositoryBase<CdmaBts>, IBtsRepository
     {
-        protected override DbSet<CdmaBts> Entities
+        public EFBtsRepository(IDbContextProvider<EFParametersContext> dbContextProvider) : base(dbContextProvider)
         {
-            get { return context.Btss; }
+        }
+
+        public EFBtsRepository() : this(new EFParametersProvider())
+        {
         }
     }
 

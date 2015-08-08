@@ -6,11 +6,11 @@ using Lte.Domain.LinqToCsv.Description;
 using Lte.Domain.LinqToCsv.Mapper;
 using Lte.Domain.Regular;
 using Lte.Domain.Test.LinqToCsv.Product;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lte.Domain.Test.LinqToCsv.TestRead
 {
-    [TestFixture]
+    [TestClass]
     public class CsvContextReadTestsUnknownColumns : Test
     {
         private CsvFileDescription _description;
@@ -21,7 +21,7 @@ namespace Lte.Domain.Test.LinqToCsv.TestRead
 
         public Person[] Expected { get; set; }
 
-        [SetUp]
+        [TestInitialize]
         public void TestInitialize()
         {
             _description = new CsvFileDescription
@@ -56,7 +56,7 @@ namespace Lte.Domain.Test.LinqToCsv.TestRead
             _dataAccess.Row = new DataRow();
         }
 
-        [Test]
+        [TestMethod]
         public void FileWithUnknownColumns_ShouldDiscardColumns_BasicParameters()
         {
             Assert.IsNotNull(_dataAccess);
@@ -64,7 +64,7 @@ namespace Lte.Domain.Test.LinqToCsv.TestRead
             Assert.AreEqual(_dataAccess.FileDescription, _description);
         }
 
-        [Test]
+        [TestMethod]
         public void FileWithUnknownColumns_ShouldDiscardColumns_Concise()
         {
             List<Person> actual = _dataAccess.ReadFieldData(_reader, null).ToList();
@@ -73,7 +73,7 @@ namespace Lte.Domain.Test.LinqToCsv.TestRead
             Assert.AreEqual(actual[1].Name, "Jane");
         }
 
-        [Test]
+        [TestMethod]
         public void FileWithUnknownColumns_ShouldDiscardColumns_BasicParameters2()
         {
             FieldMapperReading<Person> fm = new FieldMapperReading<Person>(_description, null, false);
@@ -85,7 +85,7 @@ namespace Lte.Domain.Test.LinqToCsv.TestRead
           
         }
             
-        [Test]
+        [TestMethod]
         public void FileWithUnknownColumns_ShouldDiscardColumns_ReadRow()
         {
             bool result = _dataAccess.Cs.ReadRow(_dataAccess.Row);
@@ -93,7 +93,7 @@ namespace Lte.Domain.Test.LinqToCsv.TestRead
             Assert.IsTrue(result);
         }
 
-        [Test]
+        [TestMethod]
         public void FileWithUnknownColumns_ShouldDiscardColumns_ReadFieldData()
         {
             FieldMapperReading<Person> fm = new FieldMapperReading<Person>(_description, null, false);

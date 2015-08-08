@@ -1,22 +1,22 @@
 ﻿using Lte.Parameters.Concrete;
 using Lte.Parameters.Entities;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lte.Parameters.Test.Repository.CellRepository
 {
-    [TestFixture]
+    [TestClass]
     public class CellBaseRepositoryTest : CellRepositoryTestConfig
     {
         private CellBaseRepository baseRepository;
 
-        [SetUp]
+        [TestInitialize]
         public void TestInitialize()
         {
             Initialize();
             baseRepository = new CellBaseRepository(repository.Object);
         }
 
-        [Test]
+        [TestMethod]
         public void TestCellBaseRepository_QueryCell()
         {
             CellBase cell = baseRepository.QueryCell(1, 0);
@@ -24,7 +24,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
             Assert.AreEqual(cell.SectorId, 0);
         }
 
-        [Test]
+        [TestMethod]
         public void TestCellBaseRepository_ImportNewCellInfo_ExistedCellInfo()
         {
             Assert.AreEqual(baseRepository.CellBaseList.Count, 1);
@@ -37,7 +37,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
             Assert.AreEqual(baseRepository.CellBaseList.Count, 1);
         }
 
-        [Test]
+        [TestMethod]
         public void TestCellBaseRepository_ImportNewCellInfo_NewCellInfo()
         {
             Assert.AreEqual(baseRepository.CellBaseList.Count, 1);

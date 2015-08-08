@@ -1,43 +1,43 @@
 ﻿using Lte.Domain.Measure;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lte.Domain.Test.Measure.Comparable
 {
-    [TestFixture]
+    [TestClass]
     public class ComparableCell_AzimuthFactorTest
     {
         private readonly ComparableCell mockCell = new ComparableCell();
         const double eps = 1E-6;
 
-        [Test]
+        [TestMethod]
         public void TestAzimuthAngleProperty_0()
         {
             mockCell.AzimuthAngle = 0;          
             Assert.AreEqual(mockCell.AzimuthAngle, 0);
         }
 
-        [Test]
+        [TestMethod]
         public void TestAzimuthFactor_0()
         {
             mockCell.AzimuthAngle = 0;
             Assert.AreEqual(mockCell.AzimuthFactor(), 0);          
         }
 
-        [Test]
+        [TestMethod]
         public void TestAzimuthAngleProperty_30()
         {
             mockCell.AzimuthAngle = 30;
             Assert.AreEqual(mockCell.AzimuthAngle, 30);
         }
 
-        [Test]
+        [TestMethod]
         public void TestAzimuthFactor_32()
         {
             mockCell.AzimuthAngle = 32;
             Assert.AreEqual(mockCell.AzimuthFactor(), 3, eps);
         }
 
-        [Test]
+        [TestMethod]
         public void TestAzimuthFactor_SetProperty_25_30()
         {
             HorizontalProperty property = new HorizontalProperty(25);

@@ -1,13 +1,14 @@
 ﻿using Lte.Domain.Geo.Entities;
 using Lte.Domain.Geo.Service;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Lte.Domain.Geo;
 
 namespace Lte.Domain.Test.Geo
 {
-    [TestFixture]
+    [TestClass]
     public class PositionAzimuthTest
     {
-        [Test]
+        [TestMethod]
         public void TestPositionAzimuth_SamePoint()
         {
             StubGeoPoint p1 = new StubGeoPoint(113, 23);
@@ -15,7 +16,7 @@ namespace Lte.Domain.Test.Geo
             Assert.AreEqual(p1.PositionAzimuth(p2), 90);
         }
 
-        [Test]
+        [TestMethod]
         public void TestPositionAzimuth_90()
         {
             StubGeoPoint p1 = new StubGeoPoint(113.1, 23);
@@ -23,7 +24,7 @@ namespace Lte.Domain.Test.Geo
             Assert.AreEqual(p1.PositionAzimuth(p2), 90);
         }
 
-        [Test]
+        [TestMethod]
         public void TestPositionAzimuth_0()
         {
             StubGeoPoint p1 = new StubGeoPoint(113, 23.1);
@@ -31,7 +32,7 @@ namespace Lte.Domain.Test.Geo
             Assert.AreEqual(p1.PositionAzimuth(p2), 0);
         }
 
-        [Test]
+        [TestMethod]
         public void TestPositionAzimuth_180()
         {
             StubGeoPoint p1 = new StubGeoPoint(113, 22.9);
@@ -39,7 +40,7 @@ namespace Lte.Domain.Test.Geo
             Assert.AreEqual(p1.PositionAzimuth(p2), 180);
         }
 
-        [Test]
+        [TestMethod]
         public void TestPositionAzimuth_270()
         {
             StubGeoPoint p1 = new StubGeoPoint(112.9, 23);
@@ -47,7 +48,7 @@ namespace Lte.Domain.Test.Geo
             Assert.AreEqual(p1.PositionAzimuth(p2), 270);
         }
 
-        [Test]
+        [TestMethod]
         public void TestPositionAzimuth_45()
         {
             StubGeoPoint p1 = new StubGeoPoint(113.1, 23.1);

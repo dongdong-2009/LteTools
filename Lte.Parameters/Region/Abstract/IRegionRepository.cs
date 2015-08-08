@@ -28,6 +28,5 @@ namespace Lte.Parameters.Region.Abstract
 
     public interface ICollegeRepository : IRepository<CollegeInfo>
     {
-        CollegeRegion GetRegion(int id);
     }
 }

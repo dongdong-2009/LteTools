@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Domain.Measure;
 using System.Linq;
-using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Interference
 {

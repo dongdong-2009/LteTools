@@ -1,10 +1,10 @@
-﻿using Lte.Parameters.Entities;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Lte.Parameters.Entities;
 using Lte.Domain.TypeDefs;
-using NUnit.Framework;
 
 namespace Lte.Parameters.Test.Excel
 {
-    [TestFixture]
+    [TestClass]
     public class ImportENodebExcelInfoTest
     {
         private readonly ENodeb eNodeb = new ENodeb();
@@ -17,7 +17,7 @@ namespace Lte.Parameters.Test.Excel
             Ip = new IpAddress("10.17.165.121")
         };
 
-        [Test]
+        [TestMethod]
         public void TestImportENodeb_Original()
         {
             eNodeb.Import(eNodebInfo);
@@ -28,7 +28,7 @@ namespace Lte.Parameters.Test.Excel
             Assert.AreEqual(eNodeb.Ip.AddressString, "10.17.165.121");
         }
 
-        [Test]
+        [TestMethod]
         public void TestImportENodeb_OtherInfos()
         {
             eNodebInfo.Longtitute = 113.2879;

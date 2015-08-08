@@ -1,23 +1,23 @@
-﻿using Lte.Domain.Measure;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Lte.Domain.Measure;
 using System.Collections.Generic;
-using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Interference
 {
-    [TestFixture]
+    [TestClass]
     public class CalculateDifferentModInterferenceTest
     {
-        private readonly SfMeasurePointResult result = new SfMeasurePointResult();
-        private readonly List<MeasurableCell> cellList = new List<MeasurableCell>();
+        private SfMeasurePointResult result = new SfMeasurePointResult();
+        private List<MeasurableCell> cellList = new List<MeasurableCell>();
 
-        [Test]
+        [TestMethod]
         public void TestDifferentModInterference_EmptyList()
         {
             IEnumerable<MeasurableCell> interferences = result.CalculateDifferentModInterferences(cellList);
             Assert.IsNull(interferences);
         }
 
-        [Test]
+        [TestMethod]
         public void TestDifferentModInterference_OneElement_NullStrongestCell()
         {
             CalculateDifferentModTestOneElementNullStrongestCell tester
@@ -26,7 +26,7 @@ namespace Lte.Domain.Test.Measure.Interference
             tester.AssertValues(interference);
         }
 
-        [Test]
+        [TestMethod]
         public void TestDifferentModInterference_OneElement_SameStrongestCell()
         {
             CalculateDifferentModTestOneElementSameStrongestCell tester
@@ -35,7 +35,7 @@ namespace Lte.Domain.Test.Measure.Interference
             tester.AssertValues(interference);
         }
 
-        [Test]
+        [TestMethod]
         public void TestDifferentModInterference_OneElement_DifferentStrongestCells_SameMod3()
         {
             CalculateDifferentModTestOneElementDifferentStrongestCellsSameMod3 tester
@@ -45,7 +45,7 @@ namespace Lte.Domain.Test.Measure.Interference
             tester.AssertValues(interference);
         }
 
-        [Test]
+        [TestMethod]
         public void TestDifferentModInterference_OneElement_DifferentStrongestCells_DifferentMod3()
         {
             CalculateDifferentModTestOneElementDifferentStrongestCellsDifferentMod3 tester
@@ -55,7 +55,7 @@ namespace Lte.Domain.Test.Measure.Interference
             tester.AssertValues(interference);
         }
 
-        [Test]
+        [TestMethod]
         public void TestDifferentModInterference_TwoElements_OneSameStrongestCell_OtherCellSameMod3()
         {
             CalculateDifferentModTestTwoElementsOneSameStrongestCellOtherCellSameMod3 tester
@@ -65,7 +65,7 @@ namespace Lte.Domain.Test.Measure.Interference
             tester.AssertValues(interference);
         }
 
-        [Test]
+        [TestMethod]
         public void TestDifferentModInterference_TwoElements_OneSameStrongestCell_OtherCellDifferentMod3()
         {
             CalculateDifferentModTestTwoElementsOneSameStrongestCellOtherCellDifferentMod3 tester
@@ -75,7 +75,7 @@ namespace Lte.Domain.Test.Measure.Interference
             tester.AssertValues(interference);
         }
 
-        [Test]
+        [TestMethod]
         public void TestDifferentModInterference_ThreeElements_OneSameStrongestCell_SecondCellDifferentMod3_ThirdCellSameMod3()
         {
             CalculateDifferentModTestThreeElementsOneSameStrongestCellSecondCellDifferentMod3ThirdCellSameMod3 tester
@@ -86,7 +86,7 @@ namespace Lte.Domain.Test.Measure.Interference
             tester.AssertValues(interference);
         }
 
-        [Test]
+        [TestMethod]
         public void TestDifferentModInterference_ThreeElements_OneSameStrongestCell_SecondCellDifferentMod3_ThirdCellDifferentMod3()
         {
             CalculateDifferentModTestThreeElementsOneSameStrongestCellSecondCellDifferentMod3ThirdCellDifferentMod3 tester

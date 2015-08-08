@@ -18,8 +18,7 @@ namespace Lte.WebApp.Controllers.Topic
         {
             CollegeInfo info = _repository.Get(id);
             if (info == null) return null;
-            CollegeRegion region = _repository.GetRegion(id);
-            if (region == null)
+            if (info.CollegeRegion == null)
             {
                 info.CollegeRegion = new CollegeRegion
                 {
@@ -30,9 +29,9 @@ namespace Lte.WebApp.Controllers.Topic
             }
             else
             {
-                region.Area = area;
-                region.Info = message;
-                region.RegionType = RegionType.Polygon;
+                info.CollegeRegion.Area = area;
+                info.CollegeRegion.Info = message;
+                info.CollegeRegion.RegionType = RegionType.Polygon;
             }
             _repository.Update(info);
             return info.CollegeRegion;
@@ -41,11 +40,10 @@ namespace Lte.WebApp.Controllers.Topic
         public CollegeRegion Get(int id, double centerX, double centerY, double radius)
         {
             CollegeInfo info = _repository.Get(id);
-            if (info == null) return null;
-            CollegeRegion region = _repository.GetRegion(id);
+            if (info==null) return null;
             double area = Math.PI*radius*radius;
             string message = centerX + ";" + centerY + ";" + radius;
-            if (region == null)
+            if (info.CollegeRegion == null)
             {
                 info.CollegeRegion = new CollegeRegion
                 {
@@ -56,9 +54,9 @@ namespace Lte.WebApp.Controllers.Topic
             }
             else
             {
-                region.Area = area;
-                region.Info = message;
-                region.RegionType = RegionType.Circle;
+                info.CollegeRegion.Area = area;
+                info.CollegeRegion.Info = message;
+                info.CollegeRegion.RegionType = RegionType.Circle;
             }
             _repository.Update(info);
             return info.CollegeRegion;
@@ -68,9 +66,8 @@ namespace Lte.WebApp.Controllers.Topic
         {
             CollegeInfo info = _repository.Get(id);
             if (info == null) return null;
-            CollegeRegion region = _repository.GetRegion(id);
             string message = x1 + ";" + y1 + ";" + x2 + ";" + y2;
-            if (region == null)
+            if (info.CollegeRegion == null)
             {
                 info.CollegeRegion = new CollegeRegion
                 {
@@ -81,9 +78,9 @@ namespace Lte.WebApp.Controllers.Topic
             }
             else
             {
-                region.Area = area;
-                region.Info = message;
-                region.RegionType = RegionType.Rectangle;
+                info.CollegeRegion.Area = area;
+                info.CollegeRegion.Info = message;
+                info.CollegeRegion.RegionType = RegionType.Rectangle;
             }
             _repository.Update(info);
             return info.CollegeRegion;

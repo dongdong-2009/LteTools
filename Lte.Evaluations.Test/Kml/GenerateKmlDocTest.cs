@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Xml;
 using Lte.Evaluations.Entities;
 using Lte.Evaluations.Kml;
-using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Kml
 {
-    [TestFixture]
+    [TestClass]
     public class GenerateKmlDocTest : FrameworkWriter
     {
-        [Test]
+        [TestMethod]
         public void TestGenerateKmlDoc_SameModInterference()
         {
             Assert.AreEqual(KmlTestInfrastructure.StatValueField.IntervalList[0].Color.ColorStringForKml,
@@ -38,7 +38,7 @@ namespace Lte.Evaluations.Test.Kml
 
         }
 
-        [Test]
+        [TestMethod]
         public void TestGenerateKmlDoc_DifferentModInterference()
         {
             Assert.AreEqual(KmlTestInfrastructure.StatValueField.IntervalList[0].Color.ColorStringForKml,

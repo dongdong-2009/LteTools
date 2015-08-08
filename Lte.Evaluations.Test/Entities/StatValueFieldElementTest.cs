@@ -1,16 +1,16 @@
-﻿using Lte.Evaluations.Entities;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Lte.Evaluations.Entities;
 using System.Xml.Linq;
-using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Entities
 {
-    [TestFixture]
+    [TestClass]
     public class StatValueFieldElementTest
     {
         private StatValueField _field;
         private XElement _fieldElement;
 
-        [SetUp]
+        [TestInitialize]
         public void TestInitialize()
         {
             _fieldElement = new XElement("Field", new XAttribute("ID", "myFieldName"));
@@ -31,7 +31,7 @@ namespace Lte.Evaluations.Test.Entities
             _field = new StatValueField(_fieldElement);
         }
 
-        [Test]
+        [TestMethod]
         public void TestStatValueField_InputElement()
         {
             Assert.AreEqual(_fieldElement.ToString(), @"<Field ID=""myFieldName"">

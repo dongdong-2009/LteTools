@@ -1,11 +1,12 @@
-﻿using Lte.Domain.Geo.Abstract;
+﻿using Lte.Domain.Geo;
+using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Geo.Entities;
 using Lte.Domain.Measure;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lte.Domain.Test.Measure.MeasureCell
 {
-    [TestFixture]
+    [TestClass]
     public class MeasurableCellAzimuth0Test
     {
         private readonly IGeoPoint<double> point = new GeoPoint(112, 23);
@@ -27,7 +28,7 @@ namespace Lte.Domain.Test.Measure.MeasureCell
             cell = new MeasurableCell(ccell, point, budget);
         }
 
-        [Test]
+        [TestMethod]
         public void TestMethod_Distance10m()
         {
             TestInitialize(0.00008993);
@@ -40,7 +41,7 @@ namespace Lte.Domain.Test.Measure.MeasureCell
             Assert.AreEqual(cell.ReceivedRsrp, -65.218534, eps);
         }
 
-        [Test]
+        [TestMethod]
         public void TestMethod_Distance20m()
         {
             TestInitialize(0.00017986);
@@ -50,7 +51,7 @@ namespace Lte.Domain.Test.Measure.MeasureCell
             Assert.AreEqual(cell.ReceivedRsrp, -70.61971, eps);
         }
 
-        [Test]
+        [TestMethod]
         public void TestMethod_Distance50m()
         {
             TestInitialize(0.00044966);
@@ -60,7 +61,7 @@ namespace Lte.Domain.Test.Measure.MeasureCell
             Assert.AreEqual(cell.ReceivedRsrp, -73.693636, eps);
         }
 
-        [Test]
+        [TestMethod]
         public void TestMethod_Distance100m()
         {
             TestInitialize(0.00089932);
@@ -73,7 +74,7 @@ namespace Lte.Domain.Test.Measure.MeasureCell
             Assert.AreEqual(cell.ReceivedRsrp, -76.825993, eps);
         }
 
-        [Test]
+        [TestMethod]
         public void TestMethod_Distance200m()
         {
             TestInitialize(0.00179865);
@@ -83,7 +84,7 @@ namespace Lte.Domain.Test.Measure.MeasureCell
             Assert.AreEqual(cell.ReceivedRsrp, -82.687086, eps);
         }
 
-        [Test]
+        [TestMethod]
         public void TestMethod_Distance500m()
         {
             TestInitialize(0.0044966);

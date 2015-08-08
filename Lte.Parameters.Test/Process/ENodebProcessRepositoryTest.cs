@@ -1,14 +1,19 @@
-﻿using System.Linq;
-using NUnit.Framework;
+﻿using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Lte.Parameters.Abstract;
+using Lte.Parameters.Entities;
 
 namespace Lte.Parameters.Test.Process
 {
-    [TestFixture]
+    [TestClass]
     public class ENodebProcessRepositoryTest
     {
-        private readonly StubENodebProcessRepository repository = new StubENodebProcessRepository();
+        private StubENodebProcessRepository repository = new StubENodebProcessRepository();
 
-        [Test]
+        [TestMethod]
         public void TestENodebProcessRepository_BasicParameters()
         {
             Assert.AreEqual(repository.ENodebs.Count(), 1);
@@ -16,7 +21,7 @@ namespace Lte.Parameters.Test.Process
             Assert.AreEqual(repository.ENodebs.ElementAt(0).Name, "aaa");
         }
 
-        [Test]
+        [TestMethod]
         public void TestENodebProcessRepository_CurrentProgress_0()
         {
             Assert.AreEqual(repository.CurrentProgress, 0);
@@ -26,7 +31,7 @@ namespace Lte.Parameters.Test.Process
             Assert.AreEqual(repository.CurrentProgress, 2);
         }
 
-        [Test]
+        [TestMethod]
         public void TestENodebProcessRepository_CurrentProgress_10()
         {
             Assert.AreEqual(repository.CurrentProgress, 0);

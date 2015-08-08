@@ -1,14 +1,14 @@
 ﻿using System;
 using Lte.Domain.LinqToCsv.Description;
 using Lte.Domain.Test.LinqToCsv.Product;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lte.Domain.Test.LinqToCsv.TestRead
 {
-    [TestFixture]
+    [TestClass]
     public class CsvContextReadTests_UseFieldIndex : Test
     {
-        [Test]
+        [TestMethod]
         public void GoodFileCommaDelimitedUseFieldIndexForReadingDataCharUSEnglish()
         {
             // Arrange
@@ -43,7 +43,7 @@ namespace Lte.Domain.Test.LinqToCsv.TestRead
             AssertRead(testInput, fileDescription_namesUs, expected);
         }
 
-        [Test]
+        [TestMethod]
         public void GoodFileCommaDelimitedUseFieldIndexForReadingDataCharUseOutputFormatForParsingUSEnglish()
         {
             // Arrange

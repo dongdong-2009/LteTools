@@ -1,12 +1,14 @@
-﻿using Lte.Evaluations.Signalling;
-using NUnit.Framework;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Lte.Domain.Regular;
+using Lte.Evaluations.Signalling;
 
 namespace Lte.Evaluations.Test.Signalling
 {
-    [TestFixture]
+    [TestClass]
     public class RrcConnectionRequestSignalTest
     {
-        [Test]
+        [TestMethod]
         public void TestRrcConnectionRequestSignal_MoData()
         {
             RrcConnectionRequestSignal signal = new RrcConnectionRequestSignal("401cf0b88d58");
@@ -16,7 +18,7 @@ namespace Lte.Evaluations.Test.Signalling
             Assert.AreEqual(signal.EstablishmentCause, RrcConnectionEstablishmentCause.MoData);
         }
 
-        [Test]
+        [TestMethod]
         public void TestRrcConnectionRequestSignal_MtAccess()
         {
             RrcConnectionRequestSignal signal = new RrcConnectionRequestSignal("401cf0f90254");
@@ -26,7 +28,7 @@ namespace Lte.Evaluations.Test.Signalling
             Assert.AreEqual(signal.EstablishmentCause, RrcConnectionEstablishmentCause.MtAccess);
         }
 
-        [Test]
+        [TestMethod]
         public void TestRrcConnectionRequestSignal_MtAccess_2()
         {
             RrcConnectionRequestSignal signal = new RrcConnectionRequestSignal("401e20386e94");

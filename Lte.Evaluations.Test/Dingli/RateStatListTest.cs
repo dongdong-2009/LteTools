@@ -1,32 +1,35 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Text;
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Lte.Domain.LinqToCsv.Description;
 using Lte.Evaluations.Dingli;
 using Lte.Domain.Regular;
 using Lte.Domain.LinqToCsv.Context;
-using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Dingli
 {
-    [TestFixture]
+    [TestClass]
     public class RateStatListTest : TabCsvReader
     {
         private List<RateStat> rateStatList;
 
-        [SetUp]
+        [TestInitialize]
         public void TestInitialize()
         {
             DescriptionInitialize();
 
         }
 
-        [Test]
+        [TestMethod]
         public void TestBasicRateStat_Initialize()
         {
             BasicRateStat stat = new BasicRateStat();
             Assert.AreEqual(stat.PuschRbRate, 0);
         }
 
-        [Test]
+        [TestMethod]
         public void TestRateStatList()
         {
             testInput = DingliRecordExample;
@@ -81,7 +84,7 @@ namespace Lte.Evaluations.Test.Dingli
             Assert.AreEqual(basicList[3].DlThroughput, 74756);
         }
 
-        [Test]
+        [TestMethod]
         public void TestRateStatList_HugelandRecord()
         {
             testInput = HugelandRecordExample;

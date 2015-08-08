@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Lte.Domain.Geo;
 using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Geo.Entities;
 using Lte.Domain.Geo.Service;
 using Lte.Domain.Measure;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Point
 {
-    [TestFixture]
+    [TestClass]
     public class GenerateComparableCellListTest
     {
         private readonly IList<ILinkBudget<double>> budgetList = new List<ILinkBudget<double>>();
@@ -18,7 +19,7 @@ namespace Lte.Domain.Test.Measure.Point
         const double eps = 1E-6;
         private readonly MeasurePoint measurablePoint = new MeasurePoint();
 
-        [SetUp]
+        [TestInitialize]
         public void TestInitialize()
         {
             StubGeoPoint point0 = new StubGeoPoint(112, 23);
@@ -28,7 +29,7 @@ namespace Lte.Domain.Test.Measure.Point
 
         }
 
-        [Test]
+        [TestMethod]
         public void TestGenerateComparableCellList_OneCell()
         {
             Mock<IOutdoorCell> outdoorCell = new Mock<IOutdoorCell>();
@@ -49,7 +50,7 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(compCells[0].Budget.Model, model);
         }
 
-        [Test]
+        [TestMethod]
         public void TestGenerateComparableCellList_TwoCells_InOneStation()
         {
             Mock<IOutdoorCell> outdoorCell1 = new Mock<IOutdoorCell>();
@@ -74,7 +75,7 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(compCells[1].Budget.Model, model);
         }
 
-        [Test]
+        [TestMethod]
         public void TestGenerateComparableCellList_TwoCells_InOneStation_WithDifferentMod()
         {
             Mock<IOutdoorCell> outdoorCell1 = new Mock<IOutdoorCell>();
@@ -96,7 +97,7 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(compCells[1].Budget.Model, model);
         }
 
-        [Test]
+        [TestMethod]
         public void TestGenerateComparableCellList_ThreeCells_InOneStation()
         {
             Mock<IOutdoorCell> outdoorCell1 = new Mock<IOutdoorCell>();
@@ -125,7 +126,7 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(compCells[2].MetricCalculate(), 31.612974, eps);
         }
 
-        [Test]
+        [TestMethod]
         public void TestGenerateComparableCellList_ThreeCells_InOneStation_WithDifferentMods()
         {
             Mock<IOutdoorCell> outdoorCell1 = new Mock<IOutdoorCell>();
@@ -158,7 +159,7 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(compCells[2].PciModx, 0);
         }
 
-        [Test]
+        [TestMethod]
         public void TestGenerateComparableCellList_ThreeCells_TwoInOneStation_OtherInOtherStation()
         {
             Mock<IOutdoorCell> outdoorCell1 = new Mock<IOutdoorCell>();

@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using Lte.Domain.Measure;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lte.Domain.Test.Measure.Result
 {
-    [TestFixture]
+    [TestClass]
     public class UpdateTotalInterferenceTest
     {
-        private readonly IMeasurePointResult result = new SfMeasurePointResult();
+        private IMeasurePointResult result = new SfMeasurePointResult();
         private List<MeasurableCell> _rsInterference;
         private List<MeasurableCell> _trafficInterference;
 
-        [Test]
+        [TestMethod]
         public void TestUpdateTotalInterference_BothNullInterferenceList()
         {
             _rsInterference = null;
@@ -22,7 +22,7 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.AreEqual(result.TotalInterferencePower, Double.MinValue);
         }
 
-        [Test]
+        [TestMethod]
         public void TestUpdateTotalInterference_rsNull_trafficEmpty()
         {
             _rsInterference = null;
@@ -32,7 +32,7 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.AreEqual(result.TotalInterferencePower, Double.MinValue);
         }
 
-        [Test]
+        [TestMethod]
         public void TestUpdateTotalInterference_rsEmpty_trafficNull()
         {
             _rsInterference = new List<MeasurableCell>();
@@ -42,7 +42,7 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.AreEqual(result.TotalInterferencePower, Double.MinValue);
         }
 
-        [Test]
+        [TestMethod]
         public void TestUpdateTotalInterference_rsEmpty_trafficEmpty()
         {
             _rsInterference = new List<MeasurableCell>();
@@ -51,35 +51,39 @@ namespace Lte.Domain.Test.Measure.Result
             Assert.AreEqual(result.TotalInterferencePower, Double.MinValue);
         }
 
-        [Test]
+        [TestMethod]
         public void TestUpdateTotalInterference_rsOneElement_trafficEmpty()
         {
             _rsInterference = new List<MeasurableCell>();
-            MeasurableCell mcell1 = new MeasurableCell {ReceivedRsrp = -12.3};
+            MeasurableCell mcell1 = new MeasurableCell();
+            mcell1.ReceivedRsrp = -12.3;
             _rsInterference.Add(mcell1);
             _trafficInterference = new List<MeasurableCell>();
             result.UpdateTotalInterference(0.1, _rsInterference, _trafficInterference);
             Assert.AreEqual(result.TotalInterferencePower, -12.3);
         }
 
-        [Test]
+        [TestMethod]
         public void TestUpdateTotalInterference_rsEmpty_trafficOneElement()
         {
             _rsInterference = new List<MeasurableCell>();           
             _trafficInterference = new List<MeasurableCell>();
-            MeasurableCell mcell1 = new MeasurableCell {ReceivedRsrp = -12.3};
+            MeasurableCell mcell1 = new MeasurableCell();
+            mcell1.ReceivedRsrp = -12.3;
             _trafficInterference.Add(mcell1);
             result.UpdateTotalInterference(0.1, _rsInterference, _trafficInterference);
             Assert.AreEqual(result.TotalInterferencePower, -22.3);
         }
 
-        [Test]
+        [TestMethod]
         public void TestUpdateTotalInterference_rsOneElement_trafficOneElement()
         {
             _rsInterference = new List<MeasurableCell>();
             _trafficInterference = new List<MeasurableCell>();
-            MeasurableCell mcell1 = new MeasurableCell {ReceivedRsrp = -12.3};
-            MeasurableCell mcell2 = new MeasurableCell {ReceivedRsrp = -12.3};
+            MeasurableCell mcell1 = new MeasurableCell();
+            mcell1.ReceivedRsrp = -12.3;
+            MeasurableCell mcell2 = new MeasurableCell();
+            mcell2.ReceivedRsrp = -12.3;
             _rsInterference.Add(mcell1);
             _trafficInterference.Add(mcell2);
             result.UpdateTotalInterference(0.1, _rsInterference, _trafficInterference);

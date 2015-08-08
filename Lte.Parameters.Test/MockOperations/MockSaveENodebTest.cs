@@ -1,21 +1,21 @@
-﻿using Lte.Parameters.MockOperations;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Lte.Parameters.MockOperations;
 using Lte.Parameters.Entities;
 using System.Linq;
-using NUnit.Framework;
 
 namespace Lte.Parameters.Test.MockOperations
 {
-    [TestFixture]
+    [TestClass]
     public class MockSaveENodebTest : MockENodebTestConfig
     {
-        [SetUp]
+        [TestInitialize]
         public void TestInitialize()
         {
             Initialize();
             eNodebRepository.MockENodebRepositorySaveENodeb();
         }
 
-        [Test]
+        [TestMethod]
         public void TestMockAddOneENodeb()
         {
             Assert.AreEqual(eNodebRepository.Object.Count(), 7);
@@ -24,7 +24,7 @@ namespace Lte.Parameters.Test.MockOperations
             Assert.AreEqual(eNodebRepository.Object.Count(), 8);
         }
 
-        [Test]
+        [TestMethod]
         public void TestMockSaveENodeb_TownIdExisted()
         {
             Assert.IsTrue(SaveOneENodeb(
@@ -33,7 +33,7 @@ namespace Lte.Parameters.Test.MockOperations
             Assert.AreEqual(eNodebRepository.Object.GetAll().ElementAt(7).TownId, 5);
         }
 
-        [Test]
+        [TestMethod]
         public void TestMockSaveENodeb_TownIdNotExisted()
         {
             Assert.IsTrue(SaveOneENodeb(

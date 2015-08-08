@@ -1,15 +1,15 @@
 ﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Xml;
 using Lte.Evaluations.Entities;
 using Lte.Evaluations.Kml;
-using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Kml
 {
-    [TestFixture]
+    [TestClass]
     public class InitializeKmlDocumentTest : FrameworkWriter
     {
-        [Test]
+        [TestMethod]
         public void TestInitializeKmlDocument()
         {
             Assert.AreEqual(KmlTestInfrastructure.StatValueField.IntervalList[0].Color.ColorStringForKml,

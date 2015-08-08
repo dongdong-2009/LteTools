@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Lte.Parameters.Service.Public;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Parameters.Entities;
-using NUnit.Framework;
 
 namespace Lte.Parameters.Test.Repository
 {
-    [TestFixture]
+    [TestClass]
     public class ExtractCdmaLteIdsTest
     {
         private IEnumerable<CdmaLteIds> ExtractCdmaLteIds(IEnumerable<CellExcel> cellExcelList)
@@ -15,7 +15,7 @@ namespace Lte.Parameters.Test.Repository
             return service.Query();
         }
 
-        [Test]
+        [TestMethod]
         public void TestExtractCdmaLteIds()
         {
             List<CellExcel> cellExcelList = new List<CellExcel>{
@@ -32,7 +32,7 @@ namespace Lte.Parameters.Test.Repository
             Assert.AreEqual(ids.ElementAt(1).CdmaCellId, 2006);
         }
 
-        [Test]
+        [TestMethod]
         public void TestExtractCdmaLteIds_SomeIllegalValues()
         {
             List<CellExcel> cellExcelList = new List<CellExcel>{

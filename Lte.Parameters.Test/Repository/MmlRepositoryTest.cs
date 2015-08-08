@@ -1,13 +1,13 @@
 ﻿using Lte.Parameters.Concrete;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Domain.Regular;
-using NUnit.Framework;
 
 namespace Lte.Parameters.Test.Repository
 {
-    [TestFixture]
+    [TestClass]
     public class MmlRepositoryTest
     {
-        [Test]
+        [TestMethod]
         public void TestMmlRepository_AddBts()
         {
             const string fileContents = @"ADD BSCBTSINF: BTSTP=IBSC, BTSID=1440, BTSNM=""张槎邮政宿舍"", SPUFN=6, SN=4, SSN=0, ABISCAPOPTMSW=OFF, ABISOPTMCRCSW=OFF, ABISREVFRAMEPERIOD=3, HIGHPW=NOHIGHPW, ABISREDUNDANCESW=OFF, INTRAFADAPFILTER=OFF, ABISBETRFBWTHR=0, PNSHARENUM1X=0, PNSHARENUMDO=0, ABISSATTRANSSW=OFF, DATATRFCRCSW=OFF, TODSW=OFF, VIP1XOCCUPYRES=OFF, BTSGRADE=GRADEC, BTSLOCATIONTYPE=LOCATION0, BTSPHYTYPE=MACRO, BTSSUPPORTFESW=ON;
@@ -40,7 +40,7 @@ ADD BTSOMLNK: BTSID=6, IFBFN=3, IFBSN=22, LM=MLPPP, BCIMIP=""192.82.139.1"", MLP
             Assert.AreEqual(repository.CdmaCellList.Count, 0);
         }
 
-        [Test]
+        [TestMethod]
         public void TestMmlRepository_AddCells()
         {
             const string fileContents = @"

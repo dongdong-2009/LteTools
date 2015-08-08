@@ -1,19 +1,20 @@
 ﻿using System.Globalization;
+using Lte.Domain.Geo;
 using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Geo.Entities;
 using Lte.Domain.Measure;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lte.Domain.Test.Measure.Budget
 {
-    [TestFixture]
+    [TestClass]
     public class LinkBudgetFromCellTest
     {
         private readonly IOutdoorCell cell = new StubOutdoorCell(112, 23);
         private ILinkBudget<double> budget;
         const double eps = 1E-6;
 
-        [SetUp]
+        [TestInitialize]
         public void TestInitialize()
         {
             cell.Frequency = 1825;
@@ -22,7 +23,7 @@ namespace Lte.Domain.Test.Measure.Budget
             budget = new LinkBudget(cell);
         }
 
-        [Test]
+        [TestMethod]
         public void TestLinkBudgetFromCell()
         {
             Assert.IsNotNull(budget);
@@ -36,14 +37,14 @@ namespace Lte.Domain.Test.Measure.Budget
             Assert.AreEqual(budget.Model.Frequency, 2120);
         }
 
-        [Test]
+        [TestMethod]
         public void TestBudgetFromCell_Calculate()
         {
             double x = budget.CalculateReceivedPower(1, 1);
             Assert.AreEqual(x, -123.717734, eps, x.ToString(CultureInfo.InvariantCulture));
         }
 
-        [Test]
+        [TestMethod]
         public void TestBudgetFromCell_Calculate_FromCellHeight()
         {
             double x = budget.CalculateReceivedPower(1, cell.Height);
@@ -53,7 +54,7 @@ namespace Lte.Domain.Test.Measure.Budget
             Assert.AreEqual(x, -105.7375, eps, x.ToString(CultureInfo.InvariantCulture));
         }
 
-        [Test]
+        [TestMethod]
         public void TestBudgetFromCell_Calculate_AdjustFrequencyAndRsPower()
         {
             cell.Frequency = 100;

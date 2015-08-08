@@ -2,16 +2,16 @@
 using Lte.Domain.LinqToCsv.Description;
 using Lte.Domain.LinqToCsv.Mapper;
 using Lte.Domain.Test.LinqToCsv.Product;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lte.Domain.Test.LinqToCsv.TestFieldMapper
 {
-    [TestFixture]
+    [TestClass]
     public class FieldMapperConstructorTest
     {
         private FieldMapper<ProductData> productMapper;
 
-        [Test]
+        [TestMethod]
         public void TestConstructDefault_WritingFile()
         {
             productMapper = new FieldMapper<ProductData>(new CsvFileDescription(), "test04.csv", true);
