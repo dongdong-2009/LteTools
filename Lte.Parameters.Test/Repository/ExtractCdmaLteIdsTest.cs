@@ -6,7 +6,7 @@ using Lte.Parameters.Entities;
 
 namespace Lte.Parameters.Test.Repository
 {
-    [TestClass]
+    [TestFixture]
     public class ExtractCdmaLteIdsTest
     {
         private IEnumerable<CdmaLteIds> ExtractCdmaLteIds(IEnumerable<CellExcel> cellExcelList)
@@ -15,7 +15,7 @@ namespace Lte.Parameters.Test.Repository
             return service.Query();
         }
 
-        [TestMethod]
+        [Test]
         public void TestExtractCdmaLteIds()
         {
             List<CellExcel> cellExcelList = new List<CellExcel>{
@@ -32,7 +32,7 @@ namespace Lte.Parameters.Test.Repository
             Assert.AreEqual(ids.ElementAt(1).CdmaCellId, 2006);
         }
 
-        [TestMethod]
+        [Test]
         public void TestExtractCdmaLteIds_SomeIllegalValues()
         {
             List<CellExcel> cellExcelList = new List<CellExcel>{

@@ -8,12 +8,12 @@ using Lte.Parameters.Entities;
 
 namespace Lte.Parameters.Test.Process
 {
-    [TestClass]
+    [TestFixture]
     public class CellProcessRepositoryTest
     {
         private StubCellProcessRepository repository = new StubCellProcessRepository();
 
-        [TestMethod]
+        [Test]
         public void TestCellProcessRepository_BasicParameters()
         {
             Assert.AreEqual(repository.Cells.Count(), 1);
@@ -21,7 +21,7 @@ namespace Lte.Parameters.Test.Process
             Assert.AreEqual(repository.Cells.ElementAt(0).SectorId, 2);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCellProcessRepository_CurrentProgress_0()
         {
             Assert.AreEqual(repository.CurrentProgress, 0);
@@ -31,7 +31,7 @@ namespace Lte.Parameters.Test.Process
             Assert.AreEqual(repository.CurrentProgress, 2);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCellProcessRepository_CurrentProgress_5()
         {
             Assert.AreEqual(repository.CurrentProgress, 0);

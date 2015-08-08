@@ -5,8 +5,8 @@ using Lte.Parameters.Abstract;
 using Lte.Parameters.Entities;
 using Lte.Parameters.Region.Abstract;
 using Lte.Parameters.Region.Entities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Parameters
 {

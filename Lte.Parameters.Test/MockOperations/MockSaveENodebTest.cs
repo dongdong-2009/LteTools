@@ -5,17 +5,17 @@ using System.Linq;
 
 namespace Lte.Parameters.Test.MockOperations
 {
-    [TestClass]
+    [TestFixture]
     public class MockSaveENodebTest : MockENodebTestConfig
     {
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             Initialize();
             eNodebRepository.MockENodebRepositorySaveENodeb();
         }
 
-        [TestMethod]
+        [Test]
         public void TestMockAddOneENodeb()
         {
             Assert.AreEqual(eNodebRepository.Object.Count(), 7);
@@ -24,7 +24,7 @@ namespace Lte.Parameters.Test.MockOperations
             Assert.AreEqual(eNodebRepository.Object.Count(), 8);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMockSaveENodeb_TownIdExisted()
         {
             Assert.IsTrue(SaveOneENodeb(
@@ -33,7 +33,7 @@ namespace Lte.Parameters.Test.MockOperations
             Assert.AreEqual(eNodebRepository.Object.GetAll().ElementAt(7).TownId, 5);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMockSaveENodeb_TownIdNotExisted()
         {
             Assert.IsTrue(SaveOneENodeb(

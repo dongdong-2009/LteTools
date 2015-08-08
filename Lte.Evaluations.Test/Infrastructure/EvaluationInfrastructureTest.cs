@@ -2,9 +2,9 @@
 using System.Linq;
 using Lte.Domain.Geo.Entities;
 using Lte.Parameters.Entities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Evaluations.Infrastructure;
 using Lte.Domain.Measure;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Infrastructure
 {
@@ -12,7 +12,7 @@ namespace Lte.Evaluations.Test.Infrastructure
     public class EvaluationInfrastructureTest
     {
         private EvaluationInfrastructure infrastructure;
-        private List<EvaluationOutdoorCell> cellList = new List<EvaluationOutdoorCell>();
+        private readonly List<EvaluationOutdoorCell> cellList = new List<EvaluationOutdoorCell>();
         private const double eps = 1E-6;
 
         [SetUp]

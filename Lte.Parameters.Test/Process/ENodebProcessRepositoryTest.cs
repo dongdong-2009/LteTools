@@ -8,12 +8,12 @@ using Lte.Parameters.Entities;
 
 namespace Lte.Parameters.Test.Process
 {
-    [TestClass]
+    [TestFixture]
     public class ENodebProcessRepositoryTest
     {
         private StubENodebProcessRepository repository = new StubENodebProcessRepository();
 
-        [TestMethod]
+        [Test]
         public void TestENodebProcessRepository_BasicParameters()
         {
             Assert.AreEqual(repository.ENodebs.Count(), 1);
@@ -21,7 +21,7 @@ namespace Lte.Parameters.Test.Process
             Assert.AreEqual(repository.ENodebs.ElementAt(0).Name, "aaa");
         }
 
-        [TestMethod]
+        [Test]
         public void TestENodebProcessRepository_CurrentProgress_0()
         {
             Assert.AreEqual(repository.CurrentProgress, 0);
@@ -31,7 +31,7 @@ namespace Lte.Parameters.Test.Process
             Assert.AreEqual(repository.CurrentProgress, 2);
         }
 
-        [TestMethod]
+        [Test]
         public void TestENodebProcessRepository_CurrentProgress_10()
         {
             Assert.AreEqual(repository.CurrentProgress, 0);

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Lte.Parameters.Entities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Evaluations.Infrastructure;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Infrastructure
 {

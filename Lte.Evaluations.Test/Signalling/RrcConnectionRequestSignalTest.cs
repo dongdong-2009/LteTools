@@ -1,7 +1,5 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Lte.Domain.Regular;
-using Lte.Evaluations.Signalling;
+﻿using Lte.Evaluations.Signalling;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Signalling
 {

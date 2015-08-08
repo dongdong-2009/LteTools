@@ -1,6 +1,6 @@
 ﻿using Lte.Evaluations.ViewHelpers;
 using Lte.Parameters.Region.Entities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Parameters
 {

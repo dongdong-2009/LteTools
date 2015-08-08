@@ -6,17 +6,17 @@ using System.Linq;
 
 namespace Lte.Parameters.Test.MockOperations
 {
-    [TestClass]
+    [TestFixture]
     public class MockSaveENodebsTest : MockENodebTestConfig
     {
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             Initialize();
             eNodebRepository.MockENodebRepositorySaveENodeb();
         }
 
-        [TestMethod]
+        [Test]
         public void TestMockAddSuccessiveENodebs()
         {
             eNodebRepository.MockENodebRepositorySaveENodeb();
@@ -29,7 +29,7 @@ namespace Lte.Parameters.Test.MockOperations
             Assert.AreEqual(eNodebRepository.Object.Count(), 9);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMockSaveSuccessiveENodebs_TownIdExisted()
         {
             Assert.IsTrue(SaveOneENodeb(
@@ -40,7 +40,7 @@ namespace Lte.Parameters.Test.MockOperations
             Assert.AreEqual(eNodebRepository.Object.Count(), 9);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMockSaveENodebs_TwoSuccessiveENodebs()
         {
             Assert.AreEqual(eNodebRepository.Object.Count(), 7);
@@ -52,7 +52,7 @@ namespace Lte.Parameters.Test.MockOperations
             Assert.AreEqual(eNodebRepository.Object.Count(), 9);
         }
 
-        [TestMethod]
+        [Test]
         public void TestMockSaveENodebs_ThreeSuccessiveENodebs()
         {
             Assert.AreEqual(eNodebRepository.Object.Count(), 7);

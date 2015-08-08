@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Lte.Evaluations.Entities;
+﻿using Lte.Evaluations.Entities;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Entities
 {
