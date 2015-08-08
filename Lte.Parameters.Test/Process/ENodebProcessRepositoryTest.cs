@@ -6,7 +6,13 @@ namespace Lte.Parameters.Test.Process
     [TestFixture]
     public class ENodebProcessRepositoryTest
     {
-        private readonly StubENodebProcessRepository repository = new StubENodebProcessRepository();
+        private StubENodebProcessRepository repository;
+
+        [SetUp]
+        public void SetUp()
+        {
+            repository = new StubENodebProcessRepository();
+        }
 
         [Test]
         public void TestENodebProcessRepository_BasicParameters()

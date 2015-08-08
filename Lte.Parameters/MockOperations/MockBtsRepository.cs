@@ -12,8 +12,13 @@ namespace Lte.Parameters.MockOperations
             this Mock<IBtsRepository> repository, IEnumerable<CdmaBts> btss)
         {
             repository.Setup(x => x.Insert(It.IsAny<CdmaBts>())).Callback<CdmaBts>(
-                e => repository.Setup(x => x.GetAll()).Returns(
-                    btss.Concat(new List<CdmaBts> { e }).AsQueryable()));
+                e =>
+                {
+                    repository.Setup(x => x.GetAll()).Returns(
+                        btss.Concat(new List<CdmaBts> {e}).AsQueryable());
+                    repository.Setup(x => x.Count()).Returns(
+                        repository.Object.GetAll().Count());
+                });
         }
 
         public static void MockBtsRepositorySaveBts(
@@ -25,6 +30,8 @@ namespace Lte.Parameters.MockOperations
                     IEnumerable<CdmaBts> btss = repository.Object.GetAll();
                     repository.Setup(x => x.GetAll()).Returns(
                     btss.Concat(new List<CdmaBts> { e }).AsQueryable());
+                    repository.Setup(x => x.Count()).Returns(
+                        repository.Object.GetAll().Count());
                 });
         }
 
@@ -34,8 +41,13 @@ namespace Lte.Parameters.MockOperations
             repository.Setup(x => x.Delete(It.Is<CdmaBts>(e => e != null
                 && btss.FirstOrDefault(y => y == e) != null))
                 ).Callback<CdmaBts>(
-                e => repository.Setup(x => x.GetAll()).Returns(
-                    btss.Except(new List<CdmaBts> { e }).AsQueryable()));
+                e =>
+                {
+                    repository.Setup(x => x.GetAll()).Returns(
+                        btss.Except(new List<CdmaBts> {e}).AsQueryable());
+                    repository.Setup(x => x.Count()).Returns(
+                        repository.Object.GetAll().Count());
+                });
         }
 
         public static void MockBtsRepositoryDeleteBts(
@@ -47,8 +59,13 @@ namespace Lte.Parameters.MockOperations
                 repository.Setup(x => x.Delete(It.Is<CdmaBts>(e => e != null
                     && btss.FirstOrDefault(y => y == e) != null))
                     ).Callback<CdmaBts>(
-                    e => repository.Setup(x => x.GetAll()).Returns(
-                        btss.Except(new List<CdmaBts> { e }).AsQueryable()));
+                    e =>
+                    {
+                        repository.Setup(x => x.GetAll()).Returns(
+                            btss.Except(new List<CdmaBts> { e }).AsQueryable());
+                        repository.Setup(x => x.Count()).Returns(
+                            repository.Object.GetAll().Count());
+                    });
             }
         }
     }
@@ -82,8 +99,12 @@ namespace Lte.Parameters.MockOperations
             repository.Setup(x => x.Delete(It.Is<ENodeb>(e => e != null
                 && eNodebs.FirstOrDefault(y => y == e) != null))
                 ).Callback<ENodeb>(
-                e => repository.Setup(x => x.GetAll()).Returns(
-                    eNodebs.Except(new List<ENodeb> { e }).AsQueryable()));
+                e =>
+                {
+                    repository.Setup(x => x.GetAll()).Returns(
+                        eNodebs.Except(new List<ENodeb> { e }).AsQueryable());
+                    repository.Setup(x => x.Count()).Returns(repository.Object.GetAll().Count());
+                });
         }
 
         public static void MockENodebRepositoryDeleteENodeb(

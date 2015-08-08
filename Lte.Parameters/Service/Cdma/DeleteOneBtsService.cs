@@ -33,7 +33,7 @@ namespace Lte.Parameters.Service.Cdma
         public DeleteOneBtsService(IBtsRepository repository, int btsId)
             : this(repository)
         {
-            _bts = repository.GetAll().FirstOrDefault(x=>x.BtsId==btsId);
+            _bts = repository.FirstOrDefault(x=>x.BtsId==btsId);
         }
 
         public DeleteOneBtsService(IBtsRepository repository, ITownRepository townRepository,

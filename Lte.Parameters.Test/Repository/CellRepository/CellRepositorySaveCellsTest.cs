@@ -15,7 +15,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
         public void SetUp()
         {
             Initialize();
-            eNodebRepository.SetupGet(x => x.GetAll()).Returns(new List<ENodeb> 
+            eNodebRepository.Setup(x => x.GetAll()).Returns(new List<ENodeb> 
             {
                 new ENodeb
                 {
@@ -25,7 +25,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
                     Lattitute = 22.7788
                 }
             }.AsQueryable());
-            eNodebRepository.SetupGet(x => x.GetAllList()).Returns(eNodebRepository.Object.GetAll().ToList());
+            eNodebRepository.Setup(x => x.GetAllList()).Returns(eNodebRepository.Object.GetAll().ToList());
 
             cellInfos = new List<CellExcel>
             {

@@ -17,18 +17,18 @@ namespace Lte.Parameters.Test.MockOperations
         protected override void Initialize()
         {
             base.Initialize();
-            eNodebRepository.SetupGet(x => x.GetAll()).Returns(
+            eNodebRepository.Setup(x => x.GetAll()).Returns(
                 new List<ENodeb> {
-                    new ENodeb { TownId = 1, ENodebId = 1, Name = "E-1" },
-                    new ENodeb { TownId = 1, ENodebId = 2, Name = "E-2" },
-                    new ENodeb { TownId = 1, ENodebId = 3, Name = "E-3" },
-                    new ENodeb { TownId = 2, ENodebId = 4, Name = "E-4" },
-                    new ENodeb { TownId = 2, ENodebId = 5, Name = "E-5" },
-                    new ENodeb { TownId = 3, ENodebId = 6, Name = "E-6" },
-                    new ENodeb { TownId = 4, ENodebId = 7, Name = "E-7" }
+                    new ENodeb { TownId = 1, ENodebId = 10001, Name = "E-1" },
+                    new ENodeb { TownId = 1, ENodebId = 10002, Name = "E-2" },
+                    new ENodeb { TownId = 1, ENodebId = 10003, Name = "E-3" },
+                    new ENodeb { TownId = 2, ENodebId = 10004, Name = "E-4" },
+                    new ENodeb { TownId = 2, ENodebId = 10005, Name = "E-5" },
+                    new ENodeb { TownId = 3, ENodebId = 10006, Name = "E-6" },
+                    new ENodeb { TownId = 4, ENodebId = 10007, Name = "E-7" }
                 }.AsQueryable());
-            eNodebRepository.SetupGet(x => x.GetAllList()).Returns(eNodebRepository.Object.GetAll().ToList());
-            eNodebRepository.SetupGet(x => x.Count()).Returns(eNodebRepository.Object.GetAll().Count());
+            eNodebRepository.Setup(x => x.GetAllList()).Returns(eNodebRepository.Object.GetAll().ToList());
+            eNodebRepository.Setup(x => x.Count()).Returns(eNodebRepository.Object.GetAll().Count());
         }
 
         protected bool SaveOneENodeb(ENodebExcel info)

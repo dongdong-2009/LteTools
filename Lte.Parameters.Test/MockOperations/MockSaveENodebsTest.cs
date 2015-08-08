@@ -32,10 +32,10 @@ namespace Lte.Parameters.Test.MockOperations
         public void TestMockSaveSuccessiveENodebs_TownIdExisted()
         {
             Assert.IsTrue(SaveOneENodeb(
-                new ENodebExcel { CityName = "C-5", DistrictName = "D-5", TownName = "T-5", Name = "E-1", ENodebId = 101 }));
+                new ENodebExcel { CityName = "C-5", DistrictName = "D-5", TownName = "T-5", Name = "E-1", ENodebId = 100001 }));
             Assert.AreEqual(eNodebRepository.Object.Count(), 8);
             Assert.IsTrue(SaveOneENodeb(
-                new ENodebExcel { CityName = "C-5", DistrictName = "D-5", TownName = "T-5", Name = "E-2", ENodebId = 102 }));
+                new ENodebExcel { CityName = "C-5", DistrictName = "D-5", TownName = "T-5", Name = "E-2", ENodebId = 100002 }));
             Assert.AreEqual(eNodebRepository.Object.Count(), 9);
         }
 
@@ -45,8 +45,8 @@ namespace Lte.Parameters.Test.MockOperations
             Assert.AreEqual(eNodebRepository.Object.Count(), 7);
             Assert.AreEqual(SaveENodebs(new List<ENodebExcel>
             {
-                new ENodebExcel { CityName = "C-5", DistrictName = "D-5", TownName = "T-5", Name = "E-1", ENodebId = 101 },
-                new ENodebExcel { CityName = "C-5", DistrictName = "D-5", TownName = "T-5", Name = "E-2", ENodebId = 102 }
+                new ENodebExcel { CityName = "C-5", DistrictName = "D-5", TownName = "T-5", Name = "E-1", ENodebId = 100001 },
+                new ENodebExcel { CityName = "C-5", DistrictName = "D-5", TownName = "T-5", Name = "E-2", ENodebId = 100002 }
             }), 2);
             Assert.AreEqual(eNodebRepository.Object.Count(), 9);
         }
@@ -57,9 +57,9 @@ namespace Lte.Parameters.Test.MockOperations
             Assert.AreEqual(eNodebRepository.Object.Count(), 7);
             Assert.AreEqual(SaveENodebs(new List<ENodebExcel>
             {
-                new ENodebExcel { CityName = "C-5", DistrictName = "D-5", TownName = "T-5", Name = "E-1", ENodebId = 101 },
-                new ENodebExcel { CityName = "C-5", DistrictName = "D-5", TownName = "T-5", Name = "E-2", ENodebId = 102 },
-                new ENodebExcel { CityName = "C-5", DistrictName = "D-5", TownName = "T-5", Name = "E-3", ENodebId = 103 }
+                new ENodebExcel { CityName = "C-5", DistrictName = "D-5", TownName = "T-5", Name = "E-1", ENodebId = 100001 },
+                new ENodebExcel { CityName = "C-5", DistrictName = "D-5", TownName = "T-5", Name = "E-2", ENodebId = 100002 },
+                new ENodebExcel { CityName = "C-5", DistrictName = "D-5", TownName = "T-5", Name = "E-3", ENodebId = 100003 }
             }), 3);
             Assert.AreEqual(eNodebRepository.Object.Count(), 10);
         }

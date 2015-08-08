@@ -48,7 +48,7 @@ namespace Lte.Parameters.Test.MockOperations
         [Test]
         public void TestMockDeleteTown_WrongENodebRepository()
         {
-            mockENodebRepository.SetupGet(x => x.GetAll()).Returns(new List<ENodeb> {
+            mockENodebRepository.Setup(x => x.GetAll()).Returns(new List<ENodeb> {
                 new ENodeb { TownId = 21, Name = "E1" }
             }.AsQueryable());
             TownOperationService service = new TownOperationService(mockTownRepository.Object,
@@ -60,7 +60,7 @@ namespace Lte.Parameters.Test.MockOperations
         [Test]
         public void TestMockDeleteTown_RightENodebRepository()
         {
-            mockENodebRepository.SetupGet(x => x.GetAll()).Returns(new List<ENodeb> {
+            mockENodebRepository.Setup(x => x.GetAll()).Returns(new List<ENodeb> {
                 new ENodeb { TownId = 22, Name = "E1" }
             }.AsQueryable());
             TownOperationService service = new TownOperationService(mockTownRepository.Object,

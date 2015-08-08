@@ -100,7 +100,6 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
         public void TestBtsRepositorySaveBts_Original()
         {
             helper.AssertOriginalTest();
-            Initialize();
         }
 
         [Test]
@@ -127,7 +126,6 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
             btsInfos[0].DistrictName = "Guangzhou";
             helper.AssertOriginalTest();
             btsInfos[0].DistrictName = oldDistrict;
-            Initialize();
         }
 
         [Test]
@@ -137,7 +135,6 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
             btsInfos[0].Name = "FoshanZhaoming";
             helper.AssertOriginalTest();
             btsInfos[0].Name = oldName;
-            Initialize();
         }
 
         [Test]
@@ -150,7 +147,6 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
             helper.AssertOriginalTest();
             btsInfos[0].BtsId = oldId;
             btsInfos[0].Name = oldName;
-            Initialize();
         }
 
         [Test]
@@ -160,7 +156,6 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
             btsInfos[0].BtsId = 1;
             helper.AssertOriginalTest();
             btsInfos[0].BtsId = oldId;
-            Initialize();
         }
     }
 }

@@ -1,10 +1,7 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
-using Moq;
 using Lte.Parameters.MockOperations;
 using Lte.Parameters.Entities;
-using Lte.Parameters.Abstract;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Lte.Parameters.Test.MockOperations
@@ -39,15 +36,24 @@ namespace Lte.Parameters.Test.MockOperations
         public void TestInitialize_RemoveFirstENodeb()
         {
             Assert.AreEqual(eNodebRepository.Object.Count(), 7);
-            eNodebRepository.Object.Delete(eNodebRepository.Object.GetAll().ElementAt(0));
+            ENodeb item = eNodebRepository.Object.GetAll().ElementAt(0);
+            eNodebRepository.Object.Delete(item);
+            IEnumerable<ENodeb> items = eNodebRepository.Object.GetAll();
+            Assert.AreEqual(items.Count(), 6);
             Assert.AreEqual(eNodebRepository.Object.Count(), 6);
         }
 
-        [Test]
-        public void TestInitialize_DeleteExistedENodebId()
+        [TestCase(10001)]
+        [TestCase(10002)]
+        [TestCase(10003)]
+        [TestCase(10004)]
+        [TestCase(10005)]
+        [TestCase(10006)]
+        [TestCase(10007)]
+        public void TestInitialize_DeleteExistedENodebId(int eNodebId)
         {
             Assert.AreEqual(eNodebRepository.Object.Count(), 7);
-            Assert.IsTrue(DeleteOneENodeb(1));
+            Assert.IsTrue(DeleteOneENodeb(eNodebId));
             Assert.AreEqual(eNodebRepository.Object.Count(), 6);
         }
 

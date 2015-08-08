@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Lte.Parameters.Abstract;
 using Lte.Parameters.Entities;
 using Lte.Parameters.MockOperations;
@@ -15,7 +17,7 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
 
         protected readonly List<BtsExcel> btsInfos = new List<BtsExcel>
         {
-            new BtsExcel()
+            new BtsExcel
             {
                 BtsId = 2,
                 Name = "First bts",
@@ -24,7 +26,7 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
                 Longtitute = 112.9986,
                 Lattitute = 23.1233
             },
-            new BtsExcel()
+            new BtsExcel
             {
                 BtsId = 3,
                 Name = "Second bts",
@@ -37,18 +39,27 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
 
         protected override void Initialize()
         {
-            repository.SetupGet(x => x.GetAll()).Returns(new List<CdmaBts> 
+            CdmaBts bts = new CdmaBts
             {
-                new CdmaBts()
-                {
-                    BtsId = 1,
-                    Name = "FoshanZhaoming",
-                    Address = "FenjiangZhonglu",
-                    TownId = 122,
-                    Longtitute = 112.9987,
-                    Lattitute = 23.1233
-                }
+                BtsId = 1,
+                Name = "FoshanZhaoming",
+                Address = "FenjiangZhonglu",
+                TownId = 122,
+                Longtitute = 112.9987,
+                Lattitute = 23.1233
+            };
+            repository.Setup(x => x.GetAll()).Returns(new List<CdmaBts> 
+            {
+                bts
             }.AsQueryable());
+            repository.Setup(x => x.GetAllList()).Returns(repository.Object.GetAll().ToList());
+            repository.Setup(x => x.Count()).Returns(repository.Object.GetAll().Count());
+            repository.Setup(x => x.FirstOrDefault(It.IsAny<Expression<Func<CdmaBts, bool>>>()))
+                .Returns<Func<CdmaBts, bool>>(Predicate =>
+            {
+                IEnumerable<CdmaBts> btss = repository.Object.GetAll();
+                return btss.FirstOrDefault(Predicate);
+            });
             base.Initialize();
             repository.MockBtsRepositorySaveBts();
             repository.MockBtsRepositoryDeleteBts();

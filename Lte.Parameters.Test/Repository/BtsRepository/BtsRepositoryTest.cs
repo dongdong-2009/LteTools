@@ -36,6 +36,7 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
                 Longtitute = 112.3344,
                 Lattitute = 23.5566
             };
+            repository.MockBtsRepositoryDeleteBts();
         }
 
         [Test]
@@ -133,9 +134,12 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
         {
             DeleteOneBtsService deleteOneBtsService = new DeleteOneBtsService(repository.Object, 1);
             Assert.AreEqual(repository.Object.Count(), 1);
+            IEnumerable<CdmaBts> btss = repository.Object.GetAll();
+            Assert.AreEqual(btss.Count(), 1);
+            CdmaBts bts = repository.Object.FirstOrDefault(x => x.Id == 1);
+            Assert.IsNotNull(bts);
             Assert.IsTrue(deleteOneBtsService.Delete());
             Assert.AreEqual(repository.Object.Count(), 0);
-            repository.MockBtsRepositoryDeleteBts();
             Assert.IsFalse(deleteOneBtsService.Delete());
         }
 
