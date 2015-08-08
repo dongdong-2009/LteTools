@@ -1,7 +1,7 @@
 ﻿using System;
 using Lte.Domain.LinqToExcel.Entities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Domain.Regular;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Regular
 {

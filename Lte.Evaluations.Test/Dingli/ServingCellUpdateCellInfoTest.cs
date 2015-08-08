@@ -1,22 +1,19 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
 using Lte.Evaluations.Dingli;
 using Lte.Parameters.Entities;
 using Moq;
 using Lte.Domain.Regular;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Dingli
 {
-    [TestClass]
+    [TestFixture]
     public class ServingCellUpdateCellInfoTest
     {
         private List<Cell> cellList;
         private Mock<IServingCellRecord> mockRecord = new Mock<IServingCellRecord>();
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             cellList = new List<Cell>{
@@ -34,7 +31,7 @@ namespace Lte.Evaluations.Test.Dingli
             mockRecord.BindGetAndSetAttributes(x => x.Earfcn, (x, v) => x.Earfcn = v);
         }
 
-        [TestMethod]
+        [Test]
         public void TestServingCellUpdateCellInfo_FirstMatch()
         {
             mockRecord.SetupGet(x => x.Pci).Returns(1);
@@ -46,7 +43,7 @@ namespace Lte.Evaluations.Test.Dingli
             Assert.AreEqual(mockRecord.Object.Earfcn, 100);
         }
 
-        [TestMethod]
+        [Test]
         public void TestServingCellUpdateCellInfo_SecondMatch()
         {
             mockRecord.SetupGet(x => x.Pci).Returns(1);
@@ -58,7 +55,7 @@ namespace Lte.Evaluations.Test.Dingli
             Assert.AreEqual(mockRecord.Object.Earfcn, 100);
         }
 
-        [TestMethod]
+        [Test]
         public void TestServingCellUpdateCellInfo_ThirdMatch()
         {
             mockRecord.SetupGet(x => x.Pci).Returns(1);
@@ -70,7 +67,7 @@ namespace Lte.Evaluations.Test.Dingli
             Assert.AreEqual(mockRecord.Object.Earfcn, 1825);
         }
 
-        [TestMethod]
+        [Test]
         public void TestServingCellUpdateCellInfo_FourthMatch()
         {
             mockRecord.SetupGet(x => x.Pci).Returns(4);

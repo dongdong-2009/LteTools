@@ -1,13 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using Lte.Evaluations.Entities;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Entities
 {
-    [TestClass]
+    [TestFixture]
     public class StatValueIntervalConstructorTest
     {
-        [TestMethod]
+        [Test]
         public void TestStatValueInterval_Constructor()
         {
             XElement element = new XElement("Interval",

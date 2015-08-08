@@ -10,13 +10,13 @@ using Moq;
 
 namespace Lte.Evaluations.Test.Parameters
 {
-    [TestClass]
+    [TestFixture]
     public class TownENodebStatTest
     {
         private readonly Mock<IENodebRepository> repository = new Mock<IENodebRepository>();
         private readonly Mock<IRegionRepository> regionRepository = new Mock<IRegionRepository>();
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             repository.Setup(x => x.GetAll()).Returns(
@@ -27,7 +27,7 @@ namespace Lte.Evaluations.Test.Parameters
                 }.AsQueryable());
         }
 
-        [TestMethod]
+        [Test]
         public void TestTownENodebStat()
         {
             TownENodebStat stat = new TownENodebStat(

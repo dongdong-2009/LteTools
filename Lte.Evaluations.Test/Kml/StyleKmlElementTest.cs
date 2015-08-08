@@ -4,13 +4,13 @@ using System.Xml;
 
 namespace Lte.Evaluations.Test.Kml
 {
-    [TestClass]
+    [TestFixture]
     public class StyleKmlElementTest : FrameworkWriter
     {
         private XmlDocument _doc;
         private StyleKmlElement _element;
 
-        [TestMethod]
+        [Test]
         public void TestStyleKmlElement_EmptyDoc()
         {
             Assert.AreEqual(KmlTestInfrastructure.StatValueField.IntervalList[0].Color.ColorStringForKml,
@@ -26,7 +26,7 @@ namespace Lte.Evaluations.Test.Kml
                 "800A0C80", "end");
         }
 
-        [TestMethod]
+        [Test]
         public void TestStyleKmlElement_NewDoc()
         {
             Assert.AreEqual(KmlTestInfrastructure.StatValueField.IntervalList[0].Color.ColorStringForKml,

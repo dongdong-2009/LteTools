@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Evaluations.Entities;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Entities
 {
-    [TestClass]
+    [TestFixture]
     public class StatValueGetPercentageStatTest
     {
-        private StatValueField field = new StatValueField
+        private readonly StatValueField field = new StatValueField
         {
             FieldName = "aaa",
             IntervalList = new List<StatValueInterval> {
@@ -27,7 +27,7 @@ namespace Lte.Evaluations.Test.Entities
             }
         };
 
-        [TestMethod]
+        [Test]
         public void TestStatValueGetPercentageStat()
         {
             IEnumerable<double> values = new[]{

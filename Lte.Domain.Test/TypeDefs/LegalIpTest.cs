@@ -1,8 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Lte.Domain.Regular;
+﻿using Lte.Domain.Regular;
+using NUnit.Framework;
 
-namespace Lte.Domain.Test.Regular
+namespace Lte.Domain.Test.TypeDefs
 {
     [TestFixture]
     public class LegalIpTest
@@ -10,21 +9,21 @@ namespace Lte.Domain.Test.Regular
         [Test]
         public void TestLegalIp_AllZeros_Legal()
         {
-            string address = "0.0.0.0";
+            const string address = "0.0.0.0";
             Assert.IsTrue(address.IsLegalIp());
         }
 
         [Test]
         public void TestLegalIp_AllOnes_Legal()
         {
-            string address = "1.1.1.1";
+            const string address = "1.1.1.1";
             Assert.IsTrue(address.IsLegalIp());
         }
 
         [Test]
         public void TestLegalIp_All127_Legal()
         {
-            string address = "127.127.127.127";
+            const string address = "127.127.127.127";
             Assert.IsTrue(address.IsLegalIp());
         }
 

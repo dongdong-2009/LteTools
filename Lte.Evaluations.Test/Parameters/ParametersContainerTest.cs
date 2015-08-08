@@ -9,14 +9,14 @@ using Moq;
 
 namespace Lte.Evaluations.Test.Parameters
 {
-    [TestClass]
+    [TestFixture]
     public class ParametersContainerTest : ParametersConfig
     {
         private readonly ParametersContainer container = new ParametersContainer();
         private readonly Mock<ITownRepository> mockTownRepository = new Mock<ITownRepository>();
         private readonly Mock<IRegionRepository> mockRegionRepositroy = new Mock<IRegionRepository>();
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             Mock<IENodebRepository> eNodebRepository = new Mock<IENodebRepository>();
@@ -26,7 +26,7 @@ namespace Lte.Evaluations.Test.Parameters
                 mockRegionRepositroy.Object);
         }
 
-        [TestMethod]
+        [Test]
         public void TestParametersContainer_TownENodebStats()
         {
             Assert.AreEqual(container.TownENodebStats.Count(), 7);
@@ -39,7 +39,7 @@ namespace Lte.Evaluations.Test.Parameters
             Assert.AreEqual(container.TownENodebStats.ElementAt(6).TotalENodebs, 2);
         }
 
-        [TestMethod]
+        [Test]
         public void TestParametersContainer_GetENodebsByDistrict_City1()
         {
             Dictionary<string, int> stat = container.GetENodebsByDistrict("City1");
@@ -48,7 +48,7 @@ namespace Lte.Evaluations.Test.Parameters
             Assert.AreEqual(stat["District2"], 2);
         }
 
-        [TestMethod]
+        [Test]
         public void TestParametersContainer_GetENodebsByDistrict_City2()
         {
             Dictionary<string, int> stat = container.GetENodebsByDistrict("City2");
@@ -57,7 +57,7 @@ namespace Lte.Evaluations.Test.Parameters
             Assert.AreEqual(stat["District3"], 2);
         }
 
-        [TestMethod]
+        [Test]
         public void TestParametersContainer_GetENodebsByTown_City1_District1()
         {
             Dictionary<string, int> stat = container.GetENodebsByTown("City1", "District1");
@@ -67,7 +67,7 @@ namespace Lte.Evaluations.Test.Parameters
             Assert.AreEqual(stat["Town3"], 1);
         }
 
-        [TestMethod]
+        [Test]
         public void TestParametersContainer_GetENodebsByTown_City2_District3()
         {
             Dictionary<string, int> stat = container.GetENodebsByTown("City2", "District3");

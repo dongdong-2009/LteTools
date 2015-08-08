@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Lte.Domain.Measure;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Result
 {

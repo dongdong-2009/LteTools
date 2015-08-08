@@ -1,8 +1,8 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Lte.Domain.Test.Ipv4;
 using Lte.Domain.TypeDefs;
+using NUnit.Framework;
 
-namespace Lte.Domain.Test.Ipv4
+namespace Lte.Domain.Test.TypeDefs
 {
     [TestFixture]
     public class IpAddressTest

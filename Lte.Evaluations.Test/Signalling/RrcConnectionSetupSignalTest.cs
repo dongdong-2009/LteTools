@@ -8,12 +8,12 @@ using Lte.Evaluations.Signalling;
 
 namespace Lte.Evaluations.Test.Signalling
 {
-    [TestClass]
+    [TestFixture]
     public class RrcConnectionSetupSignalTest
     {
         private string signalString = "6813980a1dce0183c0ba007e131ffa211f0c288d980002e808000960";
 
-        [TestMethod]
+        [Test]
         public void TestRrcConnectionSetupSignal_BasicParameters()
         {
             RrcConnectionSetupSignal signal = new RrcConnectionSetupSignal(signalString);

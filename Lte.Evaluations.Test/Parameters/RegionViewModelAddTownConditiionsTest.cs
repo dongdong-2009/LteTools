@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lte.Evaluations.Test.Parameters
 {
-    [TestClass]
+    [TestFixture]
     public class RegionViewModelAddTownConditionsTest
     {
-        [TestMethod]
+        [Test]
         public void TestRegionViewModelAddTownConditions_EmptyNewNames()
         {
             RegionViewModel viewModel = new RegionViewModel("")
@@ -25,7 +25,7 @@ namespace Lte.Evaluations.Test.Parameters
             Assert.AreEqual(town.TownName, "");
         }
 
-        [TestMethod]
+        [Test]
         public void TestRegionViewModelAddTownConditions_NewTown()
         {
             RegionViewModel viewModel = new RegionViewModel("")
@@ -43,7 +43,7 @@ namespace Lte.Evaluations.Test.Parameters
             Assert.AreEqual(town.TownName, "Chengqu");
         }
 
-        [TestMethod]
+        [Test]
         public void TestRegionViewModelAddTownConditions_NewDistrict()
         {
             RegionViewModel viewModel = new RegionViewModel("")
@@ -61,7 +61,7 @@ namespace Lte.Evaluations.Test.Parameters
             Assert.AreEqual(town.TownName, "Chengqu");
         }
 
-        [TestMethod]
+        [Test]
         public void TestRegionViewModelAddTownConditions_NewCity()
         {
             RegionViewModel viewModel = new RegionViewModel("")

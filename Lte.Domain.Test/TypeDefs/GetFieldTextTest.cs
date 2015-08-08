@@ -1,10 +1,10 @@
 ﻿using System;
 using Lte.Domain.Regular;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Domain.TypeDefs;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Globalization;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.TypeDefs
 {

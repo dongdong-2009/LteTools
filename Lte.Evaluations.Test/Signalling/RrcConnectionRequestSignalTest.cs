@@ -5,10 +5,10 @@ using Lte.Evaluations.Signalling;
 
 namespace Lte.Evaluations.Test.Signalling
 {
-    [TestClass]
+    [TestFixture]
     public class RrcConnectionRequestSignalTest
     {
-        [TestMethod]
+        [Test]
         public void TestRrcConnectionRequestSignal_MoData()
         {
             RrcConnectionRequestSignal signal = new RrcConnectionRequestSignal("401cf0b88d58");
@@ -18,7 +18,7 @@ namespace Lte.Evaluations.Test.Signalling
             Assert.AreEqual(signal.EstablishmentCause, RrcConnectionEstablishmentCause.MoData);
         }
 
-        [TestMethod]
+        [Test]
         public void TestRrcConnectionRequestSignal_MtAccess()
         {
             RrcConnectionRequestSignal signal = new RrcConnectionRequestSignal("401cf0f90254");
@@ -28,7 +28,7 @@ namespace Lte.Evaluations.Test.Signalling
             Assert.AreEqual(signal.EstablishmentCause, RrcConnectionEstablishmentCause.MtAccess);
         }
 
-        [TestMethod]
+        [Test]
         public void TestRrcConnectionRequestSignal_MtAccess_2()
         {
             RrcConnectionRequestSignal signal = new RrcConnectionRequestSignal("401e20386e94");

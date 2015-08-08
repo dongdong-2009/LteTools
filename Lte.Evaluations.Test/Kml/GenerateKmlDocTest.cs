@@ -7,10 +7,10 @@ using Lte.Evaluations.Kml;
 
 namespace Lte.Evaluations.Test.Kml
 {
-    [TestClass]
+    [TestFixture]
     public class GenerateKmlDocTest : FrameworkWriter
     {
-        [TestMethod]
+        [Test]
         public void TestGenerateKmlDoc_SameModInterference()
         {
             Assert.AreEqual(KmlTestInfrastructure.StatValueField.IntervalList[0].Color.ColorStringForKml,
@@ -38,7 +38,7 @@ namespace Lte.Evaluations.Test.Kml
 
         }
 
-        [TestMethod]
+        [Test]
         public void TestGenerateKmlDoc_DifferentModInterference()
         {
             Assert.AreEqual(KmlTestInfrastructure.StatValueField.IntervalList[0].Color.ColorStringForKml,

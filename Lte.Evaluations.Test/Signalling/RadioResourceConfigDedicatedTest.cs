@@ -7,12 +7,12 @@ using Lte.Evaluations.Signalling;
 
 namespace Lte.Evaluations.Test.Signalling
 {
-    [TestClass]
+    [TestFixture]
     public class RadioResourceConfigDedicatedTest
     {
         private string signalString = "13980a1dce0183c0ba007e131ffa211f0c288d980002e808000960";
 
-        [TestMethod]
+        [Test]
         public void TestRadioResourceConfigDedicated_Switchs()
         {
             RadioResourceConfigDedicated signal = new RadioResourceConfigDedicated(signalString);

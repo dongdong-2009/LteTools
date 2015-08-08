@@ -1,6 +1,6 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Domain.Regular;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Regular
 {
@@ -36,17 +36,12 @@ namespace Lte.Domain.Test.Regular
         }
 
         [Test]
+        [ExpectedException(typeof (TypeAccessException))]
         public void Test_DifferentTypes()
         {
-            try
-            {
-                oa = ob.GetObject<A, IA>();
-                Assert.AreEqual(oa.a, 3);
-            }
-            catch (Exception e)
-            {
-                Assert.IsInstanceOfType(e, typeof(TypeAccessException));
-            }
+            oa = ob.GetObject<A, IA>();
+            Assert.AreEqual(oa.a, 3);
+
         }
     }
 }

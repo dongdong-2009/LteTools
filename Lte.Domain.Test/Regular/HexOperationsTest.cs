@@ -1,6 +1,5 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Lte.Domain.Regular;
+﻿using Lte.Domain.Regular;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Regular
 {
@@ -25,7 +24,7 @@ namespace Lte.Domain.Test.Regular
         [Test]
         public void TestHex_GetFieldContent_FullLength()
         {
-            string hexString = "105A2C33";
+            const string hexString = "105A2C33";
             Assert.AreEqual(hexString.GetFieldContent(), 0);
             Assert.AreEqual(hexString.GetFieldContent(length: 4), 1);
             Assert.AreEqual(hexString.GetFieldContent(1, 4), 2);
@@ -35,7 +34,7 @@ namespace Lte.Domain.Test.Regular
         [Test]
         public void TestHex_GetFieldContent_ShortLength()
         {
-            string hexString = "733E5";
+            const string hexString = "733E5";
             Assert.AreEqual(hexString.GetFieldContent(), 0);
             Assert.AreEqual(hexString.GetFieldContent(length: 4), 7);
             Assert.AreEqual(hexString.GetFieldContent(3, 4), 9);
@@ -44,7 +43,7 @@ namespace Lte.Domain.Test.Regular
         [Test]
         public void TestHex_GetFieldContent_RRCConnectionRelease()
         {
-            string signal = "2a02";
+            const string signal = "2a02";
             Assert.AreEqual(signal.GetFieldContent(1, 4), 5);
             Assert.AreEqual(signal.GetFieldContent(5, 2), 1);
             Assert.AreEqual(signal.GetFieldContent(7), 0);

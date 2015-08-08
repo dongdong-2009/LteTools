@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Evaluations.Entities;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Entities
 {
-    [TestClass]
+    [TestFixture]
     public class StatValueFieldRepositoryAccessTest : StatValueFieldRepositoryTest
     {
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             Repository = new StatValueFieldRepository
@@ -16,7 +16,7 @@ namespace Lte.Evaluations.Test.Entities
             };
         }
 
-        [TestMethod]
+        [Test]
         public void TestStatValueFieldRepository_GetIntervalList()
         {
             Assert.AreEqual(Repository["field1"].IntervalList.Count, 3);
@@ -25,7 +25,7 @@ namespace Lte.Evaluations.Test.Entities
             Assert.AreEqual(Repository["field2"].IntervalList[1].IntervalLowLevel, 4);
         }
 
-        [TestMethod]
+        [Test]
         public void TestStatValueFieldRepository_ModifyIntervalListUpLevel()
         {
             Assert.IsNotNull(Repository["field1"]);
@@ -79,7 +79,7 @@ namespace Lte.Evaluations.Test.Entities
 </Setting>");
         }
 
-        [TestMethod]
+        [Test]
         public void TestStatValueFieldRepository_ModifyIntervalListLowLevel()
         {
             Assert.IsNotNull(Repository["field2"]);
@@ -132,7 +132,7 @@ namespace Lte.Evaluations.Test.Entities
 </Setting>");
         }
 
-        [TestMethod]
+        [Test]
         public void TestStatValueFieldRepository_ModifyColor()
         {
             Repository["field1"].IntervalList[2].Color.ColorB = 17;
@@ -184,7 +184,7 @@ namespace Lte.Evaluations.Test.Entities
 </Setting>");
         }
 
-        [TestMethod]
+        [Test]
         public void TestStatValueFieldRepository_ReplaceList()
         {
             Repository["field1"].IntervalList = new List<StatValueInterval>

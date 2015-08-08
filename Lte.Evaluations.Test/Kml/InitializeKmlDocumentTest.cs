@@ -6,10 +6,10 @@ using Lte.Evaluations.Kml;
 
 namespace Lte.Evaluations.Test.Kml
 {
-    [TestClass]
+    [TestFixture]
     public class InitializeKmlDocumentTest : FrameworkWriter
     {
-        [TestMethod]
+        [Test]
         public void TestInitializeKmlDocument()
         {
             Assert.AreEqual(KmlTestInfrastructure.StatValueField.IntervalList[0].Color.ColorStringForKml,

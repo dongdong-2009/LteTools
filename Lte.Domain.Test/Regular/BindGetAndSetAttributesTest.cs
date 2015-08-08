@@ -1,9 +1,9 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using Lte.Domain.Regular;
 using System.Linq.Expressions;
 using Moq;
+using NUnit.Framework;
 
 namespace Lte.Domain.Test.Regular
 {

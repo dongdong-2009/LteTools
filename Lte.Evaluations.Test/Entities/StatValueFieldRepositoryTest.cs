@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lte.Evaluations.Entities;
 using System.IO;
+using NUnit.Framework;
 
 namespace Lte.Evaluations.Test.Entities
 {
-    [TestClass]
+    [TestFixture]
     public class StatValueFieldRepositoryTest
     {
         protected StatValueFieldRepository Repository;
-        protected string resultString=@"<Setting>
+        private const string resultString = @"<Setting>
   <Field ID=""field1"">
     <Interval>
       <LowLevel>0</LowLevel>
@@ -135,7 +135,7 @@ namespace Lte.Evaluations.Test.Entities
             }
         };
 
-        [TestMethod]
+        [Test]
         public void TestStatValueFieldRepository_InitializeByFieldList()
         {
             Repository = new StatValueFieldRepository
@@ -145,7 +145,7 @@ namespace Lte.Evaluations.Test.Entities
             Assert.AreEqual(Repository.FieldDoc.ToString(), resultString);
         }
 
-        [TestMethod]
+        [Test]
         public void TestStatValueFieldRepository_InitializeByFieldDoc()
         {
             Stream stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(resultString));
@@ -165,7 +165,7 @@ namespace Lte.Evaluations.Test.Entities
             Assert.AreEqual(Repository.FieldList[1].IntervalList[0].Color.ColorA, 155);
         }
 
-        [TestMethod]
+        [Test]
         public void TestStatValueFieldRepository_DefaultConstruction()
         {
             Repository = new StatValueFieldRepository();
