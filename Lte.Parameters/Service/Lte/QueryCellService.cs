@@ -1,100 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Lte.Parameters.Abstract;
 using Lte.Parameters.Entities;
 
 namespace Lte.Parameters.Service.Lte
 {
-    public class QueryCellService
+    public static class QueryCellService
     {
-        private readonly ICellRepository _repository;
-
-        public QueryCellService(ICellRepository repository)
-        {
-            _repository = repository;
-        }
-
-        private bool Delete(Cell cell)
+        private static bool DeleteCell(this ICellRepository repository, Cell cell)
         {
             if (cell == null) return false;
-            _repository.Delete(cell);
+            repository.Delete(cell);
             return true;
         }
 
-        public bool Delete(int eNodebId, byte sectorId)
+        public static bool DeleteCell(this ICellRepository repository, int eNodebId, byte sectorId)
         {
-            return Delete(_repository.GetAll().FirstOrDefault(x => x.ENodebId == eNodebId && x.SectorId == sectorId));
+            return repository.DeleteCell(repository.GetAll().FirstOrDefault(x => x.ENodebId == eNodebId && x.SectorId == sectorId));
         }
     }
 
-    public class QueryMrsCellService : IDisposable
+    public static class QueryMrService
     {
-        private readonly IMrsCellRepository _repository;
-
-        public QueryMrsCellService(IMrsCellRepository repository)
-        {
-            _repository = repository;
-        }
-
-        public void SaveStats(IEnumerable<MrsCellDate> stats)
+        public static void SaveStats(this IMrsCellRepository repository, IEnumerable<MrsCellDate> stats)
         {
             foreach (MrsCellDate stat in 
-                from stat in stats let item = _repository.MrsCells.FirstOrDefault(x =>
+                from stat in stats let item = repository.MrsCells.FirstOrDefault(x =>
                 x.RecordDate == stat.RecordDate && x.CellId == stat.CellId && x.SectorId == stat.SectorId) 
                 where item == null select stat)
             {
                 stat.UpdateStats();
-                _repository.AddOneCell(stat);
+                repository.AddOneCell(stat);
             }
-            _repository.SaveChanges();
+            repository.SaveChanges();
         }
 
-        public void SaveTaStats(IEnumerable<MrsCellTa> stats)
+        public static void SaveTaStats(this IMrsCellRepository repository, IEnumerable<MrsCellTa> stats)
         {
             foreach (MrsCellTa stat in
                 from stat in stats
-                let item = _repository.TaCells.FirstOrDefault(x =>
+                let item = repository.TaCells.FirstOrDefault(x =>
                     x.RecordDate == stat.RecordDate && x.CellId == stat.CellId && x.SectorId == stat.SectorId)
                 where item == null
                 select stat)
             {
                 stat.UpdateStats();
-                _repository.AddOneCell(stat);
+                repository.AddOneCell(stat);
             }
-            _repository.SaveChanges();
+            repository.SaveChanges();
         }
 
-        public void Dispose()
+        public static void SaveRsrpTaStats(this IMroCellRepository repository, IEnumerable<MroRsrpTa> stats)
         {
-        }
-    }
-
-    public class QueryMroCellService : IDisposable
-    {
-        private readonly IMroCellRepository _repository;
-
-        public QueryMroCellService(IMroCellRepository repository)
-        {
-            _repository = repository;
-        }
-
-        public void SaveRsrpTaStats(IEnumerable<MroRsrpTa> stats)
-        {
-            foreach (MroRsrpTa stat in 
+            foreach (MroRsrpTa stat in
                 from stat in stats
-                let item = _repository.RsrpTaCells.FirstOrDefault(x =>
+                let item = repository.RsrpTaCells.FirstOrDefault(x =>
                     x.RecordDate == stat.RecordDate && x.CellId == stat.CellId && x.SectorId == stat.SectorId)
                 where item == null
                 select stat)
             {
-                _repository.AddOneCell(stat);
+                repository.AddOneCell(stat);
             }
-            _repository.SaveChanges();
+            repository.SaveChanges();
         }
 
-        public void Dispose()
-        {
-        }
     }
 }

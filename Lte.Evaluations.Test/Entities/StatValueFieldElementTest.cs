@@ -34,7 +34,7 @@ namespace Lte.Evaluations.Test.Entities
         [Test]
         public void TestStatValueField_InputElement()
         {
-            Assert.AreEqual(_fieldElement.ToString().Replace("\r",""), @"<Field ID=""myFieldName"">
+            Assert.AreEqual(_fieldElement.ToString().Replace("\r\n","\n"), (@"<Field ID=""myFieldName"">
   <Interval>
     <LowLevel>11</LowLevel>
     <UpLevel>15</UpLevel>
@@ -51,7 +51,7 @@ namespace Lte.Evaluations.Test.Entities
     <R>108</R>
     <G>171</G>
   </Interval>
-</Field>");
+</Field>").Replace("\r\n", "\n"));
         }
 
         [Test]

@@ -20,14 +20,6 @@ namespace Lte.Parameters.Service.Lte
             _repository = repository;
         }
 
-        protected void AddCells(IEnumerable<Cell> cells)
-        {
-            foreach (Cell cell in cells)
-            {
-                _repository.Insert(cell);
-            }
-        }
-
         public abstract void Save(ParametersDumpInfrastructure infrastructure);
     }
 
@@ -108,7 +100,7 @@ namespace Lte.Parameters.Service.Lte
                 cell.Import(x);
                 return cell;
             }).ToList();
-            AddCells(insertInfos);
+            _repository.AddCells(insertInfos);
             infrastructure.CellsInserted = insertInfos.Count();
         }
     }

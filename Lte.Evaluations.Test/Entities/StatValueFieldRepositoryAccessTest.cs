@@ -31,8 +31,7 @@ namespace Lte.Evaluations.Test.Entities
         {
             Assert.IsNotNull(Repository["field1"]);
             Repository["field1"].UpdateIntervalUpLevel(1, 2.5);
-            Assert.AreEqual(Repository.FieldDoc.ToString().Replace("\r\n", "\n"), 
-                @"<Setting>
+            Assert.AreEqual(Repository.FieldDoc.ToString().Replace("\r\n", "\n"), (@"<Setting>
   <Field ID=""field1"">
     <Interval>
       <LowLevel>0</LowLevel>
@@ -77,7 +76,7 @@ namespace Lte.Evaluations.Test.Entities
       <G>5</G>
     </Interval>
   </Field>
-</Setting>");
+</Setting>").Replace("\r\n", "\n"));
         }
 
         [Test]
@@ -85,7 +84,7 @@ namespace Lte.Evaluations.Test.Entities
         {
             Assert.IsNotNull(Repository["field2"]);
             Repository["field2"].UpdateIntervalLowLevel(1, 4.5);
-            Assert.AreEqual(Repository.FieldDoc.ToString().Replace("\r\n", "\n"), @"<Setting>
+            Assert.AreEqual(Repository.FieldDoc.ToString().Replace("\r\n", "\n"), (@"<Setting>
   <Field ID=""field1"">
     <Interval>
       <LowLevel>0</LowLevel>
@@ -130,14 +129,14 @@ namespace Lte.Evaluations.Test.Entities
       <G>5</G>
     </Interval>
   </Field>
-</Setting>");
+</Setting>").Replace("\r\n", "\n"));
         }
 
         [Test]
         public void TestStatValueFieldRepository_ModifyColor()
         {
             Repository["field1"].IntervalList[2].Color.ColorB = 17;
-            Assert.AreEqual(Repository.FieldDoc.ToString().Replace("\r\n", "\n"), @"<Setting>
+            Assert.AreEqual(Repository.FieldDoc.ToString().Replace("\r\n", "\n"), (@"<Setting>
   <Field ID=""field1"">
     <Interval>
       <LowLevel>0</LowLevel>
@@ -182,7 +181,7 @@ namespace Lte.Evaluations.Test.Entities
       <G>5</G>
     </Interval>
   </Field>
-</Setting>");
+</Setting>").Replace("\r\n", "\n"));
         }
 
         [Test]
@@ -203,7 +202,7 @@ namespace Lte.Evaluations.Test.Entities
                                 }
                             }
             };
-            Assert.AreEqual(Repository.FieldDoc.ToString().Replace("\r\n", "\n"), @"<Setting>
+            Assert.AreEqual(Repository.FieldDoc.ToString().Replace("\r\n", "\n"), (@"<Setting>
   <Field ID=""field1"">
     <Interval>
       <LowLevel>2</LowLevel>
@@ -232,7 +231,7 @@ namespace Lte.Evaluations.Test.Entities
       <G>5</G>
     </Interval>
   </Field>
-</Setting>");
+</Setting>").Replace("\r\n", "\n"));
         }
     }
 }

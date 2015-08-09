@@ -176,18 +176,12 @@ namespace Lte.WinApp.ViewPages
         {
             if (mrsFilesImporter.RsrpStatList != null)
             {
-                using (QueryMrsCellService service = new QueryMrsCellService(_mrsRepository))
-                {
-                    service.SaveStats(mrsFilesImporter.RsrpStatList);
-                    service.SaveTaStats(mrsFilesImporter.TaStatList);
-                }
+                _mrsRepository.SaveStats(mrsFilesImporter.RsrpStatList);
+                _mrsRepository.SaveTaStats(mrsFilesImporter.TaStatList);
             }
             if (mroFilesImporter.RsrpTaStatList != null)
             {
-                using (QueryMroCellService service = new QueryMroCellService(_mroRepository))
-                {
-                    service.SaveRsrpTaStats(mroFilesImporter.RsrpTaStatList);
-                }
+                _mroRepository.SaveRsrpTaStats(mroFilesImporter.RsrpTaStatList);
             }
             if (mroFilesImporter.InterferenceStats != null)
             {

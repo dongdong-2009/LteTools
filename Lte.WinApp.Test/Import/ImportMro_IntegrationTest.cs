@@ -16,11 +16,11 @@ namespace Lte.WinApp.Test.Import
     {
         private readonly string testDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "XmlFiles");
         private MroFilesImporter importer;
-        private Mock<ICellRepository> cellRepository = new Mock<ICellRepository>();
-        private Mock<ILteNeighborCellRepository> neighborRepository = new Mock<ILteNeighborCellRepository>();
+        private readonly Mock<ICellRepository> cellRepository = new Mock<ICellRepository>();
+        private readonly Mock<ILteNeighborCellRepository> neighborRepository = new Mock<ILteNeighborCellRepository>();
 
         [TestFixtureSetUp]
-        public void SetUp()
+        public void FixtureSetUp()
         {
             cellRepository.Setup(x => x.GetAll()).Returns(new List<Cell>
             {
@@ -37,6 +37,7 @@ namespace Lte.WinApp.Test.Import
                 new Cell {ENodebId = 501256, SectorId = 48, Pci = 90, Longtitute = 112, Lattitute = 23},
                 new Cell {ENodebId = 501257, SectorId = 48, Pci = 387, Longtitute = 112, Lattitute = 23},
             }.AsQueryable());
+            cellRepository.Setup(x => x.GetAllList()).Returns(cellRepository.Object.GetAll().ToList);
             neighborRepository.SetupGet(x => x.NearestPciCells).Returns(new List<NearestPciCell>
             {
                 new NearestPciCell {CellId = 501250, SectorId = 48, NearestCellId = 501250, NearestSectorId = 49, Pci = 112},
@@ -49,6 +50,11 @@ namespace Lte.WinApp.Test.Import
                 new NearestPciCell {CellId = 501250, SectorId = 50, NearestCellId = 501252, NearestSectorId = 49, Pci = 190},
                 new NearestPciCell {CellId = 501250, SectorId = 50, NearestCellId = 501252, NearestSectorId = 50, Pci = 192}
             }.AsQueryable());
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
             importer = new MroFilesImporter(cellRepository.Object, neighborRepository.Object);
         }
 

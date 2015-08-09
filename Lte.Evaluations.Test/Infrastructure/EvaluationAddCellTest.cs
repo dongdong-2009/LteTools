@@ -8,13 +8,12 @@ namespace Lte.Evaluations.Test.Infrastructure
     [TestFixture]
     public class EvaluationAddCellTest
     {
-        private readonly EvaluationInfrastructure infrastructure
-            = new EvaluationInfrastructure();
+        private EvaluationInfrastructure infrastructure;
 
-        private void TestRegionAndMeasurePointList()
+        [SetUp]
+        public void SetUp()
         {
-            Assert.IsTrue(infrastructure.Region.Length > 4000);
-            Assert.AreEqual(infrastructure.MeasurePointList.Count(), 0);
+            infrastructure = new EvaluationInfrastructure();
         }
 
         private void TestRegionAndMeasurePointListWithValidCells()
@@ -37,8 +36,8 @@ namespace Lte.Evaluations.Test.Infrastructure
                 Azimuth = 60,
                 Height = 20
             });
-            TestRegionAndMeasurePointList();
-            Assert.AreEqual(infrastructure.Region[5].CellRepository.CellList.Count, 0);
+            TestRegionAndMeasurePointListWithValidCells();
+            Assert.AreEqual(infrastructure.Region[5].CellRepository.CellList.Count, 1);
             infrastructure.AddCell(new EvaluationOutdoorCell
             {
                 Pci = 0,
@@ -50,8 +49,8 @@ namespace Lte.Evaluations.Test.Infrastructure
                 Azimuth = 60,
                 Height = 20
             });
-            TestRegionAndMeasurePointList();
-            Assert.AreEqual(infrastructure.Region[5].CellRepository.CellList.Count, 0);
+            TestRegionAndMeasurePointListWithValidCells();
+            Assert.AreEqual(infrastructure.Region[5].CellRepository.CellList.Count, 1);
             infrastructure.AddCell(new EvaluationOutdoorCell
             {
                 Pci = 0,
@@ -63,8 +62,8 @@ namespace Lte.Evaluations.Test.Infrastructure
                 Azimuth = 180,
                 Height = 20
             });
-            TestRegionAndMeasurePointList();
-            Assert.AreEqual(infrastructure.Region[5].CellRepository.CellList.Count, 0);
+            TestRegionAndMeasurePointListWithValidCells();
+            Assert.AreEqual(infrastructure.Region[5].CellRepository.CellList.Count, 2);
             infrastructure.AddCell(new EvaluationOutdoorCell
             {
                 Pci = 0,
@@ -76,8 +75,8 @@ namespace Lte.Evaluations.Test.Infrastructure
                 Azimuth = 180,
                 Height = 20
             });
-            TestRegionAndMeasurePointList();
-            Assert.AreEqual(infrastructure.Region[5].CellRepository.CellList.Count, 0);
+            TestRegionAndMeasurePointListWithValidCells();
+            Assert.AreEqual(infrastructure.Region[5].CellRepository.CellList.Count, 3);
         }
 
         [Test]

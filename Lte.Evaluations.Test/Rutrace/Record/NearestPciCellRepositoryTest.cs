@@ -12,7 +12,7 @@ namespace Lte.Evaluations.Test.Rutrace.Record
     [TestFixture]
     public class NearestPciCellRepositoryTest
     {
-        private IEnumerable<Cell> cells = new List<Cell>
+        private readonly IEnumerable<Cell> cells = new List<Cell>
         {
             new Cell {ENodebId = 1, SectorId = 1, Pci = 101, Longtitute = 112, Lattitute = 23},
             new Cell {ENodebId = 3, SectorId = 4, Pci = 112, Longtitute = 112.1, Lattitute = 23.1},
@@ -91,7 +91,7 @@ namespace Lte.Evaluations.Test.Rutrace.Record
         {
             repository.AddNeighbors(neiRepository.Object, 1);
             repository.AddNeighbors(neiRepository.Object, eNodebId);
-            Assert.AreEqual(repository.NearestPciCells.Count, 3);
+            Assert.AreEqual(repository.NearestPciCells.Count, 0);
         }
 
         [TestCase(2)]

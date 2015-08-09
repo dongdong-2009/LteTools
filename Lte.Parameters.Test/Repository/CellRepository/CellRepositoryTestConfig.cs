@@ -85,7 +85,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
             return service.Save();
         }
 
-        protected int SaveCells(List<CellExcel> cellInfos)
+        protected int SaveCells(IEnumerable<CellExcel> cellInfos)
         {
             ParametersDumpInfrastructure infrastructure = new ParametersDumpInfrastructure();
             SaveCellInfoListService service = new QuickSaveCellInfoListService(repository.Object,
@@ -94,7 +94,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
             return infrastructure.CellsInserted;
         }
 
-        protected int[] SaveCellInfos(List<CellExcel> cellInfos)
+        protected int[] SaveCellInfos(IEnumerable<CellExcel> cellInfos)
         {
             ParametersDumpInfrastructure infrastructure = new ParametersDumpInfrastructure();
             SaveCellInfoListService service = new UpdateConsideredSaveCellInfoListService(
@@ -105,8 +105,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
 
         protected bool DeleteOneCell(int eNodebId, byte sectorId)
         {
-            QueryCellService service = new QueryCellService(repository.Object);
-            return service.Delete(eNodebId, sectorId);
+            return repository.Object.DeleteCell(eNodebId, sectorId);
         }
     }
 }

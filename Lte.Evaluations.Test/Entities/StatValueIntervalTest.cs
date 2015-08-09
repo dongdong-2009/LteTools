@@ -34,15 +34,14 @@ namespace Lte.Evaluations.Test.Entities
         [Test]
         public void TestStatValueInterval_XElement()
         {
-            Assert.AreEqual(_statValueInterval.XElement.ToString().Replace("\r\n", "\n"),
-@"<Interval>
+            Assert.AreEqual(_statValueInterval.XElement.ToString().Replace("\r\n", "\n"), (@"<Interval>
   <LowLevel>10</LowLevel>
   <UpLevel>13</UpLevel>
   <A>122</A>
   <B>17</B>
   <R>144</R>
   <G>201</G>
-</Interval>");
+</Interval>").Replace("\r\n", "\n"));
         }
     }
 }

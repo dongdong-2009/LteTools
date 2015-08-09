@@ -21,7 +21,7 @@ namespace Lte.Evaluations.Test.Entities
             {
                 FieldList = statValueFieldList
             };
-            Assert.AreEqual(Repository.FieldDoc.ToString().Replace("\r\n", "\n"), resultString);
+            Assert.AreEqual(Repository.FieldDoc.ToString().Replace("\r\n", "\n"), resultString.Replace("\r\n", "\n"));
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace Lte.Evaluations.Test.Entities
             Stream stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(resultString));
             XDocument document = XDocument.Load(
                 new StreamReader(stream, System.Text.Encoding.UTF8));
-            Assert.AreEqual(document.ToString().Replace("\r\n", "\n"), resultString);
+            Assert.AreEqual(document.ToString().Replace("\r\n", "\n"), resultString.Replace("\r\n", "\n"));
             Repository = new StatValueFieldRepository
             {
                 FieldDoc = document

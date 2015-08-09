@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Lte.Parameters.Abstract;
 using Lte.Parameters.Entities;
@@ -10,6 +11,14 @@ namespace Lte.Parameters.Concrete
         protected override DbSet<Cell> Entities
         {
             get { throw new System.NotImplementedException(); }
+        }
+
+        public void AddCells(IEnumerable<Cell> cells)
+        {
+            foreach (Cell cell in cells)
+            {
+                Insert(cell);
+            }
         }
     }
 

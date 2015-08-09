@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Lte.Domain.Regular;
 using Lte.Evaluations.Rutrace.Entities;
-using Lte.Evaluations.Rutrace.Record;
 using Lte.Parameters.Abstract;
 using Lte.Parameters.Entities;
 using Lte.WinApp.Import;
@@ -45,15 +44,15 @@ namespace Lte.WinApp.Test.Import
             };
         };
 
-        private Mock<ICellRepository> cellRepository=new Mock<ICellRepository>();
-        private Mock<ILteNeighborCellRepository> neighborRepository=new Mock<ILteNeighborCellRepository>();
+        private readonly Mock<ICellRepository> cellRepository=new Mock<ICellRepository>();
+        private readonly Mock<ILteNeighborCellRepository> neighborRepository=new Mock<ILteNeighborCellRepository>();
 
         private MroFilesImporter importer;
 
         [SetUp]
         public void SetUp()
         {
-            cellRepository.SetupGet(x => x.GetAll()).Returns(new List<Cell>
+            cellRepository.Setup(x => x.GetAll()).Returns(new List<Cell>
             {
                 new Cell {ENodebId = 50011, SectorId = 0, Pci = 301},
                 new Cell {ENodebId = 50011, SectorId = 1, Pci = 302},
@@ -62,6 +61,7 @@ namespace Lte.WinApp.Test.Import
                 new Cell {ENodebId = 50012, SectorId = 1, Pci = 305},
                 new Cell {ENodebId = 50012, SectorId = 2, Pci = 306},
             }.AsQueryable());
+            cellRepository.Setup(x => x.GetAllList()).Returns(cellRepository.Object.GetAll().ToList());
             neighborRepository.SetupGet(x => x.NearestPciCells).Returns(new List<NearestPciCell>
             {
                 new NearestPciCell {CellId = 50001, SectorId = 0, NearestCellId = 50002, NearestSectorId = 0, Pci = 100},
