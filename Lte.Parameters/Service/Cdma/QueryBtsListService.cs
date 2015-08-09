@@ -1,48 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Lte.Parameters.Abstract;
+using Lte.Parameters.Concrete;
 using Lte.Parameters.Entities;
+using Lte.Parameters.Kpi.Service;
 using Lte.Parameters.Region.Abstract;
 using Lte.Parameters.Region.Entities;
-using Lte.Parameters.Region.Service;
 
 namespace Lte.Parameters.Service.Cdma
 {
-    public class QueryBtsListService
+    public class ByExcelInfoSaveBtsListService
     {
+        private readonly ParametersDumpInfrastructure _infrastructure;
+        private readonly ITownRepository _townRepository;
+        private readonly IENodebRepository _lteRepository;
+        private readonly ENodebBaseRepository _baseRepository;
         private readonly IBtsRepository _repository;
-        private readonly IEnumerable<Town> _townList;
-        private readonly string _btsName;
-        private readonly string _address;
 
-        public QueryBtsListService(IBtsRepository repository,
-            IEnumerable<Town> townList, string btsName, string address)
+        public ByExcelInfoSaveBtsListService(IBtsRepository repository,
+            ParametersDumpInfrastructure infrastructure, ITownRepository townRepository,
+            IENodebRepository lteRepository = null)
         {
+            _infrastructure = infrastructure;
+            _townRepository = townRepository;
+            _lteRepository = lteRepository;
             _repository = repository;
-            _townList = townList;
-            _btsName = btsName;
-            _address = address;
+            _baseRepository = new ENodebBaseRepository(repository);
         }
 
-        public QueryBtsListService(IBtsRepository repository,
-            ITownRepository townRepository, string district, string town,
-            string btsName, string address)
-            : this(repository, null, btsName, address)
+        public void Save(IEnumerable<BtsExcel> btsInfoList, bool updateBts)
         {
-            List<Town> towns = townRepository.Towns.QueryTowns(district, town).ToList();
-            if (towns.Any())
+            IEnumerable<Town> townList = _townRepository.Towns.ToList();
+            List<ENodeb> eNodebList = (_lteRepository == null) ? null : _lteRepository.GetAllList();
+            TownIdAssignedSaveOneBtsService service = new TownIdAssignedSaveOneBtsService(
+                _repository, _baseRepository, 0, eNodebList);
+
+            foreach (BtsExcel btsExcel in btsInfoList.Distinct(new BtsExcelComparer()))
             {
-                _townList = towns;
+                var town = townList.FirstOrDefault(x => x.DistrictName == btsExcel.DistrictName
+                                                        && x.TownName == btsExcel.TownName);
+                var townId = (town == null) ? -1 : town.Id;
+                service.TownId = townId;
+                if (service.SaveOneBts(btsExcel, updateBts))
+                {
+                    _infrastructure.CdmaBtsUpdated++;
+                }
             }
-        }
-
-        public IEnumerable<CdmaBts> Query()
-        {
-            return _repository.GetAllList().Where(x =>
-                _townList.FirstOrDefault(t => t.Id == x.TownId) != null
-                && (string.IsNullOrEmpty(_btsName) || x.Name.IndexOf(_btsName.Trim(), StringComparison.Ordinal) >= 0)
-                && (string.IsNullOrEmpty(_address) || x.Address.IndexOf(_address.Trim(), StringComparison.Ordinal) >= 0));
         }
     }
 }

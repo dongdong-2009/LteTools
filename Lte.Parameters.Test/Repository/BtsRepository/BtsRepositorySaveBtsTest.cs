@@ -29,10 +29,10 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
         {
             AssertOriginalParameters();
             int expectedSaved = (btsInfos[0].BtsId == repository.Object.GetAll().ElementAt(0).BtsId) ? 1 : 2;
-            SaveBtsListService service = new ByExcelInfoSaveBtsListService(
-                repository.Object, btsInfos, townRepository);
             ParametersDumpInfrastructure infrastructure = new ParametersDumpInfrastructure();
-            service.Save(infrastructure, true);
+            ByExcelInfoSaveBtsListService service = new ByExcelInfoSaveBtsListService(
+                repository.Object, infrastructure, townRepository);
+            service.Save(btsInfos, true);
             Assert.AreEqual(repository.Object.Count(), expectedSaved + 1);
 
             for (int i = 1; i < repository.Object.Count(); i++)
@@ -107,10 +107,10 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
         {
             helper.AssertOriginalParameters();
             helper.AssertOriginalBtsInfos();
-            SaveBtsListService service = new ByExcelInfoSaveBtsListService(
-                repository.Object, btsInfos, townRepository.Object, lteRepository.Object);
             ParametersDumpInfrastructure infrastructure = new ParametersDumpInfrastructure();
-            service.Save(infrastructure, true);
+            ByExcelInfoSaveBtsListService service = new ByExcelInfoSaveBtsListService(
+                repository.Object, infrastructure, townRepository.Object, lteRepository.Object);
+            service.Save(btsInfos, true);
             Assert.AreEqual(infrastructure.CdmaBtsUpdated, 2, "failure");
             Assert.AreEqual(repository.Object.Count(), 3);
             Assert.AreEqual(repository.Object.GetAll().ElementAt(0).ENodebId, -1);

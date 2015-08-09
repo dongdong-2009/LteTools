@@ -68,9 +68,9 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
 
         protected bool SaveOneBts(BtsExcel btsInfo)
         {
-            SaveOneBtsService service = new TownListConsideredSaveOneBtsService(repository.Object,
-                btsInfo, townRepository.Object);
-            return service.SaveOneBts(true);
+            TownListConsideredSaveOneBtsService service = new TownListConsideredSaveOneBtsService(repository.Object,
+                townRepository.Object);
+            return service.SaveOneBts(btsInfo, true);
         }
     }
 }

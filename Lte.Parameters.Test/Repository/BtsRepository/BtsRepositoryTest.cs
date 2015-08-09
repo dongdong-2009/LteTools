@@ -53,9 +53,7 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
         [Test]
         public void TestBtsRepository_QueryBtsByTownIdAndName()
         {
-            QueryBtsService byNameBtsService
-                = new ByTownIdAndNameQueryBtsService(repository.Object, 122, "FoshanZhaoming");
-            CdmaBts bts = byNameBtsService.QueryBts();
+            CdmaBts bts = repository.Object.QueryBts(122, "FoshanZhaoming");
             Assert.IsNotNull(bts);
             Assert.AreEqual(bts.BtsId, 1);
             Assert.AreEqual(bts.Longtitute, 112.9987);
@@ -132,27 +130,25 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
         [Test]
         public void TestBtsRepository_DeleteBts_ByBtsId()
         {
-            DeleteOneBtsService deleteOneBtsService = new DeleteOneBtsService(repository.Object, 1);
             Assert.AreEqual(repository.Object.Count(), 1);
             IEnumerable<CdmaBts> btss = repository.Object.GetAll();
             Assert.AreEqual(btss.Count(), 1);
-            CdmaBts bts = repository.Object.FirstOrDefault(x => x.Id == 1);
+            CdmaBts bts = repository.Object.GetAll().FirstOrDefault(x => x.BtsId == 1);
             Assert.IsNotNull(bts);
-            Assert.IsTrue(deleteOneBtsService.Delete());
+            Assert.IsTrue(repository.Object.DeleteOneBts(1), "Delete Failed");
             Assert.AreEqual(repository.Object.Count(), 0);
-            Assert.IsFalse(deleteOneBtsService.Delete());
+            bts = repository.Object.GetAll().FirstOrDefault(x => x.BtsId == 1);
+            Assert.IsNull(bts);
+            Assert.IsFalse(repository.Object.DeleteOneBts(1), "Delete Success");
         }
 
         [Test]
         public void TestBtsRepository_DeleteBts_ByTownAndName()
         {
             Assert.AreEqual(repository.Object.Count(), 1);
-            DeleteOneBtsService deleteOneBtsService = new DeleteOneBtsService(repository.Object,
-                townRepository.Object, "Chancheng", "Qinren", "FoshanZhaoming");
-            Assert.IsTrue(deleteOneBtsService.Delete());
+            Assert.IsTrue(repository.Object.DeleteOneBts(townRepository.Object, "Chancheng", "Qinren", "FoshanZhaoming"));
             Assert.AreEqual(repository.Object.Count(), 0);
-            deleteOneBtsService = new DeleteOneBtsService(repository.Object, 1);
-            Assert.IsFalse(deleteOneBtsService.Delete());
+            Assert.IsFalse(repository.Object.DeleteOneBts(townRepository.Object, "Chancheng", "Qinren", "FoshanZhaoming"));
         }
     }
 }

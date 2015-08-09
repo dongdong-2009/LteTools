@@ -9,10 +9,7 @@ namespace Lte.Parameters.Kpi.Concrete
 {
     public class CdmaBtsDumpRepository : IBtsDumpRepository<BtsExcel>
     {
-        private readonly ITownRepository townRepository;
-        private readonly IENodebRepository eNodebRepository;
-        private readonly IBtsRepository btsRepository;
-        private readonly ParametersDumpInfrastructure infrastructure;
+        private readonly ByExcelInfoSaveBtsListService service;
 
         public bool ImportBts { get; set; }
         public bool UpdateBts { get; set; }
@@ -23,18 +20,14 @@ namespace Lte.Parameters.Kpi.Concrete
             IBtsRepository btsRepository,
             ParametersDumpInfrastructure infrastructure)
         {
-            this.townRepository = townRepository;
-            this.eNodebRepository = eNodebRepository;
-            this.btsRepository = btsRepository;
-            this.infrastructure = infrastructure;
+            service = new ByExcelInfoSaveBtsListService(
+                btsRepository, infrastructure, townRepository, eNodebRepository);
         }
 
         public void InvokeAction(IExcelBtsImportRepository<BtsExcel> importRepository)
         {
             if (!ImportBts || importRepository.BtsExcelList.Count <= 0) return;
-            SaveBtsListService service = new ByExcelInfoSaveBtsListService(
-                btsRepository, importRepository.BtsExcelList, townRepository, eNodebRepository);
-            service.Save(infrastructure, UpdateBts);
+            service.Save(importRepository.BtsExcelList, UpdateBts);
         }
     }
 

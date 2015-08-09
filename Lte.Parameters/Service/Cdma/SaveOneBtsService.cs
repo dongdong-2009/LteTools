@@ -13,37 +13,30 @@ namespace Lte.Parameters.Service.Cdma
     {
         protected readonly IBtsRepository _repository;
 
-        protected BtsExcel _btsInfo;
-
         protected int _townId;
 
-        public abstract bool SaveOneBts(bool updateBts);
-
-        protected SaveOneBtsService(IBtsRepository repository,
-            BtsExcel btsInfo)
+        protected SaveOneBtsService(IBtsRepository repository)
         {
             _repository = repository;
-            _btsInfo = btsInfo;
         }
     }
 
-    public class TownListConsideredSaveOneBtsService : SaveOneBtsService
+    public sealed class TownListConsideredSaveOneBtsService : SaveOneBtsService
     {
-        private readonly QueryBtsService _byNameBtsService;
+        private readonly ITownRepository _townRepository;
 
-        public TownListConsideredSaveOneBtsService(IBtsRepository repository,
-            BtsExcel btsInfo, ITownRepository townRepository)
-            : base(repository, btsInfo)
+        public TownListConsideredSaveOneBtsService(IBtsRepository repository, ITownRepository townRepository)
+            : base(repository)
         {
-            _townId = townRepository.Towns.QueryId(btsInfo.DistrictName, btsInfo.TownName);
-            _byNameBtsService
-                = new ByTownIdAndNameQueryBtsService(repository, _townId, btsInfo.Name);
+            _townRepository = townRepository;
         }
 
-        public override bool SaveOneBts(bool updateBts)
+        public bool SaveOneBts(BtsExcel btsInfo, bool updateBts)
         {
-            CdmaBts bts = _byNameBtsService.QueryBts();
-            CdmaBts existedENodebWithSameId = _repository.GetAll().FirstOrDefault(x => x.BtsId == _btsInfo.BtsId);
+            _townId = _townRepository.Towns.QueryId(btsInfo.DistrictName, btsInfo.TownName);
+            string name = btsInfo.Name;
+            CdmaBts bts = _repository.QueryBts(_townId, name);
+            CdmaBts existedENodebWithSameId = _repository.GetAll().FirstOrDefault(x => x.BtsId == btsInfo.BtsId);
             bool addENodeb = false;
 
             if (bts == null)
@@ -60,7 +53,7 @@ namespace Lte.Parameters.Service.Cdma
             if (addENodeb)
             {
                 bts.TownId = _townId;
-                bts.Import(_btsInfo, true);
+                bts.Import(btsInfo, true);
                 _repository.Insert(bts);
             }
             else if (updateBts)
@@ -69,7 +62,7 @@ namespace Lte.Parameters.Service.Cdma
                 if (Math.Abs(bts.Longtitute) < tolerance && Math.Abs(bts.Lattitute) < tolerance)
                 {
                     bts.TownId = _townId;
-                    bts.Import(_btsInfo, false);
+                    bts.Import(btsInfo, false);
                     _repository.Update(bts);
                 }
                 else
@@ -79,16 +72,15 @@ namespace Lte.Parameters.Service.Cdma
         }
     }
 
-    public class TownIdAssignedSaveOneBtsService : SaveOneBtsService
+    public sealed class TownIdAssignedSaveOneBtsService : SaveOneBtsService
     {
         private readonly ENodebBaseRepository _baseRepository;
         private readonly List<ENodeb> _eNodebList;
 
         public TownIdAssignedSaveOneBtsService(IBtsRepository repository,
-            ENodebBaseRepository baseRepository,
-            BtsExcel btsInfo, int townId,
+            ENodebBaseRepository baseRepository, int townId,
             List<ENodeb> eNodebList = null)
-            : base(repository, btsInfo)
+            : base(repository)
         {
             _baseRepository = baseRepository;
             _eNodebList = eNodebList;
@@ -100,31 +92,26 @@ namespace Lte.Parameters.Service.Cdma
             set { _townId = value; }
         }
 
-        public BtsExcel BtsExcel 
+        public bool SaveOneBts(BtsExcel btsInfo, bool updateBts)
         {
-            set { _btsInfo = value; }
-        }
-
-        public override bool SaveOneBts(bool updateBts)
-        {
-            ENodebBase eNodebBase = _baseRepository.QueryENodeb(_btsInfo.BtsId);
+            ENodebBase eNodebBase = _baseRepository.QueryENodeb(btsInfo.BtsId);
 
             CdmaBts bts;
             if (eNodebBase == null)
             {
                 bts = new CdmaBts();
                 bts.TownId = _townId;
-                bts.Import(_btsInfo, true);
+                bts.Import(btsInfo, true);
                 bts.ImportLteInfo(_eNodebList);
                 _repository.Insert(bts);
                 return true;
             }
             if (!updateBts) return false;
-            bts = _repository.GetAll().FirstOrDefault(x => x.BtsId == _btsInfo.BtsId);
+            bts = _repository.GetAll().FirstOrDefault(x => x.BtsId == btsInfo.BtsId);
             if (bts != null)
             {
                 bts.TownId = _townId;
-                bts.Import(_btsInfo, false);
+                bts.Import(btsInfo, false);
                 bts.ImportLteInfo(_eNodebList);
                 _repository.Update(bts);
             }

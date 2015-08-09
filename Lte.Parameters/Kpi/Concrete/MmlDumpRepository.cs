@@ -25,7 +25,7 @@ namespace Lte.Parameters.Kpi.Concrete
             if (totalLength == 0) { return; }
             SaveBtsListService btsService = new ByDbInfoSaveBtsListService(btsRepository,
                 mmlRepository.CdmaBtsList);
-            btsService.Save(infrastructure, false);
+            btsService.Save(infrastructure);
             SaveCdmaCellListService saveService=new BtsConsideredSaveCdmaListService(cdmaCellRepository,
                 mmlRepository.CdmaCellList, btsRepository);
             saveService.Save(infrastructure);

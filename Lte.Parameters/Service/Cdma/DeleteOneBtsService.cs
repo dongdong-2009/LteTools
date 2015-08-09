@@ -6,50 +6,23 @@ using Lte.Parameters.Region.Service;
 
 namespace Lte.Parameters.Service.Cdma
 {
-    public class DeleteOneBtsService
+    public static class DeleteOneBtsService
     {
-        private readonly IBtsRepository _repository;
-        private readonly CdmaBts _bts;
-
-        public DeleteOneBtsService(IBtsRepository repository)
+        public static bool DeleteOneBts(this IBtsRepository repository, int btsId)
         {
-            _repository = repository;
+            CdmaBts bts = repository.GetAll().FirstOrDefault(x=>x.BtsId==btsId);
+            if (bts == null) return false;
+            repository.Delete(bts);
+            return true;
         }
 
-        public DeleteOneBtsService(IBtsRepository repository, CdmaBts bts)
-            : this(repository)
-        {
-            _bts = bts;
-        }
-
-        public DeleteOneBtsService(IBtsRepository repository, int townId, string btsName)
-            : this(repository)
-        {
-            QueryBtsService byNameBtsService
-                = new ByTownIdAndNameQueryBtsService(repository, townId, btsName);
-            _bts = byNameBtsService.QueryBts();
-        }
-
-        public DeleteOneBtsService(IBtsRepository repository, int btsId)
-            : this(repository)
-        {
-            _bts = repository.FirstOrDefault(x=>x.BtsId==btsId);
-        }
-
-        public DeleteOneBtsService(IBtsRepository repository, ITownRepository townRepository,
+        public static bool DeleteOneBts(this IBtsRepository repository, ITownRepository townRepository,
             string districtName, string townName, string btsName)
-            : this(repository)
         {
             int townId = townRepository.Towns.ToList().QueryId(districtName, townName);
-            QueryBtsService byNameBtsService
-                = new ByTownIdAndNameQueryBtsService(repository, townId, btsName);
-            _bts = byNameBtsService.QueryBts();
-        }
-
-        public bool Delete()
-        {
-            if (_bts == null) return false;
-            _repository.Delete(_bts);
+            CdmaBts bts = repository.QueryBts(townId, btsName);
+            if (bts == null) return false;
+            repository.Delete(bts);
             return true;
         }
     }
