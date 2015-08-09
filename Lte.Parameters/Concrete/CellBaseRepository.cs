@@ -18,7 +18,7 @@ namespace Lte.Parameters.Concrete
         public CellBaseRepository(ICellRepository inputRepository)
         {
             cellBaseList.Clear();
-            foreach (Cell cell in inputRepository.Cells.ToList())
+            foreach (Cell cell in inputRepository.GetAllList())
             {
                 cellBaseList.Add(new CellBase
                 {

@@ -11,8 +11,20 @@ namespace Lte.Evaluations.Test.Infrastructure
         private readonly EvaluationInfrastructure infrastructure
             = new EvaluationInfrastructure();
 
+        private void TestRegionAndMeasurePointList()
+        {
+            Assert.IsTrue(infrastructure.Region.Length > 4000);
+            Assert.AreEqual(infrastructure.MeasurePointList.Count(), 0);
+        }
+
+        private void TestRegionAndMeasurePointListWithValidCells()
+        {
+            Assert.IsTrue(infrastructure.Region.Length > 4000);
+            Assert.AreEqual(infrastructure.MeasurePointList.Count(), infrastructure.Region.Length);
+        }
+
         [Test]
-        public void TestEvaluationAddCell_AddOneCell()
+        public void TestEvaluationAddCell_AddCell_WithoutInitailizingRegion()
         {
             infrastructure.AddCell(new EvaluationOutdoorCell
             {
@@ -22,13 +34,68 @@ namespace Lte.Evaluations.Test.Infrastructure
                 Frequency = 1825, 
                 Longtitute = 113.001,
                 Lattitute = 23.001,
-                Azimuth = 60
+                Azimuth = 60,
+                Height = 20
             });
-            Assert.IsNotNull(infrastructure);
-            Assert.IsNotNull(infrastructure.MeasurePointList);
-            Assert.IsNotNull(infrastructure.Region);
-            Assert.AreEqual(infrastructure.Region.Length, 4422);
-            Assert.AreEqual(infrastructure.MeasurePointList.Count(), 4422);
+            TestRegionAndMeasurePointList();
+            Assert.AreEqual(infrastructure.Region[5].CellRepository.CellList.Count, 0);
+            infrastructure.AddCell(new EvaluationOutdoorCell
+            {
+                Pci = 0,
+                AntennaGain = 18,
+                RsPower = 16.2,
+                Frequency = 1825,
+                Longtitute = 113.001,
+                Lattitute = 23.001,
+                Azimuth = 60,
+                Height = 20
+            });
+            TestRegionAndMeasurePointList();
+            Assert.AreEqual(infrastructure.Region[5].CellRepository.CellList.Count, 0);
+            infrastructure.AddCell(new EvaluationOutdoorCell
+            {
+                Pci = 0,
+                AntennaGain = 18,
+                RsPower = 16.2,
+                Frequency = 1825,
+                Longtitute = 113.001,
+                Lattitute = 23.001,
+                Azimuth = 180,
+                Height = 20
+            });
+            TestRegionAndMeasurePointList();
+            Assert.AreEqual(infrastructure.Region[5].CellRepository.CellList.Count, 0);
+            infrastructure.AddCell(new EvaluationOutdoorCell
+            {
+                Pci = 0,
+                AntennaGain = 18,
+                RsPower = 16.2,
+                Frequency = 1825,
+                Longtitute = 113.001,
+                Lattitute = 23.002,
+                Azimuth = 180,
+                Height = 20
+            });
+            TestRegionAndMeasurePointList();
+            Assert.AreEqual(infrastructure.Region[5].CellRepository.CellList.Count, 0);
+        }
+
+        [Test]
+        public void TestEvaluationAddCell_AddFourCells_WithInitailizingRegion()
+        {
+            infrastructure.AddCell(new EvaluationOutdoorCell
+            {
+                Pci = 0,
+                AntennaGain = 18,
+                RsPower = 16.2,
+                Frequency = 1825,
+                Longtitute = 113.001,
+                Lattitute = 23.001,
+                Azimuth = 60,
+                Height = 20
+            });
+            infrastructure.InitializeRegion();
+            TestRegionAndMeasurePointListWithValidCells();
             Assert.AreEqual(infrastructure.Region[5].CellRepository.CellList.Count, 1);
             infrastructure.AddCell(new EvaluationOutdoorCell
             {
@@ -38,11 +105,11 @@ namespace Lte.Evaluations.Test.Infrastructure
                 Frequency = 1825,
                 Longtitute = 113.001,
                 Lattitute = 23.001,
-                Azimuth = 60
+                Azimuth = 60,
+                Height = 20
             });
-            Assert.IsNotNull(infrastructure.Region);
-            Assert.AreEqual(infrastructure.Region.Length, 4422);
-            Assert.AreEqual(infrastructure.MeasurePointList.Count(), 4422);
+            infrastructure.InitializeRegion();
+            TestRegionAndMeasurePointListWithValidCells();
             Assert.AreEqual(infrastructure.Region[5].CellRepository.CellList.Count, 1);
             infrastructure.AddCell(new EvaluationOutdoorCell
             {
@@ -52,10 +119,11 @@ namespace Lte.Evaluations.Test.Infrastructure
                 Frequency = 1825,
                 Longtitute = 113.001,
                 Lattitute = 23.001,
-                Azimuth = 180
+                Azimuth = 180,
+                Height = 20
             });
-            Assert.AreEqual(infrastructure.Region.Length, 4422);
-            Assert.AreEqual(infrastructure.MeasurePointList.Count(), 4422);
+            infrastructure.InitializeRegion();
+            TestRegionAndMeasurePointListWithValidCells();
             Assert.AreEqual(infrastructure.Region[5].CellRepository.CellList.Count, 2);
             infrastructure.AddCell(new EvaluationOutdoorCell
             {
@@ -65,10 +133,11 @@ namespace Lte.Evaluations.Test.Infrastructure
                 Frequency = 1825,
                 Longtitute = 113.001,
                 Lattitute = 23.002,
-                Azimuth = 180
+                Azimuth = 180,
+                Height = 20
             });
-            Assert.AreEqual(infrastructure.Region.Length, 4556);
-            Assert.AreEqual(infrastructure.MeasurePointList.Count(), 4556);
+            infrastructure.InitializeRegion();
+            TestRegionAndMeasurePointListWithValidCells();
             Assert.AreEqual(infrastructure.Region[5].CellRepository.CellList.Count, 3);
         }
     }

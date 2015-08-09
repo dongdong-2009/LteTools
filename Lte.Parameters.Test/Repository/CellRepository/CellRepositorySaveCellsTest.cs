@@ -65,11 +65,11 @@ namespace Lte.Parameters.Test.Repository.CellRepository
         [Test]
         public void TestCellRepositorySaveCells_FirstCell_ENodebExist_CellNotExist()
         {
-            Assert.AreEqual(repository.Object.Cells.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
             Assert.AreEqual(SaveCells(cellInfos), 2);
-            Assert.AreEqual(repository.Object.Cells.Count(), 3);
-            Assert.IsTrue(repository.Object.Cells.ElementAt(1).IsOutdoor);
-            Assert.AreEqual(repository.Object.Cells.ElementAt(1).AntennaPorts, AntennaPortsConfigure.Antenna2T4R);
+            Assert.AreEqual(repository.Object.Count(), 3);
+            Assert.IsTrue(repository.Object.GetAll().ElementAt(1).IsOutdoor);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).AntennaPorts, AntennaPortsConfigure.Antenna2T4R);
         }
 
         [Test]
@@ -78,9 +78,9 @@ namespace Lte.Parameters.Test.Repository.CellRepository
             int[] result = SaveCellInfos(cellInfos);
             Assert.AreEqual(result[0], 2);
             Assert.AreEqual(result[1], 0);
-            Assert.AreEqual(repository.Object.Cells.Count(), 3);
-            Assert.IsTrue(repository.Object.Cells.ElementAt(1).IsOutdoor);
-            Assert.AreEqual(repository.Object.Cells.ElementAt(1).AntennaPorts, AntennaPortsConfigure.Antenna2T4R);
+            Assert.AreEqual(repository.Object.Count(), 3);
+            Assert.IsTrue(repository.Object.GetAll().ElementAt(1).IsOutdoor);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).AntennaPorts, AntennaPortsConfigure.Antenna2T4R);
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
         {
             cellInfos[0].ENodebId = 2;
             Assert.AreEqual(SaveCells(cellInfos), 1);
-            Assert.AreEqual(repository.Object.Cells.Count(), 2);
+            Assert.AreEqual(repository.Object.Count(), 2);
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
             int[] result = SaveCellInfos(cellInfos);
             Assert.AreEqual(result[0], 1);
             Assert.AreEqual(result[1], 0);
-            Assert.AreEqual(repository.Object.Cells.Count(), 2);
+            Assert.AreEqual(repository.Object.Count(), 2);
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
         {
             cellInfos[0].SectorId = 0;
             Assert.AreEqual(SaveCells(cellInfos), 1);
-            Assert.AreEqual(repository.Object.Cells.Count(), 2);
+            Assert.AreEqual(repository.Object.Count(), 2);
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
             int[] result = SaveCellInfos(cellInfos);
             Assert.AreEqual(result[0], 1);
             Assert.AreEqual(result[1], 0);
-            Assert.AreEqual(repository.Object.Cells.Count(), 2);
+            Assert.AreEqual(repository.Object.Count(), 2);
         }
     }
 }

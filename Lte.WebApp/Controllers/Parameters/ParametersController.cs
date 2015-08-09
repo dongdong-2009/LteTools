@@ -134,7 +134,7 @@ namespace Lte.WebApp.Controllers.Parameters
                 }
                 photoRepository.SaveChanges();
             }
-            IEnumerable<Cell> cells = cellRepository.Cells.Where(x => x.ENodebId == eNodebId).ToList();
+            IEnumerable<Cell> cells = cellRepository.GetAll().Where(x => x.ENodebId == eNodebId).ToList();
             foreach (Cell cell in cells)
             {
                 HttpPostedFileBase file = Request.Files["cellImage-" + cell.SectorId];

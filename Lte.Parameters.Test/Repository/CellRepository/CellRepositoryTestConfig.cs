@@ -20,7 +20,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
 
         protected Cell QueryCell(int eNodebId, byte sectorId)
         {
-            return repository.Object.Cells.FirstOrDefault(x => x.ENodebId == eNodebId && x.SectorId == sectorId);
+            return repository.Object.GetAll().FirstOrDefault(x => x.ENodebId == eNodebId && x.SectorId == sectorId);
         }
 
         protected void Initialize()
@@ -32,7 +32,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
                     ENodebId = 1
                 }
             }.AsQueryable());
-            repository.SetupGet(x => x.Cells).Returns(new List<Cell> 
+            repository.Setup(x => x.GetAll()).Returns(new List<Cell> 
             {
                 new Cell
                 {
@@ -50,6 +50,8 @@ namespace Lte.Parameters.Test.Repository.CellRepository
                     AntennaPorts = AntennaPortsConfigure.Antenna2T2R
                 }
             }.AsQueryable());
+            repository.Setup(x => x.GetAllList()).Returns(repository.Object.GetAll().ToList());
+            repository.Setup(x => x.Count()).Returns(repository.Object.GetAll().Count());
             repository.MockCellRepositoryDeleteCell();
             repository.MockCellRepositorySaveCell();
             cellInfo = new CellExcel

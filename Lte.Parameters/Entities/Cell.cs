@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Abp.Domain.Entities;
 using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Geo.Service;
 using Lte.Domain.LinqToCsv;
@@ -8,12 +9,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Lte.Parameters.Entities
 {
-    public class CellBase : ILteCell
+    public class CellBase : Entity, ILteCell
     {
-        [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         [Display(Name = "基站编号")]
         public int ENodebId { get; set; }
 

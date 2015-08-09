@@ -120,7 +120,7 @@ namespace Lte.WebApp.Controllers.Parameters
 
         public IEnumerable<Cell> GetCells(double west, double east, double south, double north)
         {
-            return _repository.Cells.Where(x =>
+            return _repository.GetAll().Where(x =>
                 x.Longtitute >= west && x.Longtitute <= east && x.Lattitute >= south && x.Lattitute <= north);
         } 
     }

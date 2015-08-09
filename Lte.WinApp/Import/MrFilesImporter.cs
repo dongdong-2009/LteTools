@@ -23,7 +23,7 @@ namespace Lte.WinApp.Import
             RsrpTaStatList = new List<MroRsrpTa>();
             InterferenceStats = new List<PureInterferenceStat>();
             _neighborRepository
-                = new NearestPciCellRepository(cellRepository.Cells.ToList());
+                = new NearestPciCellRepository(cellRepository.GetAllList());
             _neighborCellRepository = neighborCellRepository;
         }
 

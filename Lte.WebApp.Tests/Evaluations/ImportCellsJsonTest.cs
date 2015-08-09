@@ -28,7 +28,9 @@ namespace Lte.WebApp.Tests.Evaluations
                 new ENodeb { ENodebId = 2, Name = "E-2" },
                 new ENodeb { ENodebId = 3, Name = "E-3" }
             }.AsQueryable());
-            cellRepository.SetupGet(x => x.Cells).Returns(new List<Cell>
+            eNodebRepository.Setup(x => x.GetAllList()).Returns(eNodebRepository.Object.GetAll().ToList());
+            eNodebRepository.Setup(x => x.Count()).Returns(eNodebRepository.Object.GetAll().Count());
+            cellRepository.Setup(x => x.GetAll()).Returns(new List<Cell>
             {
                 new Cell { ENodebId = 1, SectorId = 1, Height = 10 },
                 new Cell { ENodebId = 1, SectorId = 2, Height = 10 },
@@ -40,6 +42,8 @@ namespace Lte.WebApp.Tests.Evaluations
                 new Cell { ENodebId = 3, SectorId = 2, Height = 10 },
                 new Cell { ENodebId = 3, SectorId = 3, Height = 10 }
             }.AsQueryable());
+            cellRepository.Setup(x => x.GetAllList()).Returns(cellRepository.Object.GetAll().ToList());
+            cellRepository.Setup(x => x.Count()).Returns(cellRepository.Object.GetAll().Count());
             controller = new EvaluationController(null, eNodebRepository.Object, cellRepository.Object);
             controller.ResetENodebList();
         }

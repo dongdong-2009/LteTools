@@ -64,7 +64,7 @@ namespace Lte.WinApp.ViewPages
         private void OpenMr_Click(object sender, RoutedEventArgs e)
         {
             _neighborRepository = new EFLteNeighborCellRepository();
-            List<Cell> cells = (new EFCellRepository()).Cells.ToList();
+            List<Cell> cells = (new EFCellRepository()).GetAllList();
             _mrImporter = new MrFileInfoListImporter(_statList, cells, _neighborRepository)
             {
                 FileInfoList = _fileInfoList

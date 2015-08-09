@@ -22,7 +22,7 @@ namespace Lte.Evaluations.Test.Service
                 new ENodeb {ENodebId = 1, Name = "E-1"},
                 new ENodeb {ENodebId = 2, Name = "E-2"}
             }.AsQueryable());
-            mockCellRepository.SetupGet(x => x.Cells).Returns(new List<Cell>
+            mockCellRepository.Setup(x => x.GetAll()).Returns(new List<Cell>
             {
                 new Cell {ENodebId = 1, SectorId = 0, Height = 10},
                 new Cell {ENodebId = 1, SectorId = 1, Height = 10},

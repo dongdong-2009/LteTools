@@ -76,7 +76,7 @@ namespace Lte.Parameters.Service.Public
             foreach (CollegeCellExcel excel in cellExcels)
             {
                 Cell cell =
-                    cellRepository.Cells.FirstOrDefault(
+                    cellRepository.GetAll().FirstOrDefault(
                         x => x.ENodebId == excel.ENodebId && x.SectorId == excel.SectorId);
                 if (cell==null) continue;
                 InfrastructureInfo infrastructure = _repository.InfrastructureInfos.FirstOrDefault(x =>

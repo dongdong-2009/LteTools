@@ -34,7 +34,9 @@ namespace Lte.Parameters.Test.Service
             {
                 cellList.Add(new Cell {ENodebId = eNodebIds[i], SectorId = sectorIds[i], Height = 30});
             }
-            repository.SetupGet(x => x.Cells).Returns(cellList.AsQueryable());
+            repository.Setup(x => x.GetAll()).Returns(cellList.AsQueryable());
+            repository.Setup(x => x.GetAllList()).Returns(repository.Object.GetAll().ToList());
+            repository.Setup(x => x.Count()).Returns(repository.Object.GetAll().Count());
             List<EvaluationOutdoorCell> outdoorCells = repository.Object.Query(eNodebs);
             Assert.AreEqual(outdoorCells.Count, expectedLength);
         }

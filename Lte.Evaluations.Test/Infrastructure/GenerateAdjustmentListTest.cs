@@ -35,7 +35,7 @@ namespace Lte.Evaluations.Test.Infrastructure
                     Longtitute = 113.0002, Lattitute = 23.0001,
                     Rsrp = -94.3 }
             };
-            mockCellRepository.SetupGet(x => x.Cells).Returns(
+            mockCellRepository.Setup(x => x.GetAll()).Returns(
                 new List<Cell> {
                     new Cell { 
                         ENodebId = 1, SectorId = 2, Frequency = 100,

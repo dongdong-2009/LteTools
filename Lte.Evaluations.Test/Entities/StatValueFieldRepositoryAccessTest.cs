@@ -5,11 +5,12 @@ using NUnit.Framework;
 namespace Lte.Evaluations.Test.Entities
 {
     [TestFixture]
-    public class StatValueFieldRepositoryAccessTest : StatValueFieldRepositoryTest
+    public class StatValueFieldRepositoryAccessTest : StatValueFieldTestConfig
     {
         [SetUp]
         public void TestInitialize()
         {
+            Initialize();
             Repository = new StatValueFieldRepository
             {
                 FieldList = statValueFieldList
@@ -30,7 +31,7 @@ namespace Lte.Evaluations.Test.Entities
         {
             Assert.IsNotNull(Repository["field1"]);
             Repository["field1"].UpdateIntervalUpLevel(1, 2.5);
-            Assert.AreEqual(Repository.FieldDoc.ToString(), 
+            Assert.AreEqual(Repository.FieldDoc.ToString().Replace("\r\n", "\n"), 
                 @"<Setting>
   <Field ID=""field1"">
     <Interval>
@@ -84,7 +85,7 @@ namespace Lte.Evaluations.Test.Entities
         {
             Assert.IsNotNull(Repository["field2"]);
             Repository["field2"].UpdateIntervalLowLevel(1, 4.5);
-            Assert.AreEqual(Repository.FieldDoc.ToString(), @"<Setting>
+            Assert.AreEqual(Repository.FieldDoc.ToString().Replace("\r\n", "\n"), @"<Setting>
   <Field ID=""field1"">
     <Interval>
       <LowLevel>0</LowLevel>
@@ -136,7 +137,7 @@ namespace Lte.Evaluations.Test.Entities
         public void TestStatValueFieldRepository_ModifyColor()
         {
             Repository["field1"].IntervalList[2].Color.ColorB = 17;
-            Assert.AreEqual(Repository.FieldDoc.ToString(), @"<Setting>
+            Assert.AreEqual(Repository.FieldDoc.ToString().Replace("\r\n", "\n"), @"<Setting>
   <Field ID=""field1"">
     <Interval>
       <LowLevel>0</LowLevel>
@@ -202,7 +203,7 @@ namespace Lte.Evaluations.Test.Entities
                                 }
                             }
             };
-            Assert.AreEqual(Repository.FieldDoc.ToString(), @"<Setting>
+            Assert.AreEqual(Repository.FieldDoc.ToString().Replace("\r\n", "\n"), @"<Setting>
   <Field ID=""field1"">
     <Interval>
       <LowLevel>2</LowLevel>

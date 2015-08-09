@@ -39,7 +39,7 @@ namespace Lte.Parameters.Test.Repository
         [Test]
         public void TestQueryOutdoorCells_AddOneInvalidCell()
         {
-            repository.Object.AddOneCell(new Cell
+            repository.Object.Insert(new Cell
             {
                 ENodebId = 1,
                 SectorId = 2,
@@ -53,7 +53,7 @@ namespace Lte.Parameters.Test.Repository
         [Test]
         public void TestQueryOutdoorCells_AddOneValidCell()
         {
-            repository.Object.AddOneCell(new Cell
+            repository.Object.Insert(new Cell
             {
                 ENodebId = 1,
                 SectorId = 2,
@@ -69,7 +69,7 @@ namespace Lte.Parameters.Test.Repository
         [Test]
         public void TestQueryOutdoorCells_AddOneValidCell_DifferentENodeb()
         {
-            repository.Object.AddOneCell(new Cell
+            repository.Object.Insert(new Cell
             {
                 ENodebId = 2,
                 SectorId = 2,

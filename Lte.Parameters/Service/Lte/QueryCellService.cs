@@ -17,15 +17,14 @@ namespace Lte.Parameters.Service.Lte
 
         private bool Delete(Cell cell)
         {
-            bool result = (cell != null) && _repository.RemoveOneCell(cell);
-            if (!result) return false;
-            _repository.SaveChanges();
+            if (cell == null) return false;
+            _repository.Delete(cell);
             return true;
         }
 
         public bool Delete(int eNodebId, byte sectorId)
         {
-            return Delete(_repository.Cells.FirstOrDefault(x => x.ENodebId == eNodebId && x.SectorId == sectorId));
+            return Delete(_repository.GetAll().FirstOrDefault(x => x.ENodebId == eNodebId && x.SectorId == sectorId));
         }
     }
 

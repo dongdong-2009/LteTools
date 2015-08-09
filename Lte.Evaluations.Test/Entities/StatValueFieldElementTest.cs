@@ -34,7 +34,7 @@ namespace Lte.Evaluations.Test.Entities
         [Test]
         public void TestStatValueField_InputElement()
         {
-            Assert.AreEqual(_fieldElement.ToString(), @"<Field ID=""myFieldName"">
+            Assert.AreEqual(_fieldElement.ToString().Replace("\r",""), @"<Field ID=""myFieldName"">
   <Interval>
     <LowLevel>11</LowLevel>
     <UpLevel>15</UpLevel>

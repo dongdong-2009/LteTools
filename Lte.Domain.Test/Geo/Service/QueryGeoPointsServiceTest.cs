@@ -21,9 +21,7 @@ namespace Lte.Domain.Test.Geo.Service
         {
             IEnumerable<StubGeoPoint> inPoints = inLon.Select((x, i) => new StubGeoPoint
                 (x, inLat[i]));
-            QueryGeoPointsService<StubGeoPoint, GeoPoint> service =
-                new QueryGeoPointsService<StubGeoPoint, GeoPoint>(inPoints);
-            List<GeoPoint> results = service.Query(0.03, 0.01);
+            List<GeoPoint> results = inPoints.Query<StubGeoPoint, GeoPoint>(0.03, 0.01);
             Assert.AreEqual(results.Count, points);
         }
     }

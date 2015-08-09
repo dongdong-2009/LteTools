@@ -1,19 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Abp.Domain.Repositories;
 using Lte.Domain.Geo.Abstract;
 using Lte.Parameters.Entities;
 
 namespace Lte.Parameters.Abstract
 {
-    public interface ICellRepository
+    public interface ICellRepository : IRepository<Cell>
     {
-        IQueryable<Cell> Cells { get; }
-
-        void AddOneCell(Cell cell);
-
-        bool RemoveOneCell(Cell cell);
-
-        void SaveChanges();
     }
 
     public interface ICdmaCellRepository

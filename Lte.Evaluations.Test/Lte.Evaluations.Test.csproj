@@ -112,6 +112,7 @@
     <Compile Include="Entities\StatValueFieldRepositoryAccessTest.cs" />
     <Compile Include="Entities\StatValueFieldRepositoryTest.cs" />
     <Compile Include="Entities\StatValueFieldTest.cs" />
+    <Compile Include="Entities\StatValueFieldTestConfig.cs" />
     <Compile Include="Entities\StatValueGetColorTest.cs" />
     <Compile Include="Entities\StatValueGetPercentageStatTest.cs" />
     <Compile Include="Entities\StatValueIntervalConstructorTest.cs" />

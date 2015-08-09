@@ -53,7 +53,7 @@ namespace Lte.WinApp.Test.Import
         [SetUp]
         public void SetUp()
         {
-            cellRepository.SetupGet(x => x.Cells).Returns(new List<Cell>
+            cellRepository.SetupGet(x => x.GetAll()).Returns(new List<Cell>
             {
                 new Cell {ENodebId = 50011, SectorId = 0, Pci = 301},
                 new Cell {ENodebId = 50011, SectorId = 1, Pci = 302},

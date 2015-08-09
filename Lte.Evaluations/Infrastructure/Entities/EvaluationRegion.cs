@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Lte.Domain.Geo;
 using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Geo.Service;
 using Lte.Domain.Measure;
-using Lte.Domain.Regular;
 using Lte.Evaluations.Entities;
 using Lte.Evaluations.Service;
 
@@ -55,9 +53,7 @@ namespace Lte.Evaluations.Infrastructure.Entities
             if (!cellList.Any()) return;
             degreeInterval = distanceInMeter.GetDegreeInterval();
             degreeSpan = Math.Abs(degreeSpan / 2);
-            QueryGeoPointsService<IOutdoorCell, MeasurePoint> service = new QueryGeoPointsService
-                <IOutdoorCell, MeasurePoint>(cellList); 
-            pointList = service.Query(degreeSpan, degreeInterval).ToArray();
+            pointList = cellList.Query<IOutdoorCell, MeasurePoint> (degreeSpan, degreeInterval).ToArray();
         }
 
         public MeasurePoint this[int i]
@@ -103,7 +99,7 @@ namespace Lte.Evaluations.Infrastructure.Entities
         public void InitializeParameters<TOutdoorCell>(List<TOutdoorCell> cellList, double degreeSpan)
             where TOutdoorCell : IOutdoorCell, IGeoPointReadonly<double>
         {
-            foreach (MeasurePoint point in ValidPointList)
+            foreach (MeasurePoint point in pointList)
             {
                 IEnumerable<TOutdoorCell> tempCellList
                     = point.FilterGeoPointList(cellList, degreeSpan);

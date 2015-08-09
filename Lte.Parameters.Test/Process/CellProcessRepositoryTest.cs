@@ -17,9 +17,9 @@ namespace Lte.Parameters.Test.Process
         [Test]
         public void TestCellProcessRepository_BasicParameters()
         {
-            Assert.AreEqual(repository.Cells.Count(), 1);
-            Assert.AreEqual(repository.Cells.ElementAt(0).ENodebId, 1);
-            Assert.AreEqual(repository.Cells.ElementAt(0).SectorId, 2);
+            Assert.AreEqual(repository.Count(), 1);
+            Assert.AreEqual(repository.GetAll().ElementAt(0).ENodebId, 1);
+            Assert.AreEqual(repository.GetAll().ElementAt(0).SectorId, 2);
         }
 
         [Test]

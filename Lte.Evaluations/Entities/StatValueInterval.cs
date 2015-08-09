@@ -36,10 +36,13 @@ namespace Lte.Evaluations.Entities
             }
         }
 
-        public StatValueInterval() { }
+        public StatValueInterval()
+        {
+            Color=new Color();
+        }
 
-        public StatValueInterval(XElement element)
-        { 
+        public StatValueInterval(XElement element) : this()
+        {
             IntervalLowLevel = element.Element("LowLevel").Value.ConvertToDouble(-1);
             IntervalUpLevel = element.Element("UpLevel").Value.ConvertToDouble(1);
             Color.SetColor(element);

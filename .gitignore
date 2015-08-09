@@ -53,10 +53,6 @@ TestResults/
 TestResult.xml
 
 
-
-*.nunit
-
-
 packages/
 
 uploads/

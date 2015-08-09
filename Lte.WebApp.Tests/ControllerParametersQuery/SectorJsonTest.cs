@@ -1,14 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
-using Lte.Domain.Geo;
 using Lte.Domain.Geo.Entities;
 using Lte.Domain.Geo.Service;
 using Lte.Parameters.Abstract;
 using Lte.Parameters.Entities;
 using Lte.WebApp.Controllers.Parameters;
 using Moq;
-using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Lte.WebApp.Tests.ControllerParametersQuery
@@ -23,14 +20,18 @@ namespace Lte.WebApp.Tests.ControllerParametersQuery
         [SetUp]
         public void TestInitialize()
         {
-            eNodebRepository.SetupGet(x => x.GetAll()).Returns(new List<ENodeb>{
+            eNodebRepository.Setup(x => x.GetAll()).Returns(new List<ENodeb>{
                 new ENodeb{ENodebId=1,Longtitute=112.1,Lattitute=23.1}
             }.AsQueryable());
-            cellRepository.SetupGet(x => x.Cells).Returns(new List<Cell>{
+            eNodebRepository.Setup(x => x.GetAllList()).Returns(eNodebRepository.Object.GetAll().ToList());
+            eNodebRepository.Setup(x => x.Count()).Returns(eNodebRepository.Object.GetAll().Count());
+            cellRepository.Setup(x => x.GetAll()).Returns(new List<Cell>{
                 new Cell{ENodebId=1,SectorId=0,Azimuth=30,Height=10},
                 new Cell{ENodebId=1,SectorId=1,Azimuth=150,Height=10},
                 new Cell{ENodebId=1,SectorId=2,Azimuth=270,Height=10}
             }.AsQueryable());
+            cellRepository.Setup(x => x.GetAllList()).Returns(cellRepository.Object.GetAll().ToList());
+            cellRepository.Setup(x => x.Count()).Returns(cellRepository.Object.GetAll().Count());
             controller = new SectorListController(eNodebRepository.Object,cellRepository.Object);
         }
 

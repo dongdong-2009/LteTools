@@ -51,14 +51,16 @@ namespace Lte.Parameters.Service.Lte
             {
                 Cell cell = new Cell();
                 cell.Import(_cellInfo);
-                _repository.AddOneCell(cell);
+                _repository.Insert(cell);
                 return true;
             }
             if (_updateExisted)
             {
-                Cell cell = _repository.Cells.FirstOrDefault(x => 
+                Cell cell = _repository.GetAll().FirstOrDefault(x => 
                         x.ENodebId == _cellInfo.ENodebId && x.SectorId == _cellInfo.SectorId);
-                if (cell != null) cell.Import(_cellInfo);
+                if (cell == null) return false;
+                cell.Import(_cellInfo);
+                _repository.Update(cell);
                 return true;
             }
             return false;
@@ -83,7 +85,7 @@ namespace Lte.Parameters.Service.Lte
 
         protected override bool SaveWhenENodebNotExisted()
         {
-            Cell cell = _repository.Cells.FirstOrDefault(x =>
+            Cell cell = _repository.GetAll().FirstOrDefault(x =>
                         x.ENodebId == _cellInfo.ENodebId && x.SectorId == _cellInfo.SectorId);
             bool addCell = false;
             if (cell == null)
@@ -94,9 +96,12 @@ namespace Lte.Parameters.Service.Lte
             cell.Import(_cellInfo);
             if (addCell)
             {
-                _repository.AddOneCell(cell);
+                _repository.Insert(cell);
             }
-            _repository.SaveChanges();
+            else
+            {
+                _repository.Update(cell);
+            }
             return true;
         }
     }

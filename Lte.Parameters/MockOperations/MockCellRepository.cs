@@ -11,47 +11,65 @@ namespace Lte.Parameters.MockOperations
         public static void MockCellRepositorySaveCell(
             this Mock<ICellRepository> repository, IEnumerable<Cell> cells)
         {
-            repository.Setup(x => x.AddOneCell(It.IsAny<Cell>())).Callback<Cell>(
-                e => repository.SetupGet(x => x.Cells).Returns(
-                    cells.Concat(new List<Cell> { e }).AsQueryable()));
+            repository.Setup(x => x.Insert(It.IsAny<Cell>())).Callback<Cell>(
+                e =>
+                {
+                    repository.Setup(x => x.GetAll()).Returns(
+                        cells.Concat(new List<Cell> {e}).AsQueryable());
+                    repository.Setup(x => x.Count()).Returns(
+                        repository.Object.GetAll().Count());
+                    repository.Setup(x => x.GetAllList()).Returns(repository.Object.GetAll().ToList());
+                });
         }
 
         public static void MockCellRepositorySaveCell(
             this Mock<ICellRepository> repository)
         {
-            repository.Setup(x => x.AddOneCell(It.IsAny<Cell>())).Callback<Cell>(
+            repository.Setup(x => x.Insert(It.IsAny<Cell>())).Callback<Cell>(
                 e =>
                 {
-                    IEnumerable<Cell> cells = repository.Object.Cells;
-                    repository.SetupGet(x => x.Cells).Returns(
-                    cells.Concat(new List<Cell> { e }).AsQueryable());
+                    IEnumerable<Cell> cells = repository.Object.GetAll();
+                    repository.Setup(x => x.GetAll()).Returns(
+                        cells.Concat(new List<Cell> { e }).AsQueryable());
+                    repository.Setup(x => x.Count()).Returns(
+                        repository.Object.GetAll().Count());
+                    repository.Setup(x => x.GetAllList()).Returns(repository.Object.GetAll().ToList());
                 });
         }
 
         public static void MockCellRepositoryDeleteCell(
             this Mock<ICellRepository> repository, IEnumerable<Cell> cells)
         {
-            repository.Setup(x => x.RemoveOneCell(It.IsAny<Cell>())).Returns(false);
-            repository.Setup(x => x.RemoveOneCell(It.Is<Cell>(e => e != null
+            repository.Setup(x => x.Delete(It.Is<Cell>(e => e != null
                 && cells.FirstOrDefault(y => y == e) != null))
-                ).Returns(true).Callback<Cell>(
-                e => repository.Setup(x => x.Cells).Returns(
-                    cells.Except(new List<Cell> { e }).AsQueryable()));
+                ).Callback<Cell>(
+                e =>
+                {
+                    repository.Setup(x => x.GetAll()).Returns(
+                        cells.Except(new List<Cell> { e }).AsQueryable());
+                    repository.Setup(x => x.Count()).Returns(
+                        repository.Object.GetAll().Count());
+                    repository.Setup(x => x.GetAllList()).Returns(repository.Object.GetAll().ToList());
+                });
         }
 
         public static void MockCellRepositoryDeleteCell(
             this Mock<ICellRepository> repository)
         {
-            repository.Setup(x => x.RemoveOneCell(It.IsAny<Cell>())).Returns(false);
-
             if (repository.Object != null)
             {
-                IEnumerable<Cell> cells = repository.Object.Cells;
-                repository.Setup(x => x.RemoveOneCell(It.Is<Cell>(e => e != null
+                IEnumerable<Cell> cells = repository.Object.GetAll();
+                repository.Setup(x => x.Delete(It.Is<Cell>(e => e != null
                     && cells.FirstOrDefault(y => y == e) != null))
-                    ).Returns(true).Callback<Cell>(
-                    e => repository.Setup(x => x.Cells).Returns(
-                        cells.Except(new List<Cell> { e }).AsQueryable()));
+                    ).Callback<Cell>(
+                    e =>
+                    {
+                        repository.Setup(x => x.GetAll()).Returns(
+                            cells.Except(new List<Cell> { e }).AsQueryable());
+                        repository.Setup(x => x.Count()).Returns(
+                            repository.Object.GetAll().Count());
+                        repository.Setup(x => x.GetAllList()).Returns(repository.Object.GetAll().ToList());
+                    });
             }
         }
     }

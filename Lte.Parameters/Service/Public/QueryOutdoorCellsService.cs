@@ -72,7 +72,8 @@ namespace Lte.Parameters.Service.Public
 
         public override List<TOutdoorCell> Query()
         {
-            IEnumerable<Cell> cells = _repository.Cells.Where(x => x.ENodebId == _eNodeb.ENodebId && x.Height > 0).ToList();
+            IEnumerable<Cell> cells 
+                = _repository.GetAll().Where(x => x.ENodebId == _eNodeb.ENodebId && x.Height > 0).ToList();
             return cells.Select(cell => _outdoorCellConstructor(_eNodeb, cell)).ToList();
         }
     }
@@ -105,7 +106,7 @@ namespace Lte.Parameters.Service.Public
         public static List<EvaluationOutdoorCell> Query(
             this ICellRepository repository, IEnumerable<ENodeb> eNodebs)
         {
-            var cells = from a in repository.Cells.ToList()
+            var cells = from a in repository.GetAllList()
                         join b in eNodebs.ToList()
                         on a.ENodebId equals b.ENodebId
                         where a.Height > 0
@@ -123,7 +124,7 @@ namespace Lte.Parameters.Service.Public
             var results = from a in cells.ToList()
                 join b in eNodebs.ToList()
                     on a.CellId equals b.ENodebId
-                join c in repository.Cells.ToList()
+                join c in repository.GetAllList()
                     on new { a.CellId, a.SectorId } equals new { CellId = c.ENodebId, c.SectorId}
                 select new {Cell = a, EName = b.Name, Info = c};
             IEnumerable<EvaluationOutdoorCell> outdoorCells =

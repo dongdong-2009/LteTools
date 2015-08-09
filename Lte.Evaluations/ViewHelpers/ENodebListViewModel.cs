@@ -90,7 +90,7 @@ namespace Lte.Evaluations.ViewHelpers
             if (eNodeb != null)
             {
                 ENodeb = eNodeb;
-                Cells = cellRepository.Cells.Where(x => x.ENodebId == eNodebId).ToList();
+                Cells = cellRepository.GetAll().Where(x => x.ENodebId == eNodebId).ToList();
             }
             CdmaBts bts = btsRepository.GetAll().FirstOrDefault(x => x.ENodebId == eNodebId);
             if (bts != null)

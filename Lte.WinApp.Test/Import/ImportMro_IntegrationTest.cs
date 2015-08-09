@@ -22,7 +22,7 @@ namespace Lte.WinApp.Test.Import
         [TestFixtureSetUp]
         public void SetUp()
         {
-            cellRepository.SetupGet(x => x.Cells).Returns(new List<Cell>
+            cellRepository.Setup(x => x.GetAll()).Returns(new List<Cell>
             {
                 new Cell {ENodebId = 501250, SectorId = 48, Pci = 111, Longtitute = 112, Lattitute = 23},
                 new Cell {ENodebId = 501250, SectorId = 49, Pci = 112, Longtitute = 112, Lattitute = 23},

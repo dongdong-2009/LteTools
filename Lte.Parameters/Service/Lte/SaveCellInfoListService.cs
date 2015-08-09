@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using Lte.Domain.TypeDefs;
@@ -9,7 +8,6 @@ using Lte.Parameters.Abstract;
 using Lte.Parameters.Concrete;
 using Lte.Parameters.Entities;
 using Lte.Parameters.Kpi.Service;
-using Lte.Parameters.Migrations;
 
 namespace Lte.Parameters.Service.Lte
 {
@@ -26,9 +24,8 @@ namespace Lte.Parameters.Service.Lte
         {
             foreach (Cell cell in cells)
             {
-                _repository.AddOneCell(cell);
+                _repository.Insert(cell);
             }
-            _repository.SaveChanges();
         }
 
         public abstract void Save(ParametersDumpInfrastructure infrastructure);
@@ -60,7 +57,6 @@ namespace Lte.Parameters.Service.Lte
                 _baseRepository.ImportNewCellInfo(info);
                 infrastructure.CellsInserted++;
             }
-            _repository.SaveChanges();
         }
     }
 
@@ -90,7 +86,7 @@ namespace Lte.Parameters.Service.Lte
         {
             var updateCells
                 = from v in _validInfos
-                  join c in _repository.Cells
+                  join c in _repository.GetAll()
                   on new { v.ENodebId, v.SectorId, v.Frequency }
                   equals new { c.ENodebId, c.SectorId, c.Frequency }
                   select new { Info = v, Data = c };
@@ -100,9 +96,9 @@ namespace Lte.Parameters.Service.Lte
                 foreach (var cell in updateCells.Where(x=>x.Data.Pci!=x.Info.Pci))
                 {
                     cell.Data.Pci = cell.Info.Pci;
+                    _repository.Update(cell.Data);
                     infrastructure.CellsUpdated++;
                 }
-                _repository.SaveChanges();
 
                 infrastructure.NeighborPciUpdated = SaveLteCellRelationService.UpdateNeighborPci(_validInfos);
             }

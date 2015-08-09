@@ -36,11 +36,11 @@ namespace Lte.Parameters.Test.Repository.CellRepository
         [Test]
         public void TestCellRepository_SaveCell_ENodebExist_CellNotExist()
         {
-            Assert.AreEqual(repository.Object.Cells.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
             Assert.IsTrue(SaveOneCell());
-            Assert.AreEqual(repository.Object.Cells.Count(), 2);
-            Assert.IsTrue(repository.Object.Cells.ElementAt(1).IsOutdoor);
-            Assert.AreEqual(repository.Object.Cells.ElementAt(1).AntennaPorts, AntennaPortsConfigure.Antenna2T4R);
+            Assert.AreEqual(repository.Object.Count(), 2);
+            Assert.IsTrue(repository.Object.GetAll().ElementAt(1).IsOutdoor);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).AntennaPorts, AntennaPortsConfigure.Antenna2T4R);
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
         {
             cellInfo.ENodebId = 2;
             Assert.IsFalse(SaveOneCell());
-            Assert.AreEqual(repository.Object.Cells.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
         }
 
         [Test]
@@ -56,21 +56,21 @@ namespace Lte.Parameters.Test.Repository.CellRepository
         {
             cellInfo.SectorId = 0;
             Assert.IsTrue(SaveOneCell());
-            Assert.AreEqual(repository.Object.Cells.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
         }
 
         [Test]
         public void TestCellRepository_DeleteCell_CellExist()
         {
             Assert.IsTrue(DeleteOneCell(1, 0));
-            Assert.AreEqual(repository.Object.Cells.Count(), 0);
+            Assert.AreEqual(repository.Object.Count(), 0);
         }
 
         [Test]
         public void TestCellRepository_DeleteCell_CellNotExist()
         {
             Assert.IsFalse(DeleteOneCell(1, 1));
-            Assert.AreEqual(repository.Object.Cells.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
         }
     }
 }

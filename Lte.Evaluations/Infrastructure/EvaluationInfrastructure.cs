@@ -75,9 +75,10 @@ namespace Lte.Evaluations.Infrastructure
 
         public void AddCells(IEnumerable<EvaluationOutdoorCell> cells)
         {
-            IEnumerable<EvaluationOutdoorCell> cellList 
-                = cells.Where(cell => _service.QueryCell(cell) == null).ToList();
-            CellList.AddRange(cellList);
+            foreach (EvaluationOutdoorCell evaluationOutdoorCell in cells)
+            {
+                AddCell(evaluationOutdoorCell);
+            }
         }
 
         public void InitializeRegion()
