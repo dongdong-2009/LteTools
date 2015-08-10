@@ -13,7 +13,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
 
         protected void Initialize()
         {
-            repository.SetupGet(x => x.Cells).Returns(new List<CdmaCell> 
+            repository.Setup(x => x.GetAll()).Returns(new List<CdmaCell> 
             {
                 new CdmaCell
                 {
@@ -30,6 +30,8 @@ namespace Lte.Parameters.Test.Repository.CellRepository
                     RsPower = 15.2
                 }
             }.AsQueryable());
+            repository.Setup(x => x.GetAllList()).Returns(repository.Object.GetAll().ToList());
+            repository.Setup(x => x.Count()).Returns(repository.Object.GetAll().Count());
             repository.MockCdmaCellRepositoryDeleteCell();
             repository.MockCdmaCellRepositorySaveCell();
         }

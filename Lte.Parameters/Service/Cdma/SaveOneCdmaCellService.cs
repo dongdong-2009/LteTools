@@ -47,18 +47,16 @@ namespace Lte.Parameters.Service.Cdma
         {
             bool result = true;
             CdmaCellBase cellBase = _baseRepository.QueryCell(_cellInfo.BtsId, _cellInfo.SectorId, _cellInfo.CellType);
-            QueryCdmaCellService cellService
-                = new QueryCdmaCellService(_repository, _cellInfo.BtsId, _cellInfo.SectorId, _cellInfo.CellType);
 
             if (cellBase == null)
             {
                 CdmaCell cell = new CdmaCell();
                 cell.Import(_cellInfo, true);
-                _repository.AddOneCell(cell);
+                _repository.Insert(cell);
             }
             else if (cellBase.Frequency < 0 || !cellBase.HasFrequency(_cellInfo.Frequency))
             {
-                CdmaCell cell = cellService.Query();
+                CdmaCell cell = _repository.Query(_cellInfo.BtsId, _cellInfo.SectorId, _cellInfo.CellType);
                 if (cell != null) { cell.Import(_cellInfo, true); }
             }
             else { result = false; }
@@ -68,21 +66,18 @@ namespace Lte.Parameters.Service.Cdma
 
     public class SimpleSaveOneCdmaCellService : SaveOneCdmaCellService
     {
-        private readonly QueryCdmaCellService _cellService;
         private readonly CdmaBts _bts;
 
         public SimpleSaveOneCdmaCellService(ICdmaCellRepository repository,
             CdmaCellExcel cellInfo, IBtsRepository btsRepository)
             : base(repository, cellInfo)
         {
-            _cellService
-                = new QueryCdmaCellService(repository, cellInfo.BtsId, cellInfo.SectorId, cellInfo.CellType);
             _bts = btsRepository.GetAll().FirstOrDefault(x => x.BtsId == cellInfo.BtsId);
         }
 
         protected override bool SaveWhenBtsNotExisted()
         {
-            CdmaCell cell = _cellService.Query();
+            CdmaCell cell = _repository.Query(_cellInfo.BtsId, _cellInfo.SectorId, _cellInfo.CellType);
             bool addCell = false;
             if (cell == null)
             {
@@ -92,9 +87,13 @@ namespace Lte.Parameters.Service.Cdma
             cell.Import(_cellInfo, true);
             if (addCell)
             {
-                _repository.AddOneCell(cell);
+                _repository.Insert(cell);
             }
-            _repository.SaveChanges();
+            else
+            {
+
+                _repository.Update(cell);
+            }
             return true;
         }
 

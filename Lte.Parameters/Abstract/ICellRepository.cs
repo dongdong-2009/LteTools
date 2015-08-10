@@ -11,15 +11,8 @@ namespace Lte.Parameters.Abstract
         void AddCells(IEnumerable<Cell> cells);
     }
 
-    public interface ICdmaCellRepository
+    public interface ICdmaCellRepository : IRepository<CdmaCell>
     {
-        IQueryable<CdmaCell> Cells { get; }
-
-        void AddOneCell(CdmaCell cell);
-
-        bool RemoveOneCell(CdmaCell cell);
-
-        void SaveChanges();
     }
 
     public interface INearestPciCellRepository

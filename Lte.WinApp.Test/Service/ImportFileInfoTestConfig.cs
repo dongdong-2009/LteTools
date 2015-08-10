@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Lte.WinApp.Models;
+using Lte.WinApp.Service;
 using Moq;
 
 namespace Lte.WinApp.Test.Service

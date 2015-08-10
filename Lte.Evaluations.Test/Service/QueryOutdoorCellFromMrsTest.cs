@@ -17,11 +17,18 @@ namespace Lte.Evaluations.Test.Service
         [TestFixtureSetUp]
         public void FixtureSetup()
         {
-            mockENodebRepository.SetupGet(x => x.GetAll()).Returns(new List<ENodeb>
+            mockENodebRepository.Setup(x => x.GetAll()).Returns(new List<ENodeb>
             {
                 new ENodeb {ENodebId = 1, Name = "E-1"},
                 new ENodeb {ENodebId = 2, Name = "E-2"}
             }.AsQueryable());
+            mockENodebRepository.Setup(x => x.GetAllList()).Returns(mockENodebRepository.Object.GetAll().ToList());
+            mockENodebRepository.Setup(x => x.Count()).Returns(mockENodebRepository.Object.GetAll().Count());
+            mockENodebRepository.Setup(x => x.GetAllWithIds(It.IsAny<IEnumerable<int>>())).Returns<IEnumerable<int>>(
+                ids => (from id in ids
+                    join Entities in mockENodebRepository.Object.GetAll()
+                        on id equals Entities.ENodebId
+                    select Entities).ToList());
             mockCellRepository.Setup(x => x.GetAll()).Returns(new List<Cell>
             {
                 new Cell {ENodebId = 1, SectorId = 0, Height = 10},
@@ -31,6 +38,7 @@ namespace Lte.Evaluations.Test.Service
                 new Cell {ENodebId = 2, SectorId = 1, Height = 10},
                 new Cell {ENodebId = 2, SectorId = 2, Height = 10}
             }.AsQueryable());
+            mockCellRepository.Setup(x => x.GetAllList()).Returns(mockCellRepository.Object.GetAll().ToList());
         }
 
         [Test]

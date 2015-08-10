@@ -9,6 +9,12 @@ namespace Lte.Evaluations.Test.Kml
     [TestFixture]
     public class InitializeKmlDocumentTest : FrameworkWriter
     {
+        [SetUp]
+        public void SetUp()
+        {
+            Initialize();
+        }
+
         [Test]
         public void TestInitializeKmlDocument()
         {

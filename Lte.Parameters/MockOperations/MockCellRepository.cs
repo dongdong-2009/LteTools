@@ -20,6 +20,15 @@ namespace Lte.Parameters.MockOperations
                         repository.Object.GetAll().Count());
                     repository.Setup(x => x.GetAllList()).Returns(repository.Object.GetAll().ToList());
                 });
+            repository.Setup(x => x.AddCells(It.IsAny<IEnumerable<Cell>>())).Callback<IEnumerable<Cell>>(
+                l =>
+                {
+                    repository.Setup(x => x.GetAll()).Returns(
+                        cells.Concat(l).AsQueryable());
+                    repository.Setup(x => x.Count()).Returns(
+                        repository.Object.GetAll().Count());
+                    repository.Setup(x => x.GetAllList()).Returns(repository.Object.GetAll().ToList());
+                });
         }
 
         public static void MockCellRepositorySaveCell(
@@ -31,6 +40,16 @@ namespace Lte.Parameters.MockOperations
                     IEnumerable<Cell> cells = repository.Object.GetAll();
                     repository.Setup(x => x.GetAll()).Returns(
                         cells.Concat(new List<Cell> { e }).AsQueryable());
+                    repository.Setup(x => x.Count()).Returns(
+                        repository.Object.GetAll().Count());
+                    repository.Setup(x => x.GetAllList()).Returns(repository.Object.GetAll().ToList());
+                });
+            repository.Setup(x => x.AddCells(It.IsAny<IEnumerable<Cell>>())).Callback<IEnumerable<Cell>>(
+                l =>
+                {
+                    IEnumerable<Cell> cells = repository.Object.GetAll();
+                    repository.Setup(x => x.GetAll()).Returns(
+                        cells.Concat(l).AsQueryable());
                     repository.Setup(x => x.Count()).Returns(
                         repository.Object.GetAll().Count());
                     repository.Setup(x => x.GetAllList()).Returns(repository.Object.GetAll().ToList());
@@ -79,47 +98,61 @@ namespace Lte.Parameters.MockOperations
         public static void MockCdmaCellRepositorySaveCell(
             this Mock<ICdmaCellRepository> repository, IEnumerable<CdmaCell> cells)
         {
-            repository.Setup(x => x.AddOneCell(It.IsAny<CdmaCell>())).Callback<CdmaCell>(
-                e => repository.SetupGet(x => x.Cells).Returns(
-                    cells.Concat(new List<CdmaCell> { e }).AsQueryable()));
+            repository.Setup(x => x.Insert(It.IsAny<CdmaCell>())).Callback<CdmaCell>(
+                e =>
+                {
+                    repository.Setup(x => x.GetAll()).Returns(
+                        cells.Concat(new List<CdmaCell> {e}).AsQueryable());
+                    repository.Setup(x => x.GetAllList()).Returns(repository.Object.GetAll().ToList());
+                    repository.Setup(x => x.Count()).Returns(repository.Object.GetAll().Count());
+                });
         }
 
         public static void MockCdmaCellRepositorySaveCell(
             this Mock<ICdmaCellRepository> repository)
         {
-            repository.Setup(x => x.AddOneCell(It.IsAny<CdmaCell>())).Callback<CdmaCell>(
+            repository.Setup(x => x.Insert(It.IsAny<CdmaCell>())).Callback<CdmaCell>(
                 e =>
                 {
-                    IEnumerable<CdmaCell> cells = repository.Object.Cells;
-                    repository.SetupGet(x => x.Cells).Returns(
-                    cells.Concat(new List<CdmaCell> { e }).AsQueryable());
+                    IEnumerable<CdmaCell> cells = repository.Object.GetAll();
+                    repository.Setup(x => x.GetAll()).Returns(
+                        cells.Concat(new List<CdmaCell> { e }).AsQueryable());
+                    repository.Setup(x => x.GetAllList()).Returns(repository.Object.GetAll().ToList());
+                    repository.Setup(x => x.Count()).Returns(repository.Object.GetAll().Count());
                 });
         }
 
         public static void MockCdmaCellRepositoryDeleteCell(
             this Mock<ICdmaCellRepository> repository, IEnumerable<CdmaCell> cells)
         {
-            repository.Setup(x => x.RemoveOneCell(It.IsAny<CdmaCell>())).Returns(false);
-            repository.Setup(x => x.RemoveOneCell(It.Is<CdmaCell>(e => e != null
+            repository.Setup(x => x.Delete(It.Is<CdmaCell>(e => e != null
                 && cells.FirstOrDefault(y => y == e) != null))
-                ).Returns(true).Callback<CdmaCell>(
-                e => repository.Setup(x => x.Cells).Returns(
-                    cells.Except(new List<CdmaCell> { e }).AsQueryable()));
+                ).Callback<CdmaCell>(
+                e =>
+                {
+                    repository.Setup(x => x.GetAll()).Returns(
+                        cells.Except(new List<CdmaCell> {e}).AsQueryable());
+                    repository.Setup(x => x.GetAllList()).Returns(repository.Object.GetAll().ToList());
+                    repository.Setup(x => x.Count()).Returns(repository.Object.GetAll().Count());
+                });
         }
 
         public static void MockCdmaCellRepositoryDeleteCell(
             this Mock<ICdmaCellRepository> repository)
         {
-            repository.Setup(x => x.RemoveOneCell(It.IsAny<CdmaCell>())).Returns(false);
-
             if (repository.Object != null)
             {
-                IEnumerable<CdmaCell> cells = repository.Object.Cells;
-                repository.Setup(x => x.RemoveOneCell(It.Is<CdmaCell>(e => e != null
+                IEnumerable<CdmaCell> cells = repository.Object.GetAll();
+                repository.Setup(x => x.Delete(It.Is<CdmaCell>(e => e != null
                     && cells.FirstOrDefault(y => y == e) != null))
-                    ).Returns(true).Callback<CdmaCell>(
-                    e => repository.Setup(x => x.Cells).Returns(
-                        cells.Except(new List<CdmaCell> { e }).AsQueryable()));
+                    ).Callback<CdmaCell>(
+                    e =>
+                    {
+                        repository.Setup(x => x.GetAll()).Returns(
+                            cells.Except(new List<CdmaCell> {e}).AsQueryable());
+                        repository.Setup(x => x.GetAllList()).Returns(repository.Object.GetAll().ToList());
+                        repository.Setup(x => x.Count()).Returns(repository.Object.GetAll().Count());
+                    });
             }
         }
     }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Lte.Domain.LinqToCsv.Description;
 using Lte.Domain.Regular;
@@ -10,7 +9,6 @@ using Lte.Domain.TypeDefs;
 using Lte.Evaluations.Kpi;
 using Lte.Parameters.Kpi.Abstract;
 using Lte.WinApp.Models;
-using Moq;
 
 namespace Lte.WinApp.Test.Models
 {
@@ -52,20 +50,20 @@ namespace Lte.WinApp.Test.Models
     public class FakeStatDateImporter : IStatDateImporter
     {
         public DateTime Date { get; set; }
-        public int ImportStat(StreamReader reader, CsvFileDescription fileDescriptionNamesUs)
+        public Task<int> ImportStat(StreamReader reader, CsvFileDescription fileDescriptionNamesUs)
         {
-            return reader.ReadToEnd().Length;
+            return Task.Run(()=> reader.ReadToEnd().Length);
         }
     }
 
-    internal class FakeFileInfoListImporter : FileInfoListImporter<StubTimeStat, FakeTopCellRepository>
+    internal class FakeFileInfoListImporterAsync : FileInfoListImporterAsync<StubTimeStat, FakeTopCellRepository>
     {
         protected override IStatDateImporter GenerateImporter()
         {
             return new FakeStatDateImporter();
         }
 
-        public FakeFileInfoListImporter(string contents)
+        public FakeFileInfoListImporterAsync(string contents)
         {
             ReadFile = x => contents.GetStreamReader();
         }
@@ -75,10 +73,13 @@ namespace Lte.WinApp.Test.Models
     {
         public DateTime Date { get; set; }
         private readonly ITopCellRepository<StubTimeStat> _repository;
-        public int ImportStat(StreamReader reader, CsvFileDescription fileDescriptionNamesUs)
+        public Task<int> ImportStat(StreamReader reader, CsvFileDescription fileDescriptionNamesUs)
         {
-            _repository.AddOneStat(new StubTimeStat {StatTime = Date});
-            return reader.ReadToEnd().Length;
+            return Task.Run(() =>
+            {
+                _repository.AddOneStat(new StubTimeStat {StatTime = Date});
+                return reader.ReadToEnd().Length;
+            });
         }
 
         public FakeStatDateImporterWithRepository(ITopCellRepository<StubTimeStat> repository)
@@ -87,14 +88,14 @@ namespace Lte.WinApp.Test.Models
         }
     }
 
-    internal class FakeFileInfoListImporterWithRepository : FileInfoListImporter<StubTimeStat, FakeTopCellRepository>
+    internal class FakeFileInfoListImporterAsyncWithRepository : FileInfoListImporterAsync<StubTimeStat, FakeTopCellRepository>
     {
         protected override IStatDateImporter GenerateImporter()
         {
             return new FakeStatDateImporterWithRepository(repository);
         }
 
-        public FakeFileInfoListImporterWithRepository(string contents)
+        public FakeFileInfoListImporterAsyncWithRepository(string contents)
         {
             ReadFile = x => contents.GetStreamReader();
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Lte.Domain.LinqToCsv.Context;
 using Lte.Domain.LinqToCsv.Description;
 using Lte.Parameters.Entities;
@@ -28,13 +29,17 @@ namespace Lte.Evaluations.Kpi
                 townStatRepository, eNodebs);
         }
 
-        public int ImportStat(StreamReader reader, CsvFileDescription fileDescriptionNamesUs)
+        public Task<int> ImportStat(StreamReader reader, CsvFileDescription fileDescriptionNamesUs)
         {
-            List<PreciseCoverage4GCsv> csvInfos = new List<PreciseCoverage4GCsv>();
-            csvInfos.AddRange(CsvContext.Read<PreciseCoverage4GCsv>(reader, fileDescriptionNamesUs));
-            int count = cellStatService.Save(csvInfos);
-            _timeTownStatService.Save(csvInfos);
-            return count;
+            return Task.Run(() =>
+            {
+                List<PreciseCoverage4GCsv> csvInfos = new List<PreciseCoverage4GCsv>();
+                csvInfos.AddRange(CsvContext.Read<PreciseCoverage4GCsv>(reader, fileDescriptionNamesUs));
+                int count = cellStatService.Save(csvInfos);
+                _timeTownStatService.Save(csvInfos);
+                return count;
+
+            });
         }
     }
 }

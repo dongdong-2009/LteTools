@@ -33,10 +33,9 @@ namespace Lte.Parameters.Service.Cdma
         {
             foreach (CdmaCell cell in _cells)
             {
-                _repository.AddOneCell(cell);
+                _repository.Insert(cell);
                 infrastructure.CdmaCellsInserted++;
             }
-            _repository.SaveChanges();
         }
     }
 
@@ -61,11 +60,10 @@ namespace Lte.Parameters.Service.Cdma
                         && baseRepository.QueryCell(
                             cell.BtsId, cell.SectorId, cell.CellType) == null)
                     {
-                        _repository.AddOneCell(cell);
+                        _repository.Insert(cell);
                         infrastructure.CdmaCellsInserted++;
                     }
                 }
-                _repository.SaveChanges();
             }
         }
     }

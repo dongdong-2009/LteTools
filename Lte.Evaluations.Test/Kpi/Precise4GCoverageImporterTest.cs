@@ -83,7 +83,15 @@ namespace Lte.Evaluations.Test.Kpi
             double[] firstNeighborCellCountsByTown)
         {
             StreamReader reader = csvContents.GetStreamReader();
-            Assert.AreEqual(importer.ImportStat(reader, CsvFileDescription.CommaDescription), cellCount);
+            GetValue(cellCount, townCount, totalMrsByCell, thirdNeighborCellCountsByCell, secondNeighborCellCountsByCell, firstNeighborCellCountsByCell, totalMrsByTown, thirdNeighborCellCountsByTown, secondNeighborCellCountsByTown, firstNeighborCellCountsByTown, reader);
+        }
+
+        private async void GetValue(int cellCount, int townCount, int[] totalMrsByCell, double[] thirdNeighborCellCountsByCell,
+            double[] secondNeighborCellCountsByCell, double[] firstNeighborCellCountsByCell, int[] totalMrsByTown,
+            double[] thirdNeighborCellCountsByTown, double[] secondNeighborCellCountsByTown,
+            double[] firstNeighborCellCountsByTown, StreamReader reader)
+        {
+            Assert.AreEqual(await importer.ImportStat(reader, CsvFileDescription.CommaDescription), cellCount);
             Assert.AreEqual(cellRepository.Object.Stats.Count(), cellCount);
             Assert.AreEqual(townRepository.Object.Stats.Count(), townCount);
             for (int i = 0; i < cellCount; i++)

@@ -35,7 +35,12 @@ namespace Lte.WebApp.Controllers.Topic
                     RegionType = type
                 };
             }
-            else _repository.UpdateRegion(id, area, message, type);
+            else
+            {
+                region.Area = area;
+                region.Info = message;
+                region.RegionType = type;
+            }
         }
 
         public CollegeRegion Get(int id, double centerX, double centerY, double radius)

@@ -20,7 +20,9 @@ namespace Lte.Evaluations.Test.Parameters
         {
             Mock<IENodebRepository> eNodebRepository = new Mock<IENodebRepository>();
             mockTownRepository.SetupGet(x => x.Towns).Returns(towns.AsQueryable());
-            eNodebRepository.SetupGet(x => x.GetAll()).Returns(eNodebs.AsQueryable());
+            eNodebRepository.Setup(x => x.GetAll()).Returns(eNodebs.AsQueryable());
+            eNodebRepository.Setup(x => x.GetAllList()).Returns(eNodebRepository.Object.GetAll().ToList());
+            eNodebRepository.Setup(x => x.Count()).Returns(eNodebRepository.Object.GetAll().Count());
             container.ImportTownENodebStats(mockTownRepository.Object, eNodebRepository.Object,
                 mockRegionRepositroy.Object);
         }

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Lte.WinApp.Models;
-using Moq;
+using Lte.WinApp.Service;
 using NUnit.Framework;
 
 namespace Lte.WinApp.Test.Models
@@ -42,7 +38,7 @@ namespace Lte.WinApp.Test.Models
         [TestCase(100, true)]
         public void TestSimpleImport(int id, bool add)
         {
-            importer.Import(new List<string>
+            importer.ImportFiles(new List<string>
             {
                 "path" + id
             });

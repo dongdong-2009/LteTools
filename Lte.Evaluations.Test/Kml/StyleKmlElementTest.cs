@@ -10,6 +10,12 @@ namespace Lte.Evaluations.Test.Kml
         private XmlDocument _doc;
         private StyleKmlElement _element;
 
+        [SetUp]
+        public void SetUp()
+        {
+            Initialize();
+        }
+
         [Test]
         public void TestStyleKmlElement_EmptyDoc()
         {
@@ -31,12 +37,12 @@ namespace Lte.Evaluations.Test.Kml
         {
             Assert.AreEqual(KmlTestInfrastructure.StatValueField.IntervalList[0].Color.ColorStringForKml,
                 "800A0C80", "begin");
-            Assert.AreEqual(writer.ToString(), @"<?xml version=""1.0"" encoding=""utf-16""?>
+            Assert.AreEqual(writer.ToString().Replace("\r\n","\n"), (@"<?xml version=""1.0"" encoding=""utf-16""?>
 <kml xmlns=""http://earth.google.com/kml/2.1"">
   <Document>
     <name>KML地图</name>
   </Document>
-</kml>");
+</kml>").Replace("\r\n", "\n"));
 
             _doc = new XmlDocument();
             _doc.Load(reader);
@@ -51,10 +57,10 @@ namespace Lte.Evaluations.Test.Kml
             XmlElement styleElement = _element.CreateElement();
             documentNode.AppendChild(styleElement);
             if (_doc.DocumentElement != null) _doc.DocumentElement.AppendChild(documentNode);
-            Assert.AreEqual(_doc.InnerXml, @"<?xml version=""1.0"" encoding=""utf-16""?>" +
+            Assert.AreEqual(_doc.InnerXml.Replace("\r\n", "\n"), (@"<?xml version=""1.0"" encoding=""utf-16""?>" +
             @"<kml xmlns=""http://earth.google.com/kml/2.1""><Document><name>KML地图</name>"
             + @"<Style id=""Red-Grid"" xmlns=""""><LineStyle><width>1</width><color>FFFF8080</color></LineStyle>"
-            + @"<PolyStyle><color>800000FF</color></PolyStyle></Style></Document></kml>");
+            + @"<PolyStyle><color>800000FF</color></PolyStyle></Style></Document></kml>").Replace("\r\n", "\n"));
             Assert.AreEqual(KmlTestInfrastructure.StatValueField.IntervalList[0].Color.ColorStringForKml,
                 "800A0C80", "end");
         }

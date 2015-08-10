@@ -19,16 +19,6 @@ namespace Lte.Parameters.Region.Concrete
             var query = Entities.Where(x => x.Id == id).Select(x => x.CollegeRegion);
             return query.Any() ? query.First() : null;
         }
-
-        public void UpdateRegion(int id, double area, string message, RegionType type)
-        {
-            var query = Entities.Where(x => x.Id == id).Select(x => x.CollegeRegion);
-            if (!query.Any()) return;
-            
-            query.First().Area = area;
-            query.First().Info = message;
-            query.First().RegionType = type;
-        }
     }
 
     public class EFInfrastructureRepository : IInfrastructureRepository

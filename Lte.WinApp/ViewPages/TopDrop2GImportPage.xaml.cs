@@ -14,33 +14,27 @@ namespace Lte.WinApp.ViewPages
     public partial class TopDrop2GImportPage
     {
         private readonly List<ImportedFileInfo> _fileInfoList = new List<ImportedFileInfo>();
-        private readonly IFileInfoListImporter _kpiImporter;
-        private readonly IFileInfoListImporter _preciseImporter;
-        private readonly IFileInfoListImporter _neighborImporter;
-        private readonly QueryValidFileInfosService _kpiService;
-        private readonly QueryValidFileInfosService _preciseService;
-        private readonly QueryValidFileInfosService _neighborService;
+        private readonly KpiFileInfoListImporterAsync _kpiImporterAsync;
+        private readonly Precise4GFileInfoListImporterAsync _preciseImporterAsync;
+        private readonly FileInfoListImporter _neighborImporter;
 
         public TopDrop2GImportPage()
         {
             InitializeComponent();
             PageTitle.Content = Title;
-            _kpiImporter = new KpiFileInfoListImporter(1000) { FileInfoList = _fileInfoList };
-            _preciseImporter = new Precise4GFileInfoListImporter {FileInfoList = _fileInfoList};
+            _kpiImporterAsync = new KpiFileInfoListImporterAsync(1000) { FileInfoList = _fileInfoList };
+            _preciseImporterAsync = new Precise4GFileInfoListImporterAsync {FileInfoList = _fileInfoList};
             _neighborImporter = new NeighborFileListImporter(new EFLteNeighborCellRepository())
             {
                 FileInfoList = _fileInfoList
             };
-            _kpiService = new QueryValidFileInfosService(_kpiImporter);
-            _preciseService = new QueryValidFileInfosService(_preciseImporter);
-            _neighborService = new QueryValidFileInfosService(_neighborImporter);
         }
 
         private void Import_Click(object sender, RoutedEventArgs e)
         {
-            ImportedFileInfo[] validKpiFileInfos = _kpiService.Query().ToArray();
-            ImportedFileInfo[] validPreciseFileInfos = _preciseService.Query().ToArray();
-            ImportedFileInfo[] validNeighborFileInfos = _neighborService.Query().ToArray();
+            ImportedFileInfo[] validKpiFileInfos = _kpiImporterAsync.Query().ToArray();
+            ImportedFileInfo[] validPreciseFileInfos = _preciseImporterAsync.Query().ToArray();
+            ImportedFileInfo[] validNeighborFileInfos = _neighborImporter.Query().ToArray();
             if (validPreciseFileInfos.Length + validKpiFileInfos.Length 
                 + validNeighborFileInfos.Length == 0)
             {
@@ -50,12 +44,14 @@ namespace Lte.WinApp.ViewPages
             string result = "";
             if (validKpiFileInfos.Any())
             {
-                result += _kpiImporter.Import(validKpiFileInfos);
+                _kpiImporterAsync.Import(validKpiFileInfos);
+                result += _kpiImporterAsync.Result;
             }
 
             if (validPreciseFileInfos.Any())
             {
-                result += _preciseImporter.Import(validPreciseFileInfos);
+                _preciseImporterAsync.Import(validPreciseFileInfos);
+                result += _preciseImporterAsync.Result;
             }
 
             if (validNeighborFileInfos.Any())
@@ -72,7 +68,7 @@ namespace Lte.WinApp.ViewPages
             FileDialogWrapper wrapper = new OpenKpiFileDialogWrapper();
             if (wrapper.ShowDialog())
             {
-                _kpiImporter.Import(wrapper.FileNames);
+                _kpiImporterAsync.ImportFiles(wrapper.FileNames);
                 FileList.SetDataSource(_fileInfoList);
             }
         }
@@ -82,7 +78,7 @@ namespace Lte.WinApp.ViewPages
             FileDialogWrapper wrapper = new OpenPreciseFileDialogWrapper();
             if (wrapper.ShowDialog())
             {
-                _preciseImporter.Import(wrapper.FileNames);
+                _preciseImporterAsync.ImportFiles(wrapper.FileNames);
                 FileList.SetDataSource(_fileInfoList);
             }
         }
@@ -92,7 +88,7 @@ namespace Lte.WinApp.ViewPages
             FileDialogWrapper wrapper = new OpenLteNeighborFileDialogWrapper();
             if (wrapper.ShowDialog())
             {
-                _neighborImporter.Import(wrapper.FileNames);
+                _neighborImporter.ImportFiles(wrapper.FileNames);
                 FileList.SetDataSource(_fileInfoList);
             }
         }

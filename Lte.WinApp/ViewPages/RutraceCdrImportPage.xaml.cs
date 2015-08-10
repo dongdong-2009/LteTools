@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -46,7 +45,7 @@ namespace Lte.WinApp.ViewPages
             FileDialogWrapper wrapper = new OpenRuFileDialogWrapper();
             if (wrapper.ShowDialog())
             {
-                _ruImporter.Import(wrapper.FileNames);
+                _ruImporter.ImportFiles(wrapper.FileNames);
                 FileList.SetDataSource(_fileInfoList);
             }
         }
@@ -56,7 +55,7 @@ namespace Lte.WinApp.ViewPages
             FileDialogWrapper wrapper = new OpenCdrFileDialogWrapper();
             if (wrapper.ShowDialog())
             {
-                _cdrImporter.Import(wrapper.FileNames);
+                _cdrImporter.ImportFiles(wrapper.FileNames);
                 FileList.SetDataSource(_fileInfoList);
             }
         }
@@ -73,7 +72,7 @@ namespace Lte.WinApp.ViewPages
             FileDialogWrapper wrapper = new OpenMrFileDialogWrapper();
             if (wrapper.ShowDialog())
             {
-                _mrImporter.Import(wrapper.FileNames);
+                _mrImporter.ImportFiles(wrapper.FileNames);
                 FileList.SetDataSource(_fileInfoList);
             }
         }

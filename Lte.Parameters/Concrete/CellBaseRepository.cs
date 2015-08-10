@@ -65,7 +65,7 @@ namespace Lte.Parameters.Concrete
         public CdmaCellBaseRepository(ICdmaCellRepository inputRepository)
         {
             cellBaseList.Clear();
-            foreach (CdmaCell cell in inputRepository.Cells)
+            foreach (CdmaCell cell in inputRepository.GetAllList())
             {
                 cellBaseList.Add(new CdmaCellBase(cell));
             }

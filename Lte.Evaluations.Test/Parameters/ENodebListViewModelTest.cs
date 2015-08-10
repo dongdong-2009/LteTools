@@ -33,7 +33,7 @@ namespace Lte.Evaluations.Test.Parameters
         [SetUp]
         public void TestInitialize()
         {
-            eNodebRepository.SetupGet(x => x.GetAll()).Returns(lotsOfENodebs.AsQueryable());
+            eNodebRepository.Setup(x => x.GetAll()).Returns(lotsOfENodebs.AsQueryable());
         }
 
         [Test]

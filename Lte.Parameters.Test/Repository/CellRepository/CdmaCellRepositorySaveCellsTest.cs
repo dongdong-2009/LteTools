@@ -72,17 +72,17 @@ namespace Lte.Parameters.Test.Repository.CellRepository
         [Test]
         public void TestCdmaCellRepositorySaveCells_FirstCell_BtsExist_CellNotExist()
         {
-            Assert.AreEqual(repository.Object.Cells.Count(), 1);
-            Assert.AreEqual(repository.Object.Cells.ElementAt(0).Frequency, 64);
-            Assert.AreEqual(repository.Object.Cells.ElementAt(0).Frequency1, 283);
+            Assert.AreEqual(repository.Object.Count(), 1);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(0).Frequency, 64);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(0).Frequency1, 283);
             Assert.AreEqual(SaveCells(), 2);
-            Assert.AreEqual(repository.Object.Cells.Count(), 2);
-            Assert.AreEqual(repository.Object.Cells.ElementAt(0).Frequency, 64);
-            Assert.AreEqual(repository.Object.Cells.ElementAt(0).Frequency1, 283);
-            Assert.IsTrue(repository.Object.Cells.ElementAt(1).IsOutdoor);
-            Assert.AreEqual(repository.Object.Cells.ElementAt(1).Frequency, 65);
-            Assert.AreEqual(repository.Object.Cells.ElementAt(1).Frequency1, 283);
-            Assert.AreEqual(repository.Object.Cells.ElementAt(1).Frequency2, 37);
+            Assert.AreEqual(repository.Object.Count(), 2);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(0).Frequency, 64);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(0).Frequency1, 283);
+            Assert.IsTrue(repository.Object.GetAll().ElementAt(1).IsOutdoor);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).Frequency, 65);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).Frequency1, 283);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).Frequency2, 37);
         }
 
         [Test]
@@ -90,10 +90,10 @@ namespace Lte.Parameters.Test.Repository.CellRepository
         {
             cellInfos[0].BtsId = 2;
             Assert.AreEqual(SaveCells(), 1);
-            Assert.AreEqual(repository.Object.Cells.Count(), 2);
-            Assert.AreEqual(repository.Object.Cells.ElementAt(1).Frequency, 1);
-            Assert.AreEqual(repository.Object.Cells.ElementAt(1).Frequency1, 37);
-            Assert.AreEqual(repository.Object.Cells.ElementAt(1).Frequency2, -1);
+            Assert.AreEqual(repository.Object.Count(), 2);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).Frequency, 1);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).Frequency1, 37);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).Frequency2, -1);
         }
 
         [Test]
@@ -101,11 +101,11 @@ namespace Lte.Parameters.Test.Repository.CellRepository
         {
             cellInfos[0].SectorId = 0;
             Assert.AreEqual(SaveCells(), 1);
-            Assert.AreEqual(repository.Object.Cells.Count(), 2);
-            Assert.AreEqual(repository.Object.Cells.ElementAt(0).Frequency, 64);
-            Assert.AreEqual(repository.Object.Cells.ElementAt(0).Frequency1, 283);
-            Assert.AreEqual(repository.Object.Cells.ElementAt(1).Frequency, 1);
-            Assert.AreEqual(repository.Object.Cells.ElementAt(1).Frequency1, 37);
+            Assert.AreEqual(repository.Object.Count(), 2);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(0).Frequency, 64);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(0).Frequency1, 283);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).Frequency, 1);
+            Assert.AreEqual(repository.Object.GetAll().ElementAt(1).Frequency1, 37);
         }
     }
 }

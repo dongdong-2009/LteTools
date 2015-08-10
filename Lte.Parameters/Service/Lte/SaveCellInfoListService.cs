@@ -41,13 +41,15 @@ namespace Lte.Parameters.Service.Lte
         public override void Save(ParametersDumpInfrastructure infrastructure)
         {
             infrastructure.CellsInserted = 0;
-            foreach (CellExcel info in 
-                from info in _cellInfoList let service = new ByENodebBaseQuickSaveOneCellService(
-                _repository, _baseRepository, info, _baseENodebRepository) 
-                where service.Save() select info)
+            foreach (CellExcel info in _cellInfoList)
             {
-                _baseRepository.ImportNewCellInfo(info);
-                infrastructure.CellsInserted++;
+                ByENodebBaseQuickSaveOneCellService service = 
+                    new ByENodebBaseQuickSaveOneCellService(_repository, _baseRepository, info, _baseENodebRepository);
+                if (service.Save())
+                {
+                    _baseRepository.ImportNewCellInfo(info);
+                    infrastructure.CellsInserted++;
+                }
             }
         }
     }

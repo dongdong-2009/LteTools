@@ -53,8 +53,7 @@ namespace Lte.Parameters.Region.Abstract
             IEnumerable<int> ids = repository.InfrastructureInfos.Where(x =>
                 x.HotspotName == info.Name && x.InfrastructureType == InfrastructureType.CdmaCell
                 ).Select(x => x.InfrastructureId).ToList();
-            return ids.Select(i => cdmaCellRepository.Cells.FirstOrDefault(x => x.Id == i)
-                ).Where(cell => cell != null).ToList();
+            return ids.Select(cdmaCellRepository.Get).Where(cell => cell != null).ToList();
         }
 
         public static IEnumerable<IndoorDistribution> QueryCollegeLteDistributions(

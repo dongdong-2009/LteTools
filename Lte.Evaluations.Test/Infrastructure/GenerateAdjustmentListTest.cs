@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Lte.Evaluations.Entities;
 using Lte.Evaluations.Service;
 using Lte.Parameters.Entities;
 using Lte.Parameters.Abstract;
@@ -62,6 +61,7 @@ namespace Lte.Evaluations.Test.Infrastructure
                         Longtitute = 113.00025, Lattitute = 23.00015
                     }
                 }.AsQueryable());
+            mockCellRepository.Setup(x => x.GetAllList()).Returns(mockCellRepository.Object.GetAll().ToList());
             _eNodebs = new List<ENodeb>{
                 new ENodeb { ENodebId = 1, Name = "ENodeb-1" },
                 new ENodeb { ENodebId = 2, Name = "ENodeb-2" }

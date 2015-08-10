@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
+using Abp.Domain.Entities;
 using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Regular;
 using Lte.Parameters.Abstract;
@@ -9,12 +9,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Lte.Parameters.Entities
 {
-    public class CdmaCellBase
+    public class CdmaCellBase : Entity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         [Display(Name = "基站编号")]
         public int BtsId { get; set; }
 
@@ -112,10 +108,10 @@ namespace Lte.Parameters.Entities
         public short Pn { get; set; }
 
         [Display(Name = "经度")]
-        public double Longtitute { get; private set; }
+        public double Longtitute { get; set; }
 
         [Display(Name = "纬度")]
-        public double Lattitute { get; private set; }
+        public double Lattitute { get; set; }
 
         [Display(Name = "高度")]
         public double Height { get; set; }

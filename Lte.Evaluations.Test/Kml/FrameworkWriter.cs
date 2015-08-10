@@ -10,7 +10,7 @@ namespace Lte.Evaluations.Test.Kml
 
         protected TextReader reader;
 
-        public FrameworkWriter()
+        protected void Initialize()
         {
             KmlFramework framework = new KmlFramework("aaa");
             writer = new StringWriter();

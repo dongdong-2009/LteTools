@@ -18,9 +18,6 @@ namespace Lte.WinApp.ViewPages
         private readonly LteFileInfoListImporter _lteImporter;
         private readonly CdmaFileInfoListImporter _cdmaImporter;
         private readonly MmlFileInfoListImporter _mmlImporter;
-        private readonly QueryValidFileInfosService _lteService;
-        private readonly QueryValidFileInfosService _cdmaService;
-        private readonly QueryValidFileInfosService _mmlService;
         private readonly ParametersDumpInfrastructure infrastructure = new ParametersDumpInfrastructure();
 
         private readonly ParametersDumpConfig dumpConfig = new ParametersDumpConfig
@@ -44,21 +41,18 @@ namespace Lte.WinApp.ViewPages
             {
                 FileInfoList = _fileInfoList
             };
-            _lteService = new QueryValidFileInfosService(_lteImporter);
             infrastructure.LteENodebRepository = _lteImporter;
             infrastructure.LteCellRepository = _lteImporter;
             _cdmaImporter = new CdmaFileInfoListImporter
             {
                 FileInfoList = _fileInfoList
             };
-            _cdmaService = new QueryValidFileInfosService(_cdmaImporter);
             infrastructure.CdmaBtsRepository = _cdmaImporter;
             infrastructure.CdmaCellRepository = _cdmaImporter;
             _mmlImporter = new MmlFileInfoListImporter
             {
                 FileInfoList = _fileInfoList
             };
-            _mmlService = new QueryValidFileInfosService(_mmlImporter);
             DumpConfig.DataContext = dumpConfig;
         }
 
@@ -67,7 +61,7 @@ namespace Lte.WinApp.ViewPages
             FileDialogWrapper wrapper = new OpenLteFileDialogWrapper();
             if (wrapper.ShowDialog())
             {
-                _lteImporter.Import(wrapper.FileNames);
+                _lteImporter.ImportFiles(wrapper.FileNames);
                 FileList.SetDataSource(_fileInfoList);
             }
         }
@@ -77,7 +71,7 @@ namespace Lte.WinApp.ViewPages
             FileDialogWrapper wrapper = new OpenCdmaFileDialogWrapper();
             if (wrapper.ShowDialog())
             {
-                _cdmaImporter.Import(wrapper.FileNames);
+                _cdmaImporter.ImportFiles(wrapper.FileNames);
                 FileList.SetDataSource(_fileInfoList);
             }
         }
@@ -87,7 +81,7 @@ namespace Lte.WinApp.ViewPages
             FileDialogWrapper wrapper = new OpenMmlFileDialogWrapper();
             if (wrapper.ShowDialog())
             {
-                _mmlImporter.Import(wrapper.FileNames);
+                _mmlImporter.ImportFiles(wrapper.FileNames);
                 infrastructure.MmlRepositoryList = _mmlImporter.RepositoryList;
                 FileList.SetDataSource(_fileInfoList);
             }
@@ -95,9 +89,9 @@ namespace Lte.WinApp.ViewPages
 
         private void ImportFiles_Click(object sender, RoutedEventArgs e)
         {
-            ImportedFileInfo[] validLteFiles = _lteService.Query().ToArray();
-            ImportedFileInfo[] validCdmaFiles = _cdmaService.Query().ToArray();
-            ImportedFileInfo[] validMmlFiles = _mmlService.Query().ToArray();
+            ImportedFileInfo[] validLteFiles = _lteImporter.Query().ToArray();
+            ImportedFileInfo[] validCdmaFiles = _cdmaImporter.Query().ToArray();
+            ImportedFileInfo[] validMmlFiles = _mmlImporter.Query().ToArray();
             if (validCdmaFiles.Length + validLteFiles.Length + validMmlFiles.Length == 0)
             {
                 MessageBox.Show("未选择任何有效的数据文件。请先导入或选择！");

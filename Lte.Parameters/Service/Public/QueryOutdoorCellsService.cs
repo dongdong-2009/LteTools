@@ -51,7 +51,7 @@ namespace Lte.Parameters.Service.Public
 
         public override List<EvaluationOutdoorCell> Query()
         {
-            IEnumerable<CdmaCell> cells = _repository.Cells.ToList().Where(x => x.BtsId == _bts.BtsId && x.Height > 0);
+            IEnumerable<CdmaCell> cells = _repository.GetAllList().Where(x => x.BtsId == _bts.BtsId && x.Height > 0);
             return cells.Select(cell => new EvaluationOutdoorCell(_bts, cell)).ToList();
         }
     }
@@ -93,8 +93,7 @@ namespace Lte.Parameters.Service.Public
             List<EvaluationOutdoorCell> outdoorCells = new List<EvaluationOutdoorCell>();
             foreach (CdmaBts bts in _btss)
             {
-                IEnumerable<CdmaCell> cells = _repository.Cells.ToList().Where(x => x.BtsId == bts.BtsId
-                    && x.Height > 0);
+                IEnumerable<CdmaCell> cells = _repository.GetAllList().Where(x => x.BtsId == bts.BtsId && x.Height > 0);
                 outdoorCells.AddRange(cells.Select(cell => new EvaluationOutdoorCell(bts, cell)));
             }
             return outdoorCells;

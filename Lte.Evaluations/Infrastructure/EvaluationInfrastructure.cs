@@ -34,13 +34,13 @@ namespace Lte.Evaluations.Infrastructure
             : this()
         {
             Region = new EvaluationRegion(leftBottom, rightTop, EvaluationSettings.DistanceInMeter);
-            CellList = cells.ToList();
+            CellList = cells.Where(x => x.Height > 0).ToList();
             Region.InitializeParameters(CellList, EvaluationSettings.DegreeSpan);
         }
 
         public void ImportCellList(IEnumerable<EvaluationOutdoorCell> cells)
         {
-            CellList = cells.ToList();
+            CellList = cells.Where(x => x.Height > 0).ToList();
             Region = new EvaluationRegion(CellList, 
                 EvaluationSettings.DistanceInMeter, EvaluationSettings.DegreeSpan);
             Region.InitializeParameters(CellList, EvaluationSettings.DegreeSpan);

@@ -10,7 +10,7 @@ namespace Lte.Parameters.Concrete
     {
         protected override DbSet<Cell> Entities
         {
-            get { throw new System.NotImplementedException(); }
+            get { return context.Cells; }
         }
 
         public void AddCells(IEnumerable<Cell> cells)
@@ -22,28 +22,11 @@ namespace Lte.Parameters.Concrete
         }
     }
 
-    public class EFCdmaCellRepository : ICdmaCellRepository
+    public class EFCdmaCellRepository : LightWeightRepositroyBase<CdmaCell>, ICdmaCellRepository
     {
-        private readonly EFParametersContext context = new EFParametersContext();
-
-        public IQueryable<CdmaCell> Cells
+        protected override DbSet<CdmaCell> Entities
         {
-            get { return context.CdmaCells.AsQueryable(); }
-        }
-
-        public void AddOneCell(CdmaCell cell)
-        {
-            context.CdmaCells.Add(cell);
-        }
-
-        public bool RemoveOneCell(CdmaCell cell)
-        {
-            return (context.CdmaCells.Remove(cell) != null);
-        }
-
-        public void SaveChanges()
-        {
-            context.SaveChangesWithDelay();
+            get { return context.CdmaCells; }
         }
     }
 

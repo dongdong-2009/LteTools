@@ -50,10 +50,6 @@ namespace Lte.Parameters.Service.Cdma
                         baseRepository.ImportNewCellInfo(cellInfo);
                         infrastructure.CdmaCellsInserted++;
                     }
-                    if (infrastructure.CdmaCellsInserted % 1000 == 1)
-                    {
-                        _repository.SaveChanges();
-                    }
                 }
             }
         }
@@ -97,7 +93,7 @@ namespace Lte.Parameters.Service.Cdma
             }
             IEnumerable<CdmaCell> updateCells
                 = from v in validCells
-                  join c in _repository.Cells.ToList()
+                  join c in _repository.GetAllList()
                   on new { v.BtsId, v.SectorId, v.CellType }
                   equals new { c.BtsId, c.SectorId, c.CellType }
                   select v;
@@ -107,13 +103,13 @@ namespace Lte.Parameters.Service.Cdma
             {
                 foreach (CdmaCell cell in updateCells)
                 {
-                    CdmaCell objectCell = _repository.Cells.FirstOrDefault(
+                    CdmaCell objectCell = _repository.GetAll().FirstOrDefault(
                         x => x.BtsId == cell.BtsId && x.SectorId == cell.SectorId && x.CellType == cell.CellType);
                     if (objectCell == null) continue;
                     cell.CloneProperties<CdmaCell>(objectCell);
+                    _repository.Update(cell);
                     infrastructure.CdmaCellsUpdated++;
                 }
-                _repository.SaveChanges();
             }
             IEnumerable<CdmaCell> insertCells = validCells.Except(updateCells, new CdmaCellComperer());
             SaveCdmaCellListService service = new SimpleSaveCdmaCellListService(

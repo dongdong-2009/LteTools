@@ -10,6 +10,12 @@ namespace Lte.Evaluations.Test.Kml
     [TestFixture]
     public class GenerateKmlDocTest : FrameworkWriter
     {
+        [SetUp]
+        public void SetUp()
+        {
+            Initialize();
+        }
+
         [Test]
         public void TestGenerateKmlDoc_SameModInterference()
         {

@@ -7,8 +7,6 @@ namespace Lte.WinApp.Test.Service
     [TestFixture]
     public class ImportFileInfoServiceTest: ImportFileInfoTestConfig
     {
-        private ImportFileInfoService service;
-
         [SetUp]
         public void SetUp()
         {
@@ -29,8 +27,7 @@ namespace Lte.WinApp.Test.Service
         public void TestImport_EmptyList()
         {
             IEnumerable<string> fileNames = new List<string>();
-            service = new ImportFileInfoService(importer.Object, fileNames);
-            service.Import();
+            importer.Object.ImportFiles(fileNames);
             AssertFileInfoListUnchanged();
         }
 
@@ -41,8 +38,7 @@ namespace Lte.WinApp.Test.Service
             {
                 "path4"
             };
-            service = new ImportFileInfoService(importer.Object, fileNames);
-            service.Import();
+            importer.Object.ImportFiles(fileNames);
             AssertFileInfoListUnchanged();
             Assert.AreEqual(importer.Object.FileInfoList.Count, 4);
             Assert.AreEqual(importer.Object.FileInfoList[3].FilePath, "path4");
@@ -56,8 +52,7 @@ namespace Lte.WinApp.Test.Service
             {
                 "path1"
             };
-            service = new ImportFileInfoService(importer.Object, fileNames);
-            service.Import();
+            importer.Object.ImportFiles(fileNames);
             AssertFileInfoListUnchanged();
         }
 
@@ -68,8 +63,7 @@ namespace Lte.WinApp.Test.Service
             {
                 "path2"
             };
-            service = new ImportFileInfoService(importer.Object, fileNames);
-            service.Import();
+            importer.Object.ImportFiles(fileNames);
             AssertFileInfoListUnchanged();
         }
 
@@ -81,8 +75,7 @@ namespace Lte.WinApp.Test.Service
                 "path1",
                 "path3"
             };
-            service = new ImportFileInfoService(importer.Object, fileNames);
-            service.Import();
+            importer.Object.ImportFiles(fileNames);
             AssertFileInfoListUnchanged();
         }
     }

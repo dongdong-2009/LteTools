@@ -14,16 +14,15 @@ using Lte.Parameters.Kpi.Abstract;
 using Lte.Parameters.Kpi.Concrete;
 using Lte.Parameters.Kpi.Entities;
 using Lte.Parameters.Region.Entities;
-using Lte.Parameters.Service.Lte;
 using Lte.WinApp.Service;
 
 namespace Lte.WinApp.Models
 {
-    public class KpiFileInfoListImporter : FileInfoListImporter<TopDrop2GCellDaily, EFTopDrop2GcellDailyRepository>
+    public class KpiFileInfoListImporterAsync : FileInfoListImporterAsync<TopDrop2GCellDaily, EFTopDrop2GcellDailyRepository>
     {
         private readonly int _approximateTopnsImport = 100;
 
-        public KpiFileInfoListImporter(int approximateTopnsImport)
+        public KpiFileInfoListImporterAsync(int approximateTopnsImport)
         {
             FileType = "KPI-CSV文件";
             _approximateTopnsImport = approximateTopnsImport;
@@ -35,7 +34,7 @@ namespace Lte.WinApp.Models
         }
     }
 
-    public class Precise4GFileInfoListImporter : FileInfoListImporter<PreciseCoverage4G, EFPreciseCoverage4GRepository>
+    public class Precise4GFileInfoListImporterAsync : FileInfoListImporterAsync<PreciseCoverage4G, EFPreciseCoverage4GRepository>
     {
         private ITopCellRepository<TownPreciseCoverage4GStat> townStatRepository;
         private IEnumerable<ENodeb> eNodebs;
@@ -48,7 +47,7 @@ namespace Lte.WinApp.Models
                 eNodebs);
         }
 
-        public Precise4GFileInfoListImporter()
+        public Precise4GFileInfoListImporterAsync()
         {
             FileType = "精确覆盖-CSV文件";
         }

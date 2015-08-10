@@ -17,12 +17,14 @@ namespace Lte.Evaluations.Test.Kpi
             new Mock<ITopCellRepository<TopDrop2GCellDaily>>();
 
         private KpiStatImporter importer;
+        private int result;
 
         [SetUp]
         public void SetUp()
         {
             statRepository.MockOperations();
             importer = new KpiStatImporter(statRepository.Object, 100);
+            result = 0;
         }
 
         [TestCase(@",载波,基站名称,掉话总次数,呼叫总次数,掉话率,RSSI均值,平均掉话ECIO,掉话平均距离,0-200米,200-400米,400-600米,600-800米,800-1000米,1000-1200米,1200-1400米,1400-1600米,1600-1800米,1800-2000米,2000-2200米,2200-2400米,2400-2600米,2600-2800米,2800-3000米,3000-4000米,4000-5000米,5000-6000米,6000-7000米,7000-8000米,8000-9000米,9000米以上,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
@@ -97,7 +99,13 @@ RSSI分集,1_1377_133_2_201,,,,,-109,,,,,,,,,,,,,,,,,,,,,,,,,-109,-109,-109,-109
         public void Test_ImportStat(string csvContents, int count, string[] carries)
         {
             StreamReader reader = csvContents.GetStreamReader();
-            Assert.AreEqual(importer.ImportStat(reader, CsvFileDescription.CommaDescription), count);
+            Import(reader, count, carries);
+        }
+
+        private async void Import(StreamReader reader, int count, string[] carries)
+        {
+            result = await importer.ImportStat(reader, CsvFileDescription.CommaDescription);
+            Assert.AreEqual(result, count);
             Assert.AreEqual(statRepository.Object.Stats.Count(), count);
             for (int i = 0; i < count; i++)
             {
@@ -109,7 +117,6 @@ RSSI分集,1_1377_133_2_201,,,,,-109,,,,,,,,,,,,,,,,,,,,,,,,,-109,-109,-109,-109
                 Assert.AreEqual(stat.SectorId, byte.Parse(fields[3]));
                 Assert.AreEqual(stat.Frequency, short.Parse(fields[4]));
             }
-
         }
     }
 }

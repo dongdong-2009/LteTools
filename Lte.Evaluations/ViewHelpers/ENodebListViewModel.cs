@@ -97,7 +97,7 @@ namespace Lte.Evaluations.ViewHelpers
             {
                 int btsId = bts.BtsId;
                 Bts = bts;
-                CdmaCells = cdmaCellRepository.Cells.Where(x => x.BtsId == btsId).ToList();
+                CdmaCells = cdmaCellRepository.GetAll().Where(x => x.BtsId == btsId).ToList();
             }
             Photos = photoRepository.Photos.Where(x => x.ENodebId == eNodebId).ToList();
         }

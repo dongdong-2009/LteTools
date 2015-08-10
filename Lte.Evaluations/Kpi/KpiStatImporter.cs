@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Lte.Domain.LinqToCsv.Context;
 using Lte.Domain.LinqToCsv.Description;
 using Lte.Parameters.Kpi.Abstract;
@@ -18,12 +19,12 @@ namespace Lte.Evaluations.Kpi
 
     public interface IStatImporter
     {
-        int ImportStat(StreamReader reader, CsvFileDescription fileDescriptionNamesUs);
+        Task<int> ImportStat(StreamReader reader, CsvFileDescription fileDescriptionNamesUs);
     }
 
     public class LteNeighborImporter : IStatImporter
     {
-        public int ImportStat(StreamReader reader, CsvFileDescription fileDescriptionNamesUs)
+        public Task<int> ImportStat(StreamReader reader, CsvFileDescription fileDescriptionNamesUs)
         {
             throw new NotImplementedException();
         }
@@ -44,21 +45,25 @@ namespace Lte.Evaluations.Kpi
             _approximateTopnsImport = approximateTopnsImport;
         }
 
-        public int ImportStat(StreamReader reader, CsvFileDescription fileDescriptionNamesUs)
+        public Task<int> ImportStat(StreamReader reader, CsvFileDescription fileDescriptionNamesUs)
         {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < 10 * (_approximateTopnsImport + 1); i++)
+            return Task.Run(() =>
             {
-                string content = reader.ReadLine();
-                if (!string.IsNullOrEmpty(content))
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < 10*(_approximateTopnsImport + 1); i++)
                 {
-                    sb.Append(content + "\n");
+                    string content = reader.ReadLine();
+                    if (!string.IsNullOrEmpty(content))
+                    {
+                        sb.Append(content + "\n");
+                    }
                 }
-            }
-            string testInput = sb.ToString();
-            List<TopDrop2GCellCsv> stats
-                = CsvContext.ReadString<TopDrop2GCellCsv>(testInput, fileDescriptionNamesUs).ToList();
-            return _service.ImportStats(stats, _approximateTopnsImport * 10, Date);
+                string testInput = sb.ToString();
+                List<TopDrop2GCellCsv> stats
+                    = CsvContext.ReadString<TopDrop2GCellCsv>(testInput, fileDescriptionNamesUs).ToList();
+                return _service.ImportStats(stats, _approximateTopnsImport*10, Date);
+
+            });
         }
     }
 }

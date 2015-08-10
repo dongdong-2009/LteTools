@@ -4,20 +4,38 @@ using Lte.WinApp.Models;
 
 namespace Lte.WinApp.Service
 {
-    public class QueryValidFileInfosService
+    public interface IFileInfoListImporter
     {
-        private readonly IFileInfoListImporter _importer;
+        List<ImportedFileInfo> FileInfoList { get; }
 
-        public QueryValidFileInfosService(IFileInfoListImporter importer)
+        string FileType { get; }
+
+        string Import(ImportedFileInfo[] validFileInfos);
+    }
+
+    public interface IFileInfoListImporterAsync
+    {
+        List<ImportedFileInfo> FileInfoList { get; }
+
+        string FileType { get; }
+
+        void Import(ImportedFileInfo[] validFileInfos);
+    }
+
+    public static class QueryValidFileInfosService
+    {
+        public static IEnumerable<ImportedFileInfo> Query(this IFileInfoListImporter importer)
         {
-            _importer = importer;
+            return !importer.FileInfoList.Any() ? importer.FileInfoList
+                : importer.FileInfoList.Where(x => 
+                    x.FileType == importer.FileType && x.CurrentState == "未读取");
         }
 
-        public IEnumerable<ImportedFileInfo> Query()
+        public static IEnumerable<ImportedFileInfo> Query(this IFileInfoListImporterAsync importer)
         {
-            return !_importer.FileInfoList.Any() ? _importer.FileInfoList
-                : _importer.FileInfoList.Where(x => 
-                    x.FileType == _importer.FileType && x.CurrentState == "未读取");
+            return !importer.FileInfoList.Any() ? importer.FileInfoList
+                : importer.FileInfoList.Where(x =>
+                    x.FileType == importer.FileType && x.CurrentState == "未读取");
         }
     }
 }

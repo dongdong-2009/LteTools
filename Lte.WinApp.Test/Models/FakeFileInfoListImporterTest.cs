@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Lte.Domain.Regular;
 using Lte.WinApp.Models;
 using NUnit.Framework;
@@ -12,7 +8,7 @@ namespace Lte.WinApp.Test.Models
     [TestFixture]
     public class FakeFileInfoListImporterTest
     {
-        private FileInfoListImporter importer;
+        private FileInfoListImporterAsync<StubTimeStat, FakeTopCellRepository> _importerAsync;
 
         [TestCase("123", new[] { "D:\\20120513.txt" }, "\nD:\\20120513.txt完成导入数量：3")]
         [TestCase("123456", new[] { "D:\\aa20120513.txt" }, "\nD:\\aa20120513.txt完成导入数量：6")]
@@ -20,15 +16,15 @@ namespace Lte.WinApp.Test.Models
             "\nD:\\aa20120513.txt完成导入数量：6\nD:\\bb20120513.txt完成导入数量：6")]
         public void TestImport(string contents, string[] paths, string info)
         {
-            importer = new FakeFileInfoListImporter(contents);
+            _importerAsync = new FakeFileInfoListImporterAsync(contents);
             ImportedFileInfo[] validFileInfos = paths.Select(x =>
                 new ImportedFileInfo
                 {
                     FilePath = x,
                     FileType = "Test"
                 }).ToArray();
-            string result = importer.Import(validFileInfos);
-            Assert.AreEqual(result,info);
+            _importerAsync.Import(validFileInfos);
+            Assert.AreEqual(_importerAsync.Result, info);
             for (int i = 0; i < paths.Length; i++)
             {
                 ImportedFileInfo fileInfo = validFileInfos.ElementAt(i);
@@ -44,14 +40,14 @@ namespace Lte.WinApp.Test.Models
             new[] { true, false })]
         public void TestImport_RepositoryConsidered(string contents, string[] paths, bool[] results)
         {
-            importer = new FakeFileInfoListImporterWithRepository(contents);
+            _importerAsync = new FakeFileInfoListImporterAsyncWithRepository(contents);
             ImportedFileInfo[] validFileInfos = paths.Select(x =>
                 new ImportedFileInfo
                 {
                     FilePath = x,
                     FileType = "Test"
                 }).ToArray();
-            string result = importer.Import(validFileInfos);
+            _importerAsync.Import(validFileInfos);
             string info = "";
             for (int i = 0; i < paths.Length; i++)
             {
@@ -70,7 +66,7 @@ namespace Lte.WinApp.Test.Models
                         + "的统计记录已导入！";
                 }
             }
-            Assert.AreEqual(result, info);
+            Assert.AreEqual(_importerAsync.Result, info);
         }
     }
 }

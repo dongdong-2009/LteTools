@@ -105,7 +105,7 @@ namespace Lte.Parameters.Service.Public
             foreach (CollegeCdmaCellExcel excel in cellExcels)
             {
                 CdmaCell cell =
-                    cellRepository.Cells.FirstOrDefault(
+                    cellRepository.GetAll().FirstOrDefault(
                         x => x.BtsId == excel.BtsId && x.SectorId == excel.SectorId);
                 if (cell == null) continue;
                 InfrastructureInfo infrastructure = _repository.InfrastructureInfos.FirstOrDefault(x =>

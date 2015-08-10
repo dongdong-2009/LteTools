@@ -21,7 +21,7 @@ namespace Lte.Parameters.Service.Public
         {
             var cdmaLteInfos =
                 (from a in repository.GetAllList()
-                    join b in cellRepository.Cells.ToList()
+                    join b in cellRepository.GetAllList()
                         on a.BtsId equals b.BtsId
                     where a.ENodebId == -1
                     select new {a.BtsId, b.CellId}).Distinct();

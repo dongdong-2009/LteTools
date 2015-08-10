@@ -4,26 +4,31 @@ using Lte.WinApp.Models;
 
 namespace Lte.WinApp.Service
 {
-    public class ImportFileInfoService
+    public static class ImportFileInfoService
     {
-        private readonly IFileInfoListImporter _importer;
-        private readonly IEnumerable<string> _fileNames;
-
-        public ImportFileInfoService(IFileInfoListImporter importer, IEnumerable<string> fileNames)
+        public static void ImportFiles(this IFileInfoListImporter importer, IEnumerable<string> fileNames)
         {
-            _importer = importer;
-            _fileNames = fileNames;
-        }
-
-        public void Import()
-        {
-            foreach (string fileName in _fileNames.Where(
-                fileName => _importer.FileInfoList.All(x => x.FilePath != fileName)))
+            foreach (string fileName in fileNames.Where(
+                fileName => importer.FileInfoList.All(x => x.FilePath != fileName)))
             {
-                _importer.FileInfoList.Add(new ImportedFileInfo
+                importer.FileInfoList.Add(new ImportedFileInfo
                 {
                     FilePath = fileName,
-                    FileType = _importer.FileType,
+                    FileType = importer.FileType,
+                    IsSelected = true
+                });
+            }
+        }
+
+        public static void ImportFiles(this IFileInfoListImporterAsync importer, IEnumerable<string> fileNames)
+        {
+            foreach (string fileName in fileNames.Where(
+                fileName => importer.FileInfoList.All(x => x.FilePath != fileName)))
+            {
+                importer.FileInfoList.Add(new ImportedFileInfo
+                {
+                    FilePath = fileName,
+                    FileType = importer.FileType,
                     IsSelected = true
                 });
             }

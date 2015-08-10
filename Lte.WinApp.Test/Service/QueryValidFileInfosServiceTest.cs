@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Lte.WinApp.Service;
 using NUnit.Framework;
 
@@ -11,8 +7,6 @@ namespace Lte.WinApp.Test.Service
     [TestFixture]
     public class QueryValidFileInfosServiceTest : ImportFileInfoTestConfig
     {
-        private QueryValidFileInfosService service;
-
         [SetUp]
         public void SetUp()
         {
@@ -21,12 +15,11 @@ namespace Lte.WinApp.Test.Service
             {
                 fileInfoList[i].FileType = "txt";
             }
-            service = new QueryValidFileInfosService(importer.Object);
         }
 
         private int GetFileInfoListLength()
         {
-            return service.Query().Count();
+            return importer.Object.Query().Count();
         }
 
         [TestCase(0)]
