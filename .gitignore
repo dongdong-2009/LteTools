@@ -32,6 +32,7 @@
 *.pdb
 *.dll
 *.dll.config
+*.dll.deploy
 *.exe.config
 *.manifest
 *.application
