@@ -14,13 +14,14 @@ namespace Lte.WinApp.Test.Models
 {
     public class StubFileInfoListImporter : FileInfoListImporter
     {
-        public override string Import(ImportedFileInfo[] validFileInfos)
+        public string Message { get; private set; }
+        public override void Import(ImportedFileInfo[] validFileInfos)
         {
             if (validFileInfos.Any())
             {
-                return validFileInfos.Aggregate("", (current, info) => current + (info.FilePath + ","));
+                Message = validFileInfos.Aggregate("", (current, info) => current + (info.FilePath + ","));
             }
-            return "invalid";
+            Message = "invalid";
         }
     }
 

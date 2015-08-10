@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using Lte.Domain.LinqToCsv.Context;
 using Lte.Domain.LinqToCsv.Description;
 using Lte.Parameters.Abstract;
 using Lte.Parameters.Entities;
 using Lte.Parameters.Service.Lte;
+using Lte.WinApp.Controls;
 using Lte.WinApp.Service;
 
 namespace Lte.WinApp.Models
@@ -18,7 +20,7 @@ namespace Lte.WinApp.Models
 
         public string FileType { get; set; }
 
-        public abstract string Import(ImportedFileInfo[] validFileInfos);
+        public abstract void Import(ImportedFileInfo[] validFileInfos);
 
         protected Func<string,StreamReader> ReadFile { get; set; }
 
@@ -30,7 +32,9 @@ namespace Lte.WinApp.Models
     
     public class NeighborFileListImporter : FileInfoListImporter
     {
-        private ILteNeighborCellRepository _repository;
+        private readonly ILteNeighborCellRepository _repository;
+
+        public FileListGrid FileListGrid { private get; set; }
 
         public NeighborFileListImporter(ILteNeighborCellRepository repository)
         {
@@ -38,7 +42,7 @@ namespace Lte.WinApp.Models
             FileType = "CSV-LTE邻区关系";
         }
 
-        public override string Import(ImportedFileInfo[] validFileInfos)
+        public override void Import(ImportedFileInfo[] validFileInfos)
         {
             string result = "";
             SaveLteCellRelationService service = new SaveLteCellRelationService(_repository);
@@ -52,7 +56,8 @@ namespace Lte.WinApp.Models
                     result += "\n完成导入邻区关系文件：" + info.FilePath;
                 }
             }
-            return result;
+            MessageBox.Show(result);
+            FileListGrid.SetDataSource(FileInfoList);
         }
     }
 

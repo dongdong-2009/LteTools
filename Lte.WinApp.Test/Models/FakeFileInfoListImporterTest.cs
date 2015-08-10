@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Lte.Domain.Regular;
 using Lte.WinApp.Models;
 using NUnit.Framework;
@@ -14,7 +15,7 @@ namespace Lte.WinApp.Test.Models
         [TestCase("123456", new[] { "D:\\aa20120513.txt" }, "\nD:\\aa20120513.txt完成导入数量：6")]
         [TestCase("123456", new[] { "D:\\aa20120513.txt", "D:\\bb20120513.txt" },
             "\nD:\\aa20120513.txt完成导入数量：6\nD:\\bb20120513.txt完成导入数量：6")]
-        public void TestImport(string contents, string[] paths, string info)
+        public async void TestImport(string contents, string[] paths, string info)
         {
             _importerAsync = new FakeFileInfoListImporterAsync(contents);
             ImportedFileInfo[] validFileInfos = paths.Select(x =>
@@ -23,7 +24,9 @@ namespace Lte.WinApp.Test.Models
                     FilePath = x,
                     FileType = "Test"
                 }).ToArray();
-            _importerAsync.Import(validFileInfos);
+
+            await Task.WhenAll(Task.Run(() =>_importerAsync.Import(validFileInfos)), Task.Delay(300));
+            
             Assert.AreEqual(_importerAsync.Result, info);
             for (int i = 0; i < paths.Length; i++)
             {
@@ -36,9 +39,9 @@ namespace Lte.WinApp.Test.Models
 
         [TestCase("123", new[] { "D:\\20120513.txt" }, new[] { true })]
         [TestCase("123456", new[] { "D:\\aa20120513.txt" }, new[] { true })]
-        [TestCase("123456", new[] { "D:\\aa20120513.txt", "D:\\bb20120513.txt" },
+        [TestCase("1234567", new[] { "D:\\aa20120513.txt", "D:\\bb20120513.txt" },
             new[] { true, false })]
-        public void TestImport_RepositoryConsidered(string contents, string[] paths, bool[] results)
+        public async void TestImport_RepositoryConsidered(string contents, string[] paths, bool[] results)
         {
             _importerAsync = new FakeFileInfoListImporterAsyncWithRepository(contents);
             ImportedFileInfo[] validFileInfos = paths.Select(x =>
@@ -47,7 +50,7 @@ namespace Lte.WinApp.Test.Models
                     FilePath = x,
                     FileType = "Test"
                 }).ToArray();
-            _importerAsync.Import(validFileInfos);
+            await Task.WhenAll(Task.Run(() => _importerAsync.Import(validFileInfos)), Task.Delay(500));
             string info = "";
             for (int i = 0; i < paths.Length; i++)
             {

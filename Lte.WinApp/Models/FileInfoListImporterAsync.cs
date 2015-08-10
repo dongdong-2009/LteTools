@@ -7,6 +7,7 @@ using Lte.Domain.Regular;
 using Lte.Domain.TypeDefs;
 using Lte.Evaluations.Kpi;
 using Lte.Parameters.Kpi.Abstract;
+using Lte.WinApp.Controls;
 using Lte.WinApp.Service;
 
 namespace Lte.WinApp.Models
@@ -19,7 +20,9 @@ namespace Lte.WinApp.Models
 
         protected abstract IStatDateImporter GenerateImporter();
 
-        protected Func<string, StreamReader> ReadFile { get; set; }
+        protected Func<string, StreamReader> ReadFile { private get; set; }
+
+        public  FileListGrid FileListGrid { private get; set; }
 
         public List<ImportedFileInfo> FileInfoList { get; set; }
 
@@ -27,15 +30,15 @@ namespace Lte.WinApp.Models
 
         public string Result { get; private set; }
 
-        public async void Import(ImportedFileInfo[] validFileInfos)
+        public async void Import(IEnumerable<ImportedFileInfo> validFileInfos)
         {
             Result = "";
             repository = new TRepository();
 
-            for (int i=0; i<validFileInfos.Length; i++)
+            foreach (ImportedFileInfo file in validFileInfos)
             {
                 IStatDateImporter importer = GenerateImporter();
-                ImportedFileInfo fileInfo = validFileInfos[i];
+                ImportedFileInfo fileInfo = file;
                 importer.Date = fileInfo.FilePath.RetrieveFileNameBody().GetDateExtend();
                 TStat stat = repository.Stats.FirstOrDefault(x => x.StatTime == importer.Date);
                 if (stat == null)
@@ -53,6 +56,7 @@ namespace Lte.WinApp.Models
                     fileInfo.UnnecessaryState();
                 }
             }
+            FileListGrid.SetDataSource(FileInfoList);
         }
     }
 }

@@ -97,24 +97,22 @@ namespace Lte.WinApp.ViewPages
                 MessageBox.Show("未选择任何有效的数据文件。请先导入或选择！");
                 return;
             }
-            string result = "";
             if (validLteFiles.Any())
             {
-                result += _lteImporter.Import(validLteFiles);
+                _lteImporter.Import(validLteFiles);
                 ENodebList.SetDataSource(_lteImporter.BtsExcelList);
                 CellList.SetDataSource(_lteImporter.CellExcelList);
             }
             if (validCdmaFiles.Any())
             {
-                result += _cdmaImporter.Import(validCdmaFiles);
+                _cdmaImporter.Import(validCdmaFiles);
                 BtsList.SetDataSource(_cdmaImporter.BtsExcelList);
                 CdmaCellList.SetDataSource(_cdmaImporter.CellExcelList);
             }
             if (validMmlFiles.Any())
             {
-                result += _mmlImporter.Import(validMmlFiles);
+                _mmlImporter.Import(validMmlFiles);
             }
-            MessageBox.Show(result);
             FileList.SetDataSource(_fileInfoList);
         }
 

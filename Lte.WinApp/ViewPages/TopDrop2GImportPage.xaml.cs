@@ -22,11 +22,20 @@ namespace Lte.WinApp.ViewPages
         {
             InitializeComponent();
             PageTitle.Content = Title;
-            _kpiImporterAsync = new KpiFileInfoListImporterAsync(1000) { FileInfoList = _fileInfoList };
-            _preciseImporterAsync = new Precise4GFileInfoListImporterAsync {FileInfoList = _fileInfoList};
+            _kpiImporterAsync = new KpiFileInfoListImporterAsync(1000)
+            {
+                FileInfoList = _fileInfoList,
+                FileListGrid = FileList
+            };
+            _preciseImporterAsync = new Precise4GFileInfoListImporterAsync
+            {
+                FileInfoList = _fileInfoList,
+                FileListGrid = FileList
+            };
             _neighborImporter = new NeighborFileListImporter(new EFLteNeighborCellRepository())
             {
-                FileInfoList = _fileInfoList
+                FileInfoList = _fileInfoList,
+                FileListGrid = FileList
             };
         }
 
@@ -41,26 +50,20 @@ namespace Lte.WinApp.ViewPages
                 MessageBox.Show("未选择任何有效的CSV文件。请先导入或选择！");
                 return;
             }
-            string result = "";
             if (validKpiFileInfos.Any())
             {
                 _kpiImporterAsync.Import(validKpiFileInfos);
-                result += _kpiImporterAsync.Result;
             }
 
             if (validPreciseFileInfos.Any())
             {
                 _preciseImporterAsync.Import(validPreciseFileInfos);
-                result += _preciseImporterAsync.Result;
             }
 
             if (validNeighborFileInfos.Any())
             {
-                result += _neighborImporter.Import(validNeighborFileInfos);
+                 _neighborImporter.Import(validNeighborFileInfos);
             }
-
-            MessageBox.Show(result);
-            FileList.SetDataSource(_fileInfoList);
         }
 
         private void OpenFile_Click(object sender, RoutedEventArgs e)

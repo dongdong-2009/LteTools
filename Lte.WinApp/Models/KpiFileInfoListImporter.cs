@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using Lte.Evaluations.Kpi;
 using Lte.Evaluations.Rutrace.Entities;
 using Lte.Evaluations.Rutrace.Record;
@@ -59,7 +60,7 @@ namespace Lte.WinApp.Models
         private readonly IEnumerable<Cell> _cells;
         private readonly ILteNeighborCellRepository _repository;
 
-        public override string Import(ImportedFileInfo[] validFileInfos)
+        public override void Import(ImportedFileInfo[] validFileInfos)
         {
             FinishValidFilesStateService fileService = new FinishValidFilesStateService(validFileInfos);
             string[] paths = validFileInfos.Select(x => x.FilePath).ToArray();
@@ -86,7 +87,7 @@ namespace Lte.WinApp.Models
 
             _stats.ImportByTa(taDetails);
             fileService.Finish();
-            return "成功导入MR数据文件";
+            MessageBox.Show("成功导入MR数据文件");
         }
 
         private MrFileInfoListImporter()
@@ -107,7 +108,7 @@ namespace Lte.WinApp.Models
     {
         private readonly List<InterferenceStat> _stats;
 
-        public override string Import(ImportedFileInfo[] validFileInfos)
+        public override void Import(ImportedFileInfo[] validFileInfos)
         {
             FinishValidFilesStateService filesService = new FinishValidFilesStateService(validFileInfos);
             string[] paths = validFileInfos.Select(x => x.FilePath).ToArray();
@@ -116,7 +117,7 @@ namespace Lte.WinApp.Models
             List<CdrTaRecord> cdrDetails = service.Generate();
             _stats.ImportByTa(cdrDetails);
             filesService.Finish();
-            return "\n成功导入CDR数据文件";
+            MessageBox.Show("\n成功导入CDR数据文件");
         }
 
         private CdrFileInfoListImporter()
@@ -135,14 +136,14 @@ namespace Lte.WinApp.Models
     {
         private readonly List<InterferenceStat> _stats;
 
-        public override string Import(ImportedFileInfo[] validFileInfos)
+        public override void Import(ImportedFileInfo[] validFileInfos)
         {
             IEnumerable<string> paths = validFileInfos.Select(x => x.FilePath);
             FinishValidFilesStateService fileService = new FinishValidFilesStateService(validFileInfos);
             _stats.Import(RecordSetImporter.ImportRuRecordSets(paths));
             fileService.Finish();
 
-            return "成功导入RU数据文件";
+            MessageBox.Show("成功导入RU数据文件");
         }
 
         private RuFileInfoListImporter()
@@ -173,9 +174,9 @@ namespace Lte.WinApp.Models
             get { return _cellExcelList; }
         }
 
-        public override string Import(ImportedFileInfo[] validFileInfos)
+        public override void Import(ImportedFileInfo[] validFileInfos)
         {
-            if (validFileInfos.Length == 0) return "\n请先选择恰当的" + FileType + "！";
+            if (validFileInfos.Length == 0) MessageBox.Show("\n请先选择恰当的" + FileType + "！");
             IValueImportable importer 
                 = new ExcelBtsImportRepository<ENodebExcel>(validFileInfos[0].FilePath, x=>new ENodebExcel(x));
             importer.Import();
@@ -185,7 +186,7 @@ namespace Lte.WinApp.Models
             _cellExcelList = (importer as ExcelCellImportRepository<CellExcel>).CellExcelList;
             FinishValidFilesStateService fileService = new FinishValidFilesStateService(validFileInfos);
             fileService.Finish();
-            return "\n读取" + FileType + "成功！";
+            MessageBox.Show("\n读取" + FileType + "成功！");
         }
 
         public LteFileInfoListImporter()
@@ -211,9 +212,9 @@ namespace Lte.WinApp.Models
             get { return _cdmaCellExcelList; }
         }
 
-        public override string Import(ImportedFileInfo[] validFileInfos)
+        public override void Import(ImportedFileInfo[] validFileInfos)
         {
-            if (validFileInfos.Length == 0) return "\n请先选择恰当的" + FileType + "！";
+            if (validFileInfos.Length == 0) MessageBox.Show("\n请先选择恰当的" + FileType + "！");
             IValueImportable importer 
                 = new ExcelBtsImportRepository<BtsExcel>(validFileInfos[0].FilePath, x=>new BtsExcel(x));
             importer.Import();
@@ -224,7 +225,7 @@ namespace Lte.WinApp.Models
             _cdmaCellExcelList = (importer as ExcelCellImportRepository<CdmaCellExcel>).CellExcelList;
             FinishValidFilesStateService fileService = new FinishValidFilesStateService(validFileInfos);
             fileService.Finish();
-            return "\n读取" + FileType + "成功！";
+            MessageBox.Show("\n读取" + FileType + "成功！");
         }
 
         public CdmaFileInfoListImporter()
@@ -241,16 +242,16 @@ namespace Lte.WinApp.Models
             get; private set;
         }
 
-        public override string Import(ImportedFileInfo[] validFileInfos)
+        public override void Import(ImportedFileInfo[] validFileInfos)
         {
-            if (validFileInfos.Length == 0) return "\n请先选择恰当的" + FileType + "！";
+            if (validFileInfos.Length == 0) MessageBox.Show("\n请先选择恰当的" + FileType + "！");
             RepositoryList
                 = validFileInfos.Select(x => new MmlImportRepository(new StreamReader(x.FilePath,
                     Encoding.GetEncoding("GB2312"))) as
                     IMmlImportRepository<CdmaBts, CdmaCell, BtsExcel, CdmaCellExcel>).ToList();
             FinishValidFilesStateService fileService = new FinishValidFilesStateService(validFileInfos);
             fileService.Finish();
-            return "\n读取" + FileType + "成功！";
+            MessageBox.Show("\n读取" + FileType + "成功！");
         }
 
         public MmlFileInfoListImporter()

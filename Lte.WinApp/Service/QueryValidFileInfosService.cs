@@ -10,7 +10,7 @@ namespace Lte.WinApp.Service
 
         string FileType { get; }
 
-        string Import(ImportedFileInfo[] validFileInfos);
+        void Import(ImportedFileInfo[] validFileInfos);
     }
 
     public interface IFileInfoListImporterAsync
@@ -18,8 +18,6 @@ namespace Lte.WinApp.Service
         List<ImportedFileInfo> FileInfoList { get; }
 
         string FileType { get; }
-
-        void Import(ImportedFileInfo[] validFileInfos);
     }
 
     public static class QueryValidFileInfosService

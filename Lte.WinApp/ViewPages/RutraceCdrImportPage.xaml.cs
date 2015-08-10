@@ -80,20 +80,18 @@ namespace Lte.WinApp.ViewPages
         private void Import_Click(object sender, RoutedEventArgs e)
         {
             _repository = new EFInterferenceStatRepository();
-            string message =
-                _ruImporter.ImportRu()
-                + _cdrImporter.ImportCdr()
-                + _mrImporter.ImportCdr();
+            _ruImporter.ImportRu();
+            _cdrImporter.ImportCdr();
+            _mrImporter.ImportCdr();
 
             if (saveDb.IsChecked == true)
             {
                 if (_statList.Count == 0)
-                    message += "\n没有需要导入数据库的RUTRACE和CDR信息";
+                    MessageBox.Show("\n没有需要导入数据库的RUTRACE和CDR信息");
                 _repository.Save(_statList);
-                message += "\n导入数据库记录" + _statList.Count + "条";
+                MessageBox.Show("\n导入数据库记录" + _statList.Count + "条");
                 _statList.Clear();
             }
-            MessageBox.Show(message);
             FileList.SetDataSource(_fileInfoList);
         }
 
