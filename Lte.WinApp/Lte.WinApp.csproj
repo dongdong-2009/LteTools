@@ -179,6 +179,9 @@
     <Compile Include="Controls\ParametersConfig.xaml.cs">
       <DependentUpon>ParametersConfig.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ParametersDumpResults.xaml.cs">
+      <DependentUpon>ParametersDumpResults.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RutraceParameterSetting.xaml.cs">
       <DependentUpon>RutraceParameterSetting.xaml</DependentUpon>
     </Compile>
@@ -246,6 +249,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ParametersConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ParametersDumpResults.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

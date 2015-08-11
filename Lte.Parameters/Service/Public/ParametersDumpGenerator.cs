@@ -7,6 +7,17 @@ using Lte.Parameters.Kpi.Service;
 
 namespace Lte.Parameters.Service.Public
 {
+    public interface IParametersDumpResults
+    {
+        int ENodebs { set; }
+        int NewCells { set; }
+        int UpdateCells { set; }
+        int UpdatePcis { set; }
+        int CdmaBts { set; }
+        int NewCdmaCells { set; }
+        int UpdateCdmaCells { set; }
+    }
+
     public class ParametersDumpGenerator
     {
         private Func<IParametersDumpController, ParametersDumpInfrastructure,
@@ -39,13 +50,14 @@ namespace Lte.Parameters.Service.Public
 
         public void DumpLteData(ParametersDumpInfrastructure infrastructure,
             IParametersDumpController controller,
-            IParametersDumpConfig config)
+            IParametersDumpConfig config,
+            IParametersDumpResults results)
         {
             IBtsDumpRepository<ENodebExcel> btsDumpRepository
                 = LteENodebDumpGenerator(controller, infrastructure);
             btsDumpRepository.ImportBts = config.ImportENodeb;
             btsDumpRepository.UpdateBts = config.UpdateENodeb;
-            infrastructure.LteENodebRepository.DumpFromImportedData(btsDumpRepository);
+            infrastructure.LteENodebRepository.DumpFromImportedData(btsDumpRepository, results);
 
             ICellDumpRepository<CellExcel> cellDumpRepository
                 = LteCellDumpGenerator(controller, infrastructure);
@@ -76,13 +88,14 @@ namespace Lte.Parameters.Service.Public
 
         public void DumpCdmaData(ParametersDumpInfrastructure infrastructure,
             IParametersDumpController controller,
-            IParametersDumpConfig config)
+            IParametersDumpConfig config,
+            IParametersDumpResults results)
         {
             IBtsDumpRepository<BtsExcel> dumpBtsRepository
                 = CdmaBtsDumpGenerator(controller, infrastructure);
             dumpBtsRepository.ImportBts = config.ImportBts;
             dumpBtsRepository.UpdateBts = config.UpdateBts;
-            infrastructure.CdmaBtsRepository.DumpFromImportedData(dumpBtsRepository);
+            infrastructure.CdmaBtsRepository.DumpFromImportedData(dumpBtsRepository, results);
 
             ICellDumpRepository<CdmaCellExcel> dumpCellRepository
                 = CdmaCellDumpGenerator(controller, infrastructure);

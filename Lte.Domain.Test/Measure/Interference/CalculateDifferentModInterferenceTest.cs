@@ -7,8 +7,15 @@ namespace Lte.Domain.Test.Measure.Interference
     [TestFixture]
     public class CalculateDifferentModInterferenceTest
     {
-        private readonly SfMeasurePointResult result = new SfMeasurePointResult();
-        private readonly List<MeasurableCell> cellList = new List<MeasurableCell>();
+        private SfMeasurePointResult result;
+        private List<MeasurableCell> cellList;
+
+        [SetUp]
+        public void SetUp()
+        {
+            result = new SfMeasurePointResult();
+            cellList = new List<MeasurableCell>();
+        }
 
         [Test]
         public void TestDifferentModInterference_EmptyList()

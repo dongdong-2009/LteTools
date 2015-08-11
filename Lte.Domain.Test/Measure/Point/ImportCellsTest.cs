@@ -1,25 +1,15 @@
-﻿using System.Collections.Generic;
-using Lte.Domain.Geo.Abstract;
-using Lte.Domain.Geo.Entities;
-using Lte.Domain.Geo.Service;
-using Lte.Domain.Measure;
-using Moq;
+﻿using Lte.Domain.Geo.Entities;
 using NUnit.Framework;
 
 namespace Lte.Domain.Test.Measure.Point
 {
     [TestFixture]
-    public class ImportCellsTest
+    public class ImportCellsTest : ImportCellTestConfig
     {
-        protected readonly IList<ILinkBudget<double>> budgetList = new List<ILinkBudget<double>>();
-        protected readonly IBroadcastModel model = new BroadcastModel();
-        protected readonly IList<IOutdoorCell> outdoorCellList = new List<IOutdoorCell>();
-        protected const double eps = 1E-6;
-        protected readonly MeasurePoint measurablePoint = new MeasurePoint();
-
         [SetUp]
         public void TestInitialize()
         {
+            Initialize();
             StubGeoPoint point0 = new StubGeoPoint(112, 23);
             StubGeoPoint point = new StubGeoPoint(point0, 0.01);
             measurablePoint.Longtitute = point.Longtitute;
@@ -46,15 +36,6 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(measurablePoint.CellRepository.CellList[0].TiltAngle, 2.939795, eps);
         }
 
-        protected void ImportOneCell()
-        {
-            Mock<IOutdoorCell> outdoorCell = new Mock<IOutdoorCell>();
-            outdoorCell.MockOutdoorCell(112, 23, 0, 15.2, 18);
-            outdoorCellList.Add(outdoorCell.Object);
-
-            measurablePoint.ImportCells(outdoorCellList, budgetList, model);
-        }
-
         [Test]
         public void TestImportCells_TwoCells_InOneStation()
         {
@@ -65,18 +46,6 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(measurablePoint.CellRepository.CellList[0].TiltAngle, 2.939795, eps);
             Assert.AreEqual(measurablePoint.CellRepository.CellList[1].ReceivedRsrp, -136.877442, eps);
             Assert.AreEqual(measurablePoint.CellRepository.CellList[1].TiltAngle, 2.939795, eps);
-        }
-
-        protected void ImportTwoCellsInOneStation()
-        {
-            Mock<IOutdoorCell> outdoorCell1 = new Mock<IOutdoorCell>();
-            outdoorCell1.MockOutdoorCell(112, 23, 0, 15.2, 18);
-            Mock<IOutdoorCell> outdoorCell2 = new Mock<IOutdoorCell>();
-            outdoorCell2.MockOutdoorCell(112, 23, 45, 15.2, 18);
-            outdoorCellList.Add(outdoorCell1.Object);
-            outdoorCellList.Add(outdoorCell2.Object);
-
-            measurablePoint.ImportCells(outdoorCellList, budgetList, model);
         }
 
         [Test]
@@ -93,18 +62,6 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(measurablePoint.CellRepository.CellList[1].Cell.PciModx, 0);
         }
 
-        protected void ImportTwoCellsInOneStation_WithDifferentMods()
-        {
-            Mock<IOutdoorCell> outdoorCell1 = new Mock<IOutdoorCell>();
-            outdoorCell1.MockOutdoorCell(112, 23, 0, 15.2, 18);
-            Mock<IOutdoorCell> outdoorCell2 = new Mock<IOutdoorCell>();
-            outdoorCell2.MockOutdoorCell(112, 23, 45, 15.2, 18, 1);
-            outdoorCellList.Add(outdoorCell1.Object);
-            outdoorCellList.Add(outdoorCell2.Object);
-
-            measurablePoint.ImportCells(outdoorCellList, budgetList, model);
-        }
-
         [Test]
         public void TestImportCells_ThreeCells_InOneStation()
         {
@@ -117,21 +74,6 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(measurablePoint.CellRepository.CellList[1].TiltAngle, 2.939795, eps);
             Assert.AreEqual(measurablePoint.CellRepository.CellList[2].ReceivedRsrp, -136.877442, eps);
             Assert.AreEqual(measurablePoint.CellRepository.CellList[2].TiltAngle, 2.939795, eps);
-        }
-
-        protected void ImportThreeCellsInOneStation()
-        {
-            Mock<IOutdoorCell> outdoorCell1 = new Mock<IOutdoorCell>();
-            outdoorCell1.MockOutdoorCell(112, 23, 0, 15.2, 18);
-            Mock<IOutdoorCell> outdoorCell2 = new Mock<IOutdoorCell>();
-            outdoorCell2.MockOutdoorCell(112, 23, 45, 15.2, 18);
-            Mock<IOutdoorCell> outdoorCell3 = new Mock<IOutdoorCell>();
-            outdoorCell3.MockOutdoorCell(112, 23, 90, 15.2, 18);
-            outdoorCellList.Add(outdoorCell1.Object);
-            outdoorCellList.Add(outdoorCell2.Object);
-            outdoorCellList.Add(outdoorCell3.Object);
-
-            measurablePoint.ImportCells(outdoorCellList, budgetList, model);
         }
 
         [Test]
@@ -148,19 +90,5 @@ namespace Lte.Domain.Test.Measure.Point
             Assert.AreEqual(measurablePoint.CellRepository.CellList[2].TiltAngle, 2.939795, eps);
         }
 
-        protected void ImportThreeCellsInDifferentStations()
-        {
-            Mock<IOutdoorCell> outdoorCell1 = new Mock<IOutdoorCell>();
-            outdoorCell1.MockOutdoorCell(112, 23, 0, 15.2, 18);
-            Mock<IOutdoorCell> outdoorCell2 = new Mock<IOutdoorCell>();
-            outdoorCell2.MockOutdoorCell(112, 23, 45, 15.2, 18);
-            Mock<IOutdoorCell> outdoorCell3 = new Mock<IOutdoorCell>();
-            outdoorCell3.MockOutdoorCell(111.99, 23, 90, 15.2, 18);
-            outdoorCellList.Add(outdoorCell1.Object);
-            outdoorCellList.Add(outdoorCell2.Object);
-            outdoorCellList.Add(outdoorCell3.Object);
-
-            measurablePoint.ImportCells(outdoorCellList, budgetList, model);
-        }
     }
 }

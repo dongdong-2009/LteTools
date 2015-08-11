@@ -37,6 +37,9 @@
             <TabItem Header="导入设置">
                 <controls:ParametersConfig x:Name="DumpConfig" />
             </TabItem>
+            <TabItem Header="导入结果">
+                <controls:ParametersDumpResults x:Name="DumpResults" Margin="5"/>
+            </TabItem>
             <TabItem Header="LTE基站">
                 <controls:ENodebListGrid x:Name="ENodebList" />
             </TabItem>

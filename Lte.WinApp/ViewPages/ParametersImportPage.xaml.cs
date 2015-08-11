@@ -116,13 +116,13 @@ namespace Lte.WinApp.ViewPages
             FileList.SetDataSource(_fileInfoList);
         }
 
-        private void DumpToDb_Click(object sender, RoutedEventArgs e)
+        private async void DumpToDb_Click(object sender, RoutedEventArgs e)
         {
             WinDumpController controller = new WinDumpController();
             ParametersDumpGenerator generater = new ParametersDumpGenerator();
-            generater.DumpLteData(infrastructure, controller, dumpConfig);
+            generater.DumpLteData(infrastructure, controller, dumpConfig, DumpResults);
             generater.DumpMmlData(infrastructure, controller);
-            generater.DumpCdmaData(infrastructure, controller, dumpConfig);
+            generater.DumpCdmaData(infrastructure, controller, dumpConfig, DumpResults);
             MessageBox.Show("新增LTE基站：" + infrastructure.ENodebsUpdated +
                             "\n新增LTE小区：" + infrastructure.CellsInserted +
                             "\n更新LTE小区：" + infrastructure.CellsUpdated +

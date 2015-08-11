@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Lte.Domain.Geo.Entities;
 using Lte.Domain.Geo.Service;

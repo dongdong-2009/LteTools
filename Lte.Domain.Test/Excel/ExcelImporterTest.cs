@@ -22,18 +22,18 @@ namespace Lte.Domain.Test.Excel
         }
     }
 
-    public abstract class ExcelImporterService
+    public class ExcelImporterService
     {
-        readonly IExcelImporter importer;
+        readonly IExcelImporter _importer;
 
         public IExcelImporter Importer
         {
-            get { return importer; }
+            get { return _importer; }
         }
 
-        protected ExcelImporterService(IExcelImporter importer)
+        public ExcelImporterService(IExcelImporter importer)
         {
-            this.importer = importer;
+            _importer = importer;
         }
 
     }
@@ -50,8 +50,8 @@ namespace Lte.Domain.Test.Excel
     {
         protected override IExcelImporter CreateInstance(IContext context)
         {
-            string[] sheetNames = { "基站级", "小区级" };
-            return new StubExcelImporter(sheetNames);
+            string[] tableNames = { "基站级", "小区级" };
+            return new StubExcelImporter(tableNames);
         }
     }
 

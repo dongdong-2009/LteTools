@@ -126,6 +126,7 @@
     <Compile Include="LinqToExcel\Row_SQLStatement_UnitTests.cs" />
     <Compile Include="LinqToExcel\SQLLogStatements_Helper.cs" />
     <Compile Include="LinqToExcel\UnSupportedMethods.cs" />
+    <Compile Include="Measure\Point\ImportCellTestConfig.cs" />
     <Compile Include="Regular\BindGetAndSetAttributesTest.cs" />
     <Compile Include="Regular\DateTimeTranslationTest.cs" />
     <Compile Include="TypeDefs\IpAddressTest.cs" />

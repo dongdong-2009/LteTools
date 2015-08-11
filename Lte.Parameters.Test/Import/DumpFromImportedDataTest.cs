@@ -1,5 +1,6 @@
 ﻿using Lte.Parameters.Abstract;
 using Lte.Parameters.Kpi.Abstract;
+using Lte.Parameters.Service.Public;
 using Moq;
 using System.Collections.Generic;
 using NUnit.Framework;
@@ -20,6 +21,9 @@ namespace Lte.Parameters.Test.Import
 
         private readonly Mock<ICellDumpRepository<ImportClass>> dumpCellRepository
             = new Mock<ICellDumpRepository<ImportClass>>();
+
+        private readonly Mock<IParametersDumpResults> dumpResults
+            =new Mock<IParametersDumpResults>();
 
         [SetUp]
         public void TestInitialize()
@@ -53,7 +57,7 @@ namespace Lte.Parameters.Test.Import
         public void TestDumpFromImportedData_OriginalValues_ImportRepositoryNull()
         {
             ((IExcelBtsImportRepository<ImportClass>)null).DumpFromImportedData(
-                dumpBtsRepository.Object);
+                dumpBtsRepository.Object, dumpResults.Object);
             Assert.IsNull(importBtsRepository.Object.BtsExcelList);
             ((IExcelCellImportRepository<ImportClass>) null).DumpFromImportedData(
                 dumpCellRepository.Object);
@@ -63,7 +67,7 @@ namespace Lte.Parameters.Test.Import
         [Test]
         public void TestDumpFromImportedData_OriginalValues_ImportRepository_NotNull()
         {
-            importBtsRepository.Object.DumpFromImportedData(dumpBtsRepository.Object);
+            importBtsRepository.Object.DumpFromImportedData(dumpBtsRepository.Object, dumpResults.Object);
             importCellRepository.Object.DumpFromImportedData(dumpCellRepository.Object);
             Assert.IsNotNull(importBtsRepository.Object.BtsExcelList);
             Assert.IsNotNull(importCellRepository.Object.CellExcelList);

@@ -12,10 +12,17 @@ namespace Lte.Domain.Test.Measure.Comparable
     [TestFixture]
     public class ComparableCell_NewTest
     {
-        private readonly IList<ILinkBudget<double>> budgetList = new List<ILinkBudget<double>>();
-        private readonly IBroadcastModel model = new BroadcastModel();
+        private IList<ILinkBudget<double>> budgetList;
+        private IBroadcastModel model;
         const double eps = 1E-6;
-        
+
+        [SetUp]
+        public void SetUp()
+        {
+            budgetList = new List<ILinkBudget<double>>();
+            model = new BroadcastModel();
+        }
+
         [Test]
         public void TestComparableCell_OnePoint()
         {

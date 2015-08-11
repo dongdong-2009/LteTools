@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Lte.Parameters.Kpi.Abstract;
+using Lte.Parameters.Service.Public;
 
 namespace Lte.Parameters.Abstract
 {
@@ -25,7 +26,7 @@ namespace Lte.Parameters.Abstract
     {
         public static void DumpFromImportedData<TBts>(
             this IExcelBtsImportRepository<TBts> importRepository,
-            IBtsDumpRepository<TBts> dumpRepository)
+            IBtsDumpRepository<TBts> dumpRepository, IParametersDumpResults results)
             where TBts : class, IValueImportable, new()
         {
             if (importRepository != null)

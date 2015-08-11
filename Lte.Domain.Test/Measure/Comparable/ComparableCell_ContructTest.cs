@@ -9,8 +9,14 @@ namespace Lte.Domain.Test.Measure.Comparable
     [TestFixture]
     public class ComparableCell_ContructTest
     {
-        private readonly IList<ILinkBudget<double>> budgetList = new List<ILinkBudget<double>>();
+        private IList<ILinkBudget<double>> budgetList;
         const double eps = 1E-6;
+
+        [SetUp]
+        public void SetUp()
+        {
+            budgetList = new List<ILinkBudget<double>>();
+        }
 
         [Test]
         public void TestComparableCell_ConstructOnePoint()
@@ -52,7 +58,7 @@ namespace Lte.Domain.Test.Measure.Comparable
             Assert.AreEqual(comparableCell1.Cell, cell);
             Assert.AreEqual(comparableCell1.Distance, 1.111949, eps);
             Assert.AreEqual(comparableCell1.AzimuthAngle, 90);
-            Assert.AreEqual(budgetList.Count, 1);
+            Assert.AreEqual(budgetList.Count, 1, "listCount");
             Assert.AreEqual(budgetList.ElementAt(0), comparableCell1.Budget);
 
             ComparableCell comparableCell2 = new ComparableCell(point2, cell, budgetList);
