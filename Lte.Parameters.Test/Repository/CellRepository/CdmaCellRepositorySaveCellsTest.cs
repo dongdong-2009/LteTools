@@ -4,6 +4,7 @@ using Lte.Parameters.Abstract;
 using Lte.Parameters.Entities;
 using Lte.Parameters.Kpi.Service;
 using Lte.Parameters.Service.Cdma;
+using Lte.Parameters.Service.Public;
 using Moq;
 using NUnit.Framework;
 
@@ -14,6 +15,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
     {
         private readonly Mock<IBtsRepository> btsRepository = new Mock<IBtsRepository>();
         private List<CdmaCellExcel> cellInfos;
+        private Mock<IParametersDumpResults> results=new Mock<IParametersDumpResults>();
 
         [SetUp]
         public void TestInitialize()
@@ -65,7 +67,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
             SaveCdmaCellInfoListService service = new SimpleSaveCdmaCellInfoListService(
                 repository.Object, cellInfos, btsRepository.Object);
             ParametersDumpInfrastructure infrastructure = new ParametersDumpInfrastructure();
-            service.Save(infrastructure);
+            service.Save(infrastructure, results.Object);
             return infrastructure.CdmaCellsInserted;
         }
 

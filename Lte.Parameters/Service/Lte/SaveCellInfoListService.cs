@@ -8,6 +8,7 @@ using Lte.Parameters.Abstract;
 using Lte.Parameters.Concrete;
 using Lte.Parameters.Entities;
 using Lte.Parameters.Kpi.Service;
+using Lte.Parameters.Service.Public;
 
 namespace Lte.Parameters.Service.Lte
 {
@@ -20,7 +21,7 @@ namespace Lte.Parameters.Service.Lte
             _repository = repository;
         }
 
-        public abstract void Save(ParametersDumpInfrastructure infrastructure);
+        public abstract void Save(ParametersDumpInfrastructure infrastructure, IParametersDumpResults results);
     }
 
     public class QuickSaveCellInfoListService : SaveCellInfoListService
@@ -38,7 +39,7 @@ namespace Lte.Parameters.Service.Lte
             _baseENodebRepository = new ENodebBaseRepository(eNodebRepository);
         }
 
-        public override void Save(ParametersDumpInfrastructure infrastructure)
+        public override void Save(ParametersDumpInfrastructure infrastructure, IParametersDumpResults results)
         {
             infrastructure.CellsInserted = 0;
             foreach (CellExcel info in _cellInfoList)
@@ -49,6 +50,7 @@ namespace Lte.Parameters.Service.Lte
                 {
                     _baseRepository.ImportNewCellInfo(info);
                     infrastructure.CellsInserted++;
+                    results.NewCells = infrastructure.CellsInserted;
                 }
             }
         }
@@ -76,7 +78,7 @@ namespace Lte.Parameters.Service.Lte
                   select d;
         }
 
-        public override void Save(ParametersDumpInfrastructure infrastructure)
+        public override void Save(ParametersDumpInfrastructure infrastructure, IParametersDumpResults results)
         {
             var updateCells
                 = from v in _validInfos
@@ -85,6 +87,7 @@ namespace Lte.Parameters.Service.Lte
                   equals new { c.ENodebId, c.SectorId, c.Frequency }
                   select new { Info = v, Data = c };
             infrastructure.CellsUpdated = 0;
+            infrastructure.NeighborPciUpdated = 0;
             if (_updateExisted && _updatePci)
             {
                 foreach (var cell in updateCells.Where(x=>x.Data.Pci!=x.Info.Pci))
@@ -92,6 +95,9 @@ namespace Lte.Parameters.Service.Lte
                     cell.Data.Pci = cell.Info.Pci;
                     _repository.Update(cell.Data);
                     infrastructure.CellsUpdated++;
+                    infrastructure.NeighborPciUpdated++;
+                    results.UpdateCells = infrastructure.CellsUpdated;
+                    results.UpdatePcis = infrastructure.NeighborPciUpdated;
                 }
 
                 infrastructure.NeighborPciUpdated = SaveLteCellRelationService.UpdateNeighborPci(_validInfos);
@@ -104,6 +110,7 @@ namespace Lte.Parameters.Service.Lte
             }).ToList();
             _repository.AddCells(insertInfos);
             infrastructure.CellsInserted = insertInfos.Count();
+            results.NewCells = infrastructure.CellsInserted;
         }
     }
 

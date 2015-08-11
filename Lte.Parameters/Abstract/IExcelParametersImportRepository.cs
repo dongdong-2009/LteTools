@@ -31,18 +31,18 @@ namespace Lte.Parameters.Abstract
         {
             if (importRepository != null)
             {
-                dumpRepository.InvokeAction(importRepository);
+                dumpRepository.InvokeAction(importRepository, results);
             }
         }
 
         public static void DumpFromImportedData<TCell>(
             this IExcelCellImportRepository<TCell> importRepository,
-            ICellDumpRepository<TCell> dumpRepository)
+            ICellDumpRepository<TCell> dumpRepository, IParametersDumpResults results)
             where TCell : class, IValueImportable, new()
         {
             if (importRepository != null)
             {
-                dumpRepository.InvokeAction(importRepository);
+                dumpRepository.InvokeAction(importRepository, results);
             }
         }
     }

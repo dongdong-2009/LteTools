@@ -9,6 +9,7 @@ using Lte.Parameters.MockOperations;
 using Lte.Parameters.Region.Abstract;
 using Lte.Parameters.Region.Entities;
 using Lte.Parameters.Service.Lte;
+using Lte.Parameters.Service.Public;
 using Moq;
 
 namespace Lte.Parameters.Test.Repository.ENodebRepository
@@ -21,6 +22,7 @@ namespace Lte.Parameters.Test.Repository.ENodebRepository
 
         protected readonly Mock<ITownRepository> townRepository = new Mock<ITownRepository>();
         protected ENodebExcel eNodebInfo;
+        protected Mock<IParametersDumpResults> results=new Mock<IParametersDumpResults>();
 
         protected virtual void Initialize()
         {
@@ -125,7 +127,7 @@ namespace Lte.Parameters.Test.Repository.ENodebRepository
             ParametersDumpInfrastructure infrastructure = new ParametersDumpInfrastructure();
             SaveENodebListService service = new SaveENodebListService(
                 lteRepository.Object, eNodebInfos, townRepository.Object);
-            service.Save(infrastructure, update);
+            service.Save(infrastructure, results.Object, update);
             return infrastructure.ENodebsUpdated;
         }
 

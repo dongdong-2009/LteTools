@@ -8,6 +8,7 @@ using Lte.Parameters.Kpi.Service;
 using Lte.Parameters.Region.Abstract;
 using Lte.Parameters.Region.Entities;
 using Lte.Parameters.Region.Service;
+using Lte.Parameters.Service.Public;
 
 namespace Lte.Parameters.Service.Lte
 {
@@ -34,7 +35,7 @@ namespace Lte.Parameters.Service.Lte
             set { infoFilter = value; }
         }
 
-        public void Save(ParametersDumpInfrastructure infrastructure, bool update)
+        public void Save(ParametersDumpInfrastructure infrastructure, IParametersDumpResults results, bool update)
         {
             infrastructure.ENodebsUpdated = 0;
             SaveOneENodebService saveService = new TownAssignedSaveOneENodebService(
@@ -43,12 +44,14 @@ namespace Lte.Parameters.Service.Lte
                 _eNodebInfoList.Where(x => infoFilter(x)).Distinct(new ENodebExcelComparer()).Distinct(
                 new ENodebExcelNameComparer());
 
-            foreach (ENodebExcel excel in 
-                from info in validInfos 
-                let townId = _townRepository.Towns.ToList().QueryId(info) 
-                where saveService.Save(info, townId) select info)
+            foreach (ENodebExcel info in validInfos)
             {
-                infrastructure.ENodebsUpdated++;
+                int townId = _townRepository.Towns.ToList().QueryId(info);
+                if (saveService.Save(info, townId))
+                {
+                    infrastructure.ENodebsUpdated++;
+                    results.ENodebs = infrastructure.ENodebsUpdated;
+                }
             }
         }
     }

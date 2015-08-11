@@ -4,6 +4,7 @@ using Lte.Parameters.Kpi.Abstract;
 using Lte.Parameters.Kpi.Service;
 using Lte.Parameters.Region.Abstract;
 using Lte.Parameters.Service.Cdma;
+using Lte.Parameters.Service.Public;
 
 namespace Lte.Parameters.Kpi.Concrete
 {
@@ -24,7 +25,7 @@ namespace Lte.Parameters.Kpi.Concrete
                 btsRepository, infrastructure, townRepository, eNodebRepository);
         }
 
-        public void InvokeAction(IExcelBtsImportRepository<BtsExcel> importRepository)
+        public void InvokeAction(IExcelBtsImportRepository<BtsExcel> importRepository, IParametersDumpResults results)
         {
             if (!ImportBts || importRepository.BtsExcelList.Count <= 0) return;
             service.Save(importRepository.BtsExcelList, UpdateBts);
@@ -50,14 +51,14 @@ namespace Lte.Parameters.Kpi.Concrete
             this.infrastructure = infrastructure;
         }
 
-        public void InvokeAction(IExcelCellImportRepository<CdmaCellExcel> importRepository)
+        public void InvokeAction(IExcelCellImportRepository<CdmaCellExcel> importRepository, IParametersDumpResults results)
         {
             if (ImportCell && importRepository.CellExcelList.Count > 0)
             {
                 SaveCdmaCellInfoListService service =
                     new UpdateConsideredSaveCdmaCellInfoListService(cdmaCellRepository,
                         importRepository.CellExcelList, btsRepository, UpdateCell);
-                service.Save(infrastructure);
+                service.Save(infrastructure, results);
             }
         }
     }

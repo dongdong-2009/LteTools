@@ -66,7 +66,7 @@ namespace Lte.Parameters.Service.Public
             LteCellDumpRepository repository = cellDumpRepository as LteCellDumpRepository;
             if (repository != null)
                 repository.UpdatePci = config.UpdatePci;
-            infrastructure.LteCellRepository.DumpFromImportedData(cellDumpRepository);
+            infrastructure.LteCellRepository.DumpFromImportedData(cellDumpRepository, results);
         }
 
         public void DumpMmlData(ParametersDumpInfrastructure infrastructure,
@@ -101,7 +101,7 @@ namespace Lte.Parameters.Service.Public
                 = CdmaCellDumpGenerator(controller, infrastructure);
             dumpCellRepository.ImportCell = config.ImportCdmaCell;
             dumpCellRepository.UpdateCell = config.UpdateCdmaCell;
-            infrastructure.CdmaCellRepository.DumpFromImportedData(dumpCellRepository);
+            infrastructure.CdmaCellRepository.DumpFromImportedData(dumpCellRepository, results);
 
         }
     }

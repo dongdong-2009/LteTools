@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Lte.Parameters.Kpi.Service;
@@ -120,17 +121,20 @@ namespace Lte.WinApp.ViewPages
         {
             WinDumpController controller = new WinDumpController();
             ParametersDumpGenerator generater = new ParametersDumpGenerator();
-            generater.DumpLteData(infrastructure, controller, dumpConfig, DumpResults);
-            generater.DumpMmlData(infrastructure, controller);
-            generater.DumpCdmaData(infrastructure, controller, dumpConfig, DumpResults);
-            MessageBox.Show("新增LTE基站：" + infrastructure.ENodebsUpdated +
-                            "\n新增LTE小区：" + infrastructure.CellsInserted +
-                            "\n更新LTE小区：" + infrastructure.CellsUpdated +
-                            "\n更新LTE邻区PCI：" + infrastructure.NeighborPciUpdated +
-                            "\n新增CDMA基站：" + infrastructure.CdmaBtsUpdated +
-                            "\n新增CDMA小区：" + infrastructure.CdmaCellsInserted +
-                            "\n更新CDMA小区：" + infrastructure.CdmaCellsUpdated,
-                "执行结果");
+            await Task.Run(() =>
+            {
+                generater.DumpLteData(infrastructure, controller, dumpConfig, DumpResults);
+                generater.DumpMmlData(infrastructure, controller);
+                generater.DumpCdmaData(infrastructure, controller, dumpConfig, DumpResults);
+                MessageBox.Show("新增LTE基站：" + infrastructure.ENodebsUpdated +
+                                "\n新增LTE小区：" + infrastructure.CellsInserted +
+                                "\n更新LTE小区：" + infrastructure.CellsUpdated +
+                                "\n更新LTE邻区PCI：" + infrastructure.NeighborPciUpdated +
+                                "\n新增CDMA基站：" + infrastructure.CdmaBtsUpdated +
+                                "\n新增CDMA小区：" + infrastructure.CdmaCellsInserted +
+                                "\n更新CDMA小区：" + infrastructure.CdmaCellsUpdated,
+                    "执行结果");
+            });
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Lte.Parameters.Abstract;
 using Lte.Parameters.Region.Abstract;
+using Lte.Parameters.Service.Public;
 
 namespace Lte.Parameters.Kpi.Abstract
 {
@@ -40,7 +41,7 @@ namespace Lte.Parameters.Kpi.Abstract
     public interface IBtsDumpRepository<TBts>
         where TBts : class, IValueImportable, new()
     {
-        void InvokeAction(IExcelBtsImportRepository<TBts> importRepository);
+        void InvokeAction(IExcelBtsImportRepository<TBts> importRepository, IParametersDumpResults results);
 
         bool ImportBts { get; set; }
 
@@ -50,7 +51,7 @@ namespace Lte.Parameters.Kpi.Abstract
     public interface ICellDumpRepository<TCell>
         where TCell : class, IValueImportable, new()
     {
-        void InvokeAction(IExcelCellImportRepository<TCell> importRepository);
+        void InvokeAction(IExcelCellImportRepository<TCell> importRepository, IParametersDumpResults results);
 
         bool ImportCell { get; set; }
 

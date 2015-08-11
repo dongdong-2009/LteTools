@@ -31,12 +31,15 @@ namespace Lte.Parameters.Test.Import
             importBtsRepository.SetupGet(x => x.BtsExcelList).Returns((List<ImportClass>)null);
             importCellRepository.SetupGet(x => x.CellExcelList).Returns((List<ImportClass>)null);
             dumpBtsRepository.Setup(x => x.InvokeAction(
-                It.IsAny<IExcelBtsImportRepository<ImportClass>>())
-                ).Callback(() => { });
+                It.IsAny<IExcelBtsImportRepository<ImportClass>>(),
+                It.IsAny<IParametersDumpResults>()
+                )).Callback(() => { });
             dumpCellRepository.Setup(x => x.InvokeAction(
-                It.Is<IExcelCellImportRepository<ImportClass>>(v => v != null))
-                ).Callback<IExcelCellImportRepository<ImportClass>>(
-                import =>
+                It.Is<IExcelCellImportRepository<ImportClass>>(v => v != null),
+                It.IsAny<IParametersDumpResults>()
+                )).Callback<IExcelCellImportRepository<ImportClass>,
+                    IParametersDumpResults>(
+                (import, results) =>
                 {
                     importBtsRepository.SetupGet(x => x.BtsExcelList).Returns(
                     new List<ImportClass> { new ImportClass { Name = "ENodebListSuccess" } });
@@ -60,7 +63,7 @@ namespace Lte.Parameters.Test.Import
                 dumpBtsRepository.Object, dumpResults.Object);
             Assert.IsNull(importBtsRepository.Object.BtsExcelList);
             ((IExcelCellImportRepository<ImportClass>) null).DumpFromImportedData(
-                dumpCellRepository.Object);
+                dumpCellRepository.Object, dumpResults.Object);
             Assert.IsNull(importCellRepository.Object.CellExcelList);
         }
 
@@ -68,7 +71,7 @@ namespace Lte.Parameters.Test.Import
         public void TestDumpFromImportedData_OriginalValues_ImportRepository_NotNull()
         {
             importBtsRepository.Object.DumpFromImportedData(dumpBtsRepository.Object, dumpResults.Object);
-            importCellRepository.Object.DumpFromImportedData(dumpCellRepository.Object);
+            importCellRepository.Object.DumpFromImportedData(dumpCellRepository.Object, dumpResults.Object);
             Assert.IsNotNull(importBtsRepository.Object.BtsExcelList);
             Assert.IsNotNull(importCellRepository.Object.CellExcelList);
             Assert.AreEqual(importBtsRepository.Object.BtsExcelList[0].Name, "ENodebListSuccess");

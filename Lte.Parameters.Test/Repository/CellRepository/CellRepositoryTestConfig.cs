@@ -7,6 +7,7 @@ using Lte.Parameters.Entities;
 using Lte.Parameters.Kpi.Service;
 using Lte.Parameters.MockOperations;
 using Lte.Parameters.Service.Lte;
+using Lte.Parameters.Service.Public;
 using Moq;
 
 namespace Lte.Parameters.Test.Repository.CellRepository
@@ -16,6 +17,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
         protected readonly Mock<ICellRepository> repository = new Mock<ICellRepository>();
         protected readonly Mock<IENodebRepository> eNodebRepository = new Mock<IENodebRepository>();
         protected CellExcel cellInfo;
+        protected Mock<IParametersDumpResults> results=new Mock<IParametersDumpResults>();
 
 
         protected Cell QueryCell(int eNodebId, byte sectorId)
@@ -90,7 +92,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
             ParametersDumpInfrastructure infrastructure = new ParametersDumpInfrastructure();
             SaveCellInfoListService service = new QuickSaveCellInfoListService(repository.Object,
                 cellInfos, eNodebRepository.Object);
-            service.Save(infrastructure);
+            service.Save(infrastructure, results.Object);
             return infrastructure.CellsInserted;
         }
 
@@ -99,7 +101,7 @@ namespace Lte.Parameters.Test.Repository.CellRepository
             ParametersDumpInfrastructure infrastructure = new ParametersDumpInfrastructure();
             SaveCellInfoListService service = new UpdateConsideredSaveCellInfoListService(
                 repository.Object, cellInfos, eNodebRepository.Object, true);
-            service.Save(infrastructure);
+            service.Save(infrastructure, results.Object);
             return new[] {infrastructure.CellsInserted, infrastructure.CellsUpdated};
         }
 
