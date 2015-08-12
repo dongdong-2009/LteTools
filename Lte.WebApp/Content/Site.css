@@ -5,7 +5,7 @@
 }
 
 body {
-    padding-top: 100px;
+    padding-top: 60px;
     padding-bottom: 20px;
 }
 
@@ -20,46 +20,8 @@ body {
     padding-right:60px;
 }
 
-.blue-nav {
-    background-color: #0099FF;
-    border-color: rgba(0, 0, 0, 0.2);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.07);
-}
-
-.docs-nav {
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
-}
-
-.dropdown-menu li {
-    margin-top:0;
-}
-
-    .docs-nav li a {
-    color: #fff;
-    font-family: 黑体;
-    font-size: 16px;
-}
-        .docs-nav li a:hover {
-            color:#1d365d
-        }
-
 /* site title
 ----------------------------------------------------------*/
-.site-title {
-    font-family: 华文新魏;
-    font-size: 4em;
-    margin: 0;
-    padding-right: 140px;
-}
-
-.site-title a, .site-title a:hover, .site-title a:active {
-    margin-top:10px;
-    color: #FFFFCC;
-    background: none;
-    outline: none;
-    text-decoration: none;
-}
-
 fieldset {
     margin: 5px;
     padding: 5px;
@@ -75,15 +37,6 @@ fieldset {
             fieldset ol li label {
                 min-width:80px;
             }
-
-    .login-menu li a {
-        font-size: 12px;
-    }
-
-        .login-menu li a:hover {
-            color:#1d365d;
-            background-color:rgba(0, 0, 0, 0.2);
-        }
 
 label.checkbox {
     display: inline;

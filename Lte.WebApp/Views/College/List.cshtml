@@ -28,9 +28,8 @@
                             <th>@Html.DisplayNameFor(x=>x.Colleges.ElementAt(0).DistrictName)</th>
                             <th>@Html.DisplayNameFor(x=>x.Colleges.ElementAt(0).TownName)</th>
                             <th>@Html.DisplayNameFor(x=>x.Colleges.ElementAt(0).Name)</th>
-                            <th>基本信息</th>
-                            <th>覆盖信息</th>
-                            <th>容量信息</th>
+                            <th>状态信息</th>
+                            <th>覆盖容量信息</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,11 +66,9 @@
                                     }
                                 </td>
                                 <td>
-                                    @Html.ActionLink("覆盖情况", "CollegeCoverage", new { id = view.Id }, 
-                                        new {@class="btn btn-primary"})
-                                </td>
-                                <td>
                                     <div class="btn-group">
+                                        @Html.ActionLink("覆盖情况", "CollegeCoverage", new { id = view.Id }, 
+                                        new {@class="btn btn-primary"})
                                         @Html.ActionLink("修改信息", "CollegeDetails", new { id = view.Id }, 
                                         new {@class="btn btn-warning"})
                                         @Html.ActionLink("小区信息", "CollegeCells", new { id = view.Id }, 

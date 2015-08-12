@@ -10,8 +10,8 @@
             </hgroup>
 }
 
-<article>
-    <section>
+<div class="row">
+    <div class="col-md-4">
         <h3><span class="label label-primary">电话</span></h3>
         <p>
             <span class="label label-info">手机:</span>
@@ -21,8 +21,13 @@
             <span class="label label-info">办公电话:</span>
             <span>0757-83877744</span>
         </p>
-    </section>
-    <section>
+        <h3><span class="label label-primary">单位地址</span></h3>
+        <p>
+            南海区平洲南港路7号7楼<br />
+            广东佛山，528251
+        </p>
+    </div>
+    <div class="col-md-4">
         <h3><span class="label label-primary">互联网信息</span></h3>
         <p>
             <span class="label label-info">OA邮箱:</span>
@@ -40,16 +45,11 @@
             <span class="label label-success">微信：</span>
             <span>fsook_ook</span>
         </p>
-    </section>
+    </div>
+    <div class="col-md-4">
+        @{Html.RenderPartial("_Accessory");}
+    </div>
+</div>
 
-    <section>
-        <h3><span class="label label-primary">单位地址</span></h3>
-        <p>
-            南海区平洲南港路7号7楼<br />
-            广东佛山，528251
-        </p>
-    </section>
-</article>
 
-@{Html.RenderPartial("_Accessory");}
 

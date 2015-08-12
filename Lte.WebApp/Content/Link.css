@@ -98,13 +98,13 @@ hgroup.title h1, hgroup.title h2 {
 }
 
     hgroup.title h1 {
-        font-size: 250%;
+        font-size: 200%;
     }
 
 hgroup.title h2 {
     font-weight: normal;
     margin-left: 3px;
-    font-size:200%;
+    font-size:150%;
 }
 
 /* features */
