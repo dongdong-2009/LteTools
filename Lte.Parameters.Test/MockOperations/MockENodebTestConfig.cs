@@ -4,7 +4,6 @@ using Lte.Parameters.Kpi.Service;
 using Lte.Parameters.Region.Abstract;
 using Lte.Parameters.Region.Entities;
 using Lte.Parameters.Service.Lte;
-using Lte.Parameters.Service.Public;
 using Moq;
 using Lte.Parameters.Abstract;
 using Lte.Parameters.Entities;
@@ -14,8 +13,6 @@ namespace Lte.Parameters.Test.MockOperations
     public class MockENodebTestConfig : MockTownTestConfig
     {
         protected readonly Mock<IENodebRepository> eNodebRepository = new Mock<IENodebRepository>();
-        protected Mock<IParametersDumpResults> results=new Mock<IParametersDumpResults>();
-
         protected override void Initialize()
         {
             base.Initialize();
@@ -33,19 +30,12 @@ namespace Lte.Parameters.Test.MockOperations
             eNodebRepository.Setup(x => x.Count()).Returns(eNodebRepository.Object.GetAll().Count());
         }
 
-        protected bool SaveOneENodeb(ENodebExcel info)
-        {
-            SaveOneENodebService service = new TownMatchedSaveOneENodebService(
-                eNodebRepository.Object, townRepository.Object);
-            return service.Save(info, 0);
-        }
-
         protected int SaveENodebs(List<ENodebExcel> infoList)
         {
             ParametersDumpInfrastructure infrastructure = new ParametersDumpInfrastructure();
             SaveENodebListService service = new SaveENodebListService(
-                eNodebRepository.Object, infoList, townRepository.Object);
-            service.Save(infrastructure, results.Object, true);
+                eNodebRepository.Object, infrastructure, townRepository.Object);
+            service.Save(infoList, true);
             return infrastructure.ENodebsUpdated;
         }
 

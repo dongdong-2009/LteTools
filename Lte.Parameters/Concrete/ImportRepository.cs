@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Lte.Domain.Regular;
 using Lte.Parameters.Abstract;
 using Lte.Parameters.Entities;
-using Lte.Parameters.Kpi.Entities;
 
 namespace Lte.Parameters.Concrete
 {
@@ -153,8 +152,7 @@ namespace Lte.Parameters.Concrete
         }
     }
 
-    public class ExcelDistributionImportRepository<TDistribution> 
-        : IExcelDistributionImportRepository<TDistribution>, IValueImportable
+    public class ExcelDistributionImportRepository<TDistribution> : IValueImportable
         where TDistribution : class, IValueImportable, new()
     {
         private readonly ImportExcelValueService<TDistribution> service;

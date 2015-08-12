@@ -22,7 +22,7 @@ namespace Lte.Parameters.Service.Cdma
             _cellInfoList = cellInfoList;
         }
 
-        public abstract void Save(ParametersDumpInfrastructure infrastructure, IParametersDumpResults results);
+        public abstract void Save(ParametersDumpInfrastructure infrastructure);
     }
 
     public class SimpleSaveCdmaCellInfoListService : SaveCdmaCellInfoListService
@@ -36,7 +36,7 @@ namespace Lte.Parameters.Service.Cdma
             _btsBaseRepository = new ENodebBaseRepository(btsRepository);
         }
 
-        public override void Save(ParametersDumpInfrastructure infrastructure, IParametersDumpResults results)
+        public override void Save(ParametersDumpInfrastructure infrastructure)
         {
             infrastructure.CdmaCellsInserted = 0;
 
@@ -50,7 +50,6 @@ namespace Lte.Parameters.Service.Cdma
                     {
                         baseRepository.ImportNewCellInfo(cellInfo);
                         infrastructure.CdmaCellsInserted++;
-                        results.NewCdmaCells = infrastructure.CdmaCellsInserted;
                     }
                 }
             }
@@ -78,7 +77,7 @@ namespace Lte.Parameters.Service.Cdma
                   select d;
         }
 
-        public override void Save(ParametersDumpInfrastructure infrastructure, IParametersDumpResults results)
+        public override void Save(ParametersDumpInfrastructure infrastructure)
         {
             CdmaCell.UpdateFirstFrequency = true;
             List<CdmaCell> validCells = new List<CdmaCell>();
@@ -111,14 +110,12 @@ namespace Lte.Parameters.Service.Cdma
                     cell.CloneProperties<CdmaCell>(objectCell);
                     _repository.Update(cell);
                     infrastructure.CdmaCellsUpdated++;
-                    results.UpdateCdmaCells = infrastructure.CdmaCellsUpdated;
                 }
             }
             IEnumerable<CdmaCell> insertCells = validCells.Except(updateCells, new CdmaCellComperer());
             SaveCdmaCellListService service = new SimpleSaveCdmaCellListService(
                 _repository, insertCells);
             infrastructure.CdmaCellsInserted += insertCells.Count();
-            results.NewCdmaCells = infrastructure.CdmaCellsInserted;
             service.Save(infrastructure);
         }
     }

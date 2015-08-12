@@ -1,6 +1,5 @@
 ﻿using Lte.Parameters.MockOperations;
 using Lte.Parameters.Entities;
-using System.Linq;
 using NUnit.Framework;
 
 namespace Lte.Parameters.Test.MockOperations
@@ -22,24 +21,6 @@ namespace Lte.Parameters.Test.MockOperations
             eNodebRepository.Object.Insert(
                 new ENodeb { TownId = 5, ENodebId = 11, Name = "E-11" });
             Assert.AreEqual(eNodebRepository.Object.Count(), 8);
-        }
-
-        [Test]
-        public void TestMockSaveENodeb_TownIdExisted()
-        {
-            Assert.IsTrue(SaveOneENodeb(
-                new ENodebExcel { CityName = "C-5", DistrictName = "D-5", TownName = "T-5" }));
-            Assert.AreEqual(eNodebRepository.Object.Count(), 8);
-            Assert.AreEqual(eNodebRepository.Object.GetAll().ElementAt(7).TownId, 5);
-        }
-
-        [Test]
-        public void TestMockSaveENodeb_TownIdNotExisted()
-        {
-            Assert.IsTrue(SaveOneENodeb(
-                new ENodebExcel { CityName = "C-6", DistrictName = "D-5", TownName = "T-5" }));
-            Assert.AreEqual(eNodebRepository.Object.Count(), 8);
-            Assert.AreEqual(eNodebRepository.Object.GetAll().ElementAt(7).TownId, -1);
         }
     }
 }

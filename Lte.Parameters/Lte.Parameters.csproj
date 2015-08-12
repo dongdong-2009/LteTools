@@ -174,6 +174,7 @@
     <Compile Include="Entities\CdmaDownSwitchEvent.cs" />
     <Compile Include="Service\Coverage\TestItemsQueries.cs" />
     <Compile Include="Concrete\EFENodebRepository.cs" />
+    <Compile Include="Service\Lte\SaveLteCellRelationService.cs" />
     <Compile Include="Service\Public\SaveCollegeInfrastructureService.cs" />
     <Compile Include="Service\Public\ParametersDumpGenerator.cs" />
     <Compile Include="Entities\ExcelAttributes.cs" />

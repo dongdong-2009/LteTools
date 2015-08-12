@@ -31,12 +31,11 @@ namespace Lte.Parameters.Kpi.Concrete
             this.infrastructure = infrastructure;
         }
 
-        public void InvokeAction(IExcelBtsImportRepository<ENodebExcel> importRepository, IParametersDumpResults results)
+        public void InvokeAction(IExcelBtsImportRepository<ENodebExcel> importRepository)
         {
             if (!ImportBts || importRepository.BtsExcelList.Count <= 0) return;
-            SaveENodebListService service = new SaveENodebListService(
-                eNodebRepository, importRepository.BtsExcelList, townRepository);
-            service.Save(infrastructure, results, UpdateBts);
+            SaveENodebListService service = new SaveENodebListService(eNodebRepository, infrastructure, townRepository);
+            service.Save(importRepository.BtsExcelList, UpdateBts);
         }
     }
 
@@ -72,13 +71,12 @@ namespace Lte.Parameters.Kpi.Concrete
             this.infrastructure = infrastructure;
         }
 
-        public void InvokeAction(IExcelCellImportRepository<CellExcel> importRepository, IParametersDumpResults results)
+        public void InvokeAction(IExcelCellImportRepository<CellExcel> importRepository)
         {
             if (!ImportCell || importRepository.CellExcelList.Count <= 0) return;
             SaveCellInfoListService lteService = new UpdateConsideredSaveCellInfoListService(
-                cellRepository, importRepository.CellExcelList.Distinct(new CellExcelComparer()), eNodebRepository, 
-                UpdateCell, UpdatePci);
-            lteService.Save(infrastructure, results);
+                cellRepository, eNodebRepository, UpdateCell, UpdatePci);
+            lteService.Save(importRepository.CellExcelList.Distinct(new CellExcelComparer()), infrastructure);
 
             CdmaLteIdsService idService = new CdmaLteIdsService(importRepository.CellExcelList);
             IEnumerable<CdmaLteIds> ids = idService.Query();

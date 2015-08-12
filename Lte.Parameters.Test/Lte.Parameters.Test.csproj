@@ -189,6 +189,7 @@
     <Compile Include="Repository\QueryOutdoorCellsTest.cs" />
     <Compile Include="Repository\TownRepositoryTest.cs" />
     <Compile Include="Repository\ENodebRepository\ENodebRepositoryQueryTest.cs" />
+    <Compile Include="Service\ParametersDumpGeneratorTest.cs" />
     <Compile Include="Service\QueryOutdoorCellServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>

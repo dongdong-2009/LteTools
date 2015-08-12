@@ -6,6 +6,8 @@ namespace Lte.Parameters.Kpi.Service
 {
     public class ParametersDumpInfrastructure
     {
+        public int ENodebInserted { get; set; }
+
         public int ENodebsUpdated { get; set; }
 
         public int CellsInserted { get; set; }

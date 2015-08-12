@@ -8,26 +8,26 @@ using Lte.Parameters.Kpi.Service;
 using Lte.Parameters.Region.Abstract;
 using Lte.Parameters.Region.Entities;
 using Lte.Parameters.Region.Service;
-using Lte.Parameters.Service.Public;
 
 namespace Lte.Parameters.Service.Lte
 {
     public class SaveENodebListService
     {
         private readonly IENodebRepository _repository;
-        private readonly ITownRepository _townRepository;
+        private readonly List<Town> _townList; 
         private readonly ENodebBaseRepository _baseRepository;
-        private readonly List<ENodebExcel> _eNodebInfoList;
+        private readonly ParametersDumpInfrastructure _infrastructure;
 
         private static Func<ENodebExcel, bool> infoFilter = x => x.ENodebId > 10000;
 
         public SaveENodebListService(IENodebRepository repository,
-            List<ENodebExcel> eNodebInfoList, ITownRepository townRepository)
+            ParametersDumpInfrastructure infrastructure, ITownRepository townRepository)
         {
             _repository = repository;
             _baseRepository = new ENodebBaseRepository(repository);
-            _townRepository = townRepository;
-            _eNodebInfoList = eNodebInfoList;
+            _townList = townRepository.Towns.ToList();
+            _infrastructure = infrastructure;
+            _infrastructure.ENodebsUpdated = 0;
         }
 
         public static Func<ENodebExcel, bool> InfoFilter
@@ -35,103 +35,49 @@ namespace Lte.Parameters.Service.Lte
             set { infoFilter = value; }
         }
 
-        public void Save(ParametersDumpInfrastructure infrastructure, IParametersDumpResults results, bool update)
+        public void Save(List<ENodebExcel> eNodebInfoList, bool update)
         {
-            infrastructure.ENodebsUpdated = 0;
-            SaveOneENodebService saveService = new TownAssignedSaveOneENodebService(
-                _repository, _baseRepository, update);
             IEnumerable<ENodebExcel> validInfos =
-                _eNodebInfoList.Where(x => infoFilter(x)).Distinct(new ENodebExcelComparer()).Distinct(
-                new ENodebExcelNameComparer());
+                eNodebInfoList.Where(x => infoFilter(x))
+                .Distinct(new ENodebExcelComparer())
+                .Distinct(new ENodebExcelNameComparer());
 
             foreach (ENodebExcel info in validInfos)
             {
-                int townId = _townRepository.Towns.ToList().QueryId(info);
-                if (saveService.Save(info, townId))
+                int townId = _townList.QueryId(info);
+                ENodebBase existedENodebWithSameName = _baseRepository.QueryENodeb(townId, info.Name);
+                ENodebBase existedENodebWithSameId = _baseRepository.QueryENodeb(info.ENodebId);
+                if (existedENodebWithSameName == null && existedENodebWithSameId == null)
                 {
-                    infrastructure.ENodebsUpdated++;
-                    results.ENodebs = infrastructure.ENodebsUpdated;
+                    ENodeb eNodeb = new ENodeb();
+                    eNodeb.Import(info, townId);
+                    _repository.Insert(eNodeb);
+                    _infrastructure.ENodebInserted++;
+                }
+                if (!update) continue;
+                if (existedENodebWithSameId != null)
+                {
+                    ENodeb byIdENodeb = _repository.GetAll().FirstOrDefault(x => x.ENodebId == info.ENodebId);
+                    if (byIdENodeb != null)
+                    {
+                        byIdENodeb.Import(info, townId, false);
+                        _repository.Update(byIdENodeb);
+                        _infrastructure.ENodebsUpdated++;
+                    }
+                }
+                else if (existedENodebWithSameName != null)
+                {
+                    ENodeb byNameENodeb =
+                        _repository.GetAll().FirstOrDefault(x => x.TownId == townId && x.Name == info.Name);
+                    if (byNameENodeb != null)
+                    {
+                        byNameENodeb.Import(info, townId);
+                        _repository.Update(byNameENodeb);
+                        _infrastructure.ENodebsUpdated++;
+                    }
                 }
             }
         }
     }
 
-    public abstract class SaveOneENodebService
-    {
-        protected readonly IENodebRepository _repository;
-
-        protected SaveOneENodebService(IENodebRepository repository)
-        {
-            _repository = repository;
-        }
-
-        public abstract bool Save(ENodebExcel eNodebInfo, int townId);
-    }
-
-    public class TownMatchedSaveOneENodebService : SaveOneENodebService
-    {
-        private readonly IEnumerable<Town> _towns;
-
-        public TownMatchedSaveOneENodebService(IENodebRepository repository, ITownRepository townRepository)
-            : base(repository)
-        {
-            _towns = townRepository.Towns.ToList();
-        }
-
-        public override bool Save(ENodebExcel eNodebInfo, int townId)
-        {
-            townId = _towns.QueryId(eNodebInfo);
-            ENodeb existedENodebWithSameName =
-                _repository.GetAll().FirstOrDefault(x => x.TownId == townId && x.Name == eNodebInfo.Name);
-            ENodeb existedENodebWithSameId = _repository.GetAll().FirstOrDefault(x => x.ENodebId == eNodebInfo.ENodebId);
-
-            if (existedENodebWithSameName == null && existedENodebWithSameId == null)
-            {
-                existedENodebWithSameId = new ENodeb();
-                existedENodebWithSameId.Import(eNodebInfo, townId, false);
-                _repository.Insert(existedENodebWithSameId);
-            }
-            else if (existedENodebWithSameName == existedENodebWithSameId)
-            {
-                existedENodebWithSameId.Import(eNodebInfo, townId, false);
-            }
-            else
-            {
-                return false;
-            }
-
-            return true;
-        }
-    }
-
-    public class TownAssignedSaveOneENodebService : SaveOneENodebService
-    {
-        private readonly bool _updateExisted;
-        private readonly ENodebBaseRepository _baseRepository;
-
-        public TownAssignedSaveOneENodebService(IENodebRepository repository,
-            ENodebBaseRepository baseRepository, bool updateExisted = false)
-            : base(repository)
-        {
-            _baseRepository = baseRepository;
-            _updateExisted = updateExisted;
-        }
-
-        public override bool Save(ENodebExcel eNodebInfo, int townId)
-        {
-            ENodebBase existedENodebWithSameName = _baseRepository.QueryENodeb(townId, eNodebInfo.Name);
-            ENodebBase existedENodebWithSameId = _baseRepository.QueryENodeb(eNodebInfo.ENodebId);
-            if (existedENodebWithSameName == null && existedENodebWithSameId == null)
-            {
-                ENodeb eNodeb = new ENodeb();
-                eNodeb.Import(eNodebInfo, townId);
-                _repository.Insert(eNodeb);
-                return true;
-            }
-            if (!_updateExisted || existedENodebWithSameName != existedENodebWithSameId) return false;
-            ENodeb byIdENodeb = _repository.GetAll().FirstOrDefault(x => x.ENodebId == eNodebInfo.ENodebId);
-            if (byIdENodeb != null) byIdENodeb.Import(eNodebInfo, townId, false);
-            return true;
-        }
-    }
 }

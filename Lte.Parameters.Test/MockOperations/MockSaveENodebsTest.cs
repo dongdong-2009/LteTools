@@ -29,17 +29,6 @@ namespace Lte.Parameters.Test.MockOperations
         }
 
         [Test]
-        public void TestMockSaveSuccessiveENodebs_TownIdExisted()
-        {
-            Assert.IsTrue(SaveOneENodeb(
-                new ENodebExcel { CityName = "C-5", DistrictName = "D-5", TownName = "T-5", Name = "E-1", ENodebId = 100001 }));
-            Assert.AreEqual(eNodebRepository.Object.Count(), 8);
-            Assert.IsTrue(SaveOneENodeb(
-                new ENodebExcel { CityName = "C-5", DistrictName = "D-5", TownName = "T-5", Name = "E-2", ENodebId = 100002 }));
-            Assert.AreEqual(eNodebRepository.Object.Count(), 9);
-        }
-
-        [Test]
         public void TestMockSaveENodebs_TwoSuccessiveENodebs()
         {
             Assert.AreEqual(eNodebRepository.Object.Count(), 7);

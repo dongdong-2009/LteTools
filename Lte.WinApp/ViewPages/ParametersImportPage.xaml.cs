@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Lte.Parameters.Kpi.Concrete;
 using Lte.Parameters.Kpi.Service;
 using Lte.Parameters.Service.Public;
 using Lte.WinApp.Models;
@@ -120,13 +121,25 @@ namespace Lte.WinApp.ViewPages
         private async void DumpToDb_Click(object sender, RoutedEventArgs e)
         {
             WinDumpController controller = new WinDumpController();
-            ParametersDumpGenerator generater = new ParametersDumpGenerator();
+            ParametersDumpGenerator generater = new ParametersDumpGenerator
+            {
+                LteENodebDumpGenerator = (c, i) => new LteENodebDumpRepository(
+                    c.TownRepository, c.ENodebRepository, i),
+                LteCellDumpGenerator = (c, i) => new LteCellDumpRepository(
+                    c.CellRepository, c.ENodebRepository, c.BtsRepository, c.CdmaCellRepository, i),
+                CdmaBtsDumpGenerator = (c, i) => new CdmaBtsDumpRepository(
+                    c.TownRepository, c.ENodebRepository, c.BtsRepository, i),
+                CdmaCellDumpGenerator = (c, i) => new CdmaCellDumpRepository(
+                    c.BtsRepository, c.CdmaCellRepository, i),
+                MmlDumpGenerator = (c, i) => new MmlDumpRepository(c.BtsRepository, c.CdmaCellRepository, i)
+            };
             await Task.Run(() =>
             {
-                generater.DumpLteData(infrastructure, controller, dumpConfig, DumpResults);
+                generater.DumpLteData(infrastructure, controller, dumpConfig);
                 generater.DumpMmlData(infrastructure, controller);
-                generater.DumpCdmaData(infrastructure, controller, dumpConfig, DumpResults);
-                MessageBox.Show("新增LTE基站：" + infrastructure.ENodebsUpdated +
+                generater.DumpCdmaData(infrastructure, controller, dumpConfig);
+                MessageBox.Show("新增LTE基站：" + infrastructure.ENodebInserted +
+                                "\n更新LTE基站：" + infrastructure.ENodebsUpdated +
                                 "\n新增LTE小区：" + infrastructure.CellsInserted +
                                 "\n更新LTE小区：" + infrastructure.CellsUpdated +
                                 "\n更新LTE邻区PCI：" + infrastructure.NeighborPciUpdated +
@@ -135,6 +148,18 @@ namespace Lte.WinApp.ViewPages
                                 "\n更新CDMA小区：" + infrastructure.CdmaCellsUpdated,
                     "执行结果");
             });
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            DumpResults.ENodebs = infrastructure.ENodebInserted;
+            DumpResults.UpdateENodebs = infrastructure.ENodebsUpdated;
+            DumpResults.NewCells = infrastructure.CellsInserted;
+            DumpResults.UpdateCells = infrastructure.CellsUpdated;
+            DumpResults.UpdatePcis = infrastructure.NeighborPciUpdated;
+            DumpResults.CdmaBts = infrastructure.CdmaBtsUpdated;
+            DumpResults.NewCdmaCells = infrastructure.CdmaCellsInserted;
+            DumpResults.UpdateCdmaCells = infrastructure.CdmaCellsUpdated;
         }
     }
 }

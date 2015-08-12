@@ -38,7 +38,10 @@
                 <controls:ParametersConfig x:Name="DumpConfig" />
             </TabItem>
             <TabItem Header="导入结果">
-                <controls:ParametersDumpResults x:Name="DumpResults" Margin="5"/>
+                <StackPanel>
+                    <controls:ParametersDumpResults x:Name="DumpResults" Margin="5"/>
+                    <Button Content="刷新结果" Click="Button_Click"/>
+                </StackPanel>
             </TabItem>
             <TabItem Header="LTE基站">
                 <controls:ENodebListGrid x:Name="ENodebList" />

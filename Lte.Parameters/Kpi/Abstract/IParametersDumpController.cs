@@ -41,7 +41,7 @@ namespace Lte.Parameters.Kpi.Abstract
     public interface IBtsDumpRepository<TBts>
         where TBts : class, IValueImportable, new()
     {
-        void InvokeAction(IExcelBtsImportRepository<TBts> importRepository, IParametersDumpResults results);
+        void InvokeAction(IExcelBtsImportRepository<TBts> importRepository);
 
         bool ImportBts { get; set; }
 
@@ -51,7 +51,7 @@ namespace Lte.Parameters.Kpi.Abstract
     public interface ICellDumpRepository<TCell>
         where TCell : class, IValueImportable, new()
     {
-        void InvokeAction(IExcelCellImportRepository<TCell> importRepository, IParametersDumpResults results);
+        void InvokeAction(IExcelCellImportRepository<TCell> importRepository);
 
         bool ImportCell { get; set; }
 

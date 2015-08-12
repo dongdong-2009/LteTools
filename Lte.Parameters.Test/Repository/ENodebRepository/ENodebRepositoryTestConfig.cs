@@ -9,7 +9,6 @@ using Lte.Parameters.MockOperations;
 using Lte.Parameters.Region.Abstract;
 using Lte.Parameters.Region.Entities;
 using Lte.Parameters.Service.Lte;
-using Lte.Parameters.Service.Public;
 using Moq;
 
 namespace Lte.Parameters.Test.Repository.ENodebRepository
@@ -22,7 +21,6 @@ namespace Lte.Parameters.Test.Repository.ENodebRepository
 
         protected readonly Mock<ITownRepository> townRepository = new Mock<ITownRepository>();
         protected ENodebExcel eNodebInfo;
-        protected Mock<IParametersDumpResults> results=new Mock<IParametersDumpResults>();
 
         protected virtual void Initialize()
         {
@@ -95,20 +93,6 @@ namespace Lte.Parameters.Test.Repository.ENodebRepository
             SaveENodebListService.InfoFilter = x => true;
         }
 
-        protected bool SaveOneENodeb()
-        {
-            SaveOneENodebService service = new TownMatchedSaveOneENodebService(
-                lteRepository.Object, townRepository.Object);
-            return service.Save(eNodebInfo, 0);
-        }
-
-        protected bool SaveOneENodeb(ENodebBaseRepository baseRepository, int townId, bool update = false)
-        {
-            SaveOneENodebService service = new TownAssignedSaveOneENodebService(
-                lteRepository.Object, baseRepository, update);
-            return service.Save(eNodebInfo, townId);
-        }
-
         protected bool DeleteOneENodeb(int eNodebId)
         {
             DeleteOneENodebService service = new DeleteOneENodebService(lteRepository.Object, eNodebId);
@@ -126,8 +110,8 @@ namespace Lte.Parameters.Test.Repository.ENodebRepository
         {
             ParametersDumpInfrastructure infrastructure = new ParametersDumpInfrastructure();
             SaveENodebListService service = new SaveENodebListService(
-                lteRepository.Object, eNodebInfos, townRepository.Object);
-            service.Save(infrastructure, results.Object, update);
+                lteRepository.Object, infrastructure, townRepository.Object);
+            service.Save(eNodebInfos, update);
             return infrastructure.ENodebsUpdated;
         }
 
