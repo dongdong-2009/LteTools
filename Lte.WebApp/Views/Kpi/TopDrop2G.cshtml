@@ -9,29 +9,28 @@
                 <h1>@ViewBag.Title.</h1>
             </hgroup>
     }
-<article>
-    
-    <div id="radiotabs">
+<div class="row">
+    <div id="radiotabs" class="col-md-8">
         <ul>
             <li><a href ="#oneday">当日指标分析</a></li>
             <li><a href="#multi-days">TOP小区变化趋势</a></li>
         </ul>
         <div id="oneday">
-        @using (Html.BeginForm("TopDrop2G", "Kpi",
-            FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("TopDrop2G", "Kpi",
+                FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-            Html.RenderPartial("_StatDateSelection", Model);
-            <p>
-                <button type="submit" id="stat" class="btn btn-primary btn-lg">
-                    <span class="glyphicon glyphicon-search"></span>统计指标
-                </button>
-            </p>
+                Html.RenderPartial("_StatDateSelection", Model);
+                <p>
+                    <button type="submit" id="stat" class="btn btn-primary btn-lg">
+                        <span class="glyphicon glyphicon-search"></span>统计指标
+                    </button>
+                </p>
             }
-        @if (Model.StatList.Any())
-        {
-            <h3>@Model.StatDate.ToShortDateString() TOP掉话指标</h3>
-            Html.RenderPartial("_TopDrop2GStatTable", Model.StatList);
-        }
+            @if (Model.StatList.Any())
+            {
+                <h3>@Model.StatDate.ToShortDateString() TOP掉话指标</h3>
+                Html.RenderPartial("_TopDrop2GStatTable", Model.StatList);
+            }
         </div>
         <div id="multi-days">
             @{ Html.RenderPartial("_DateSpanAndTopCountSelection", Model); }
@@ -46,14 +45,13 @@
             }
         </div>
     </div>
+    <div class="col-md-4">@{ Html.RenderPartial("_KpiMenu");}</div>
     @foreach (string city in Model.Cities)
     { 
         <input type="hidden" class="citylist" value="@city" />
     }
     <div id="dialog-modal"></div>
-</article>
-
-@{ Html.RenderPartial("_KpiMenu");}
+</div>
 
 @section css{
 @Styles.Render("~/Content/themes/base/css")

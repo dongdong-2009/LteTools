@@ -10,8 +10,8 @@
             </hgroup>
 }
 
-<article>
-    <div id="radiotabs">
+<div class="row">
+    <div id="radiotabs" class="col-md-8">
         <ul>
             <li><a href ="#overall">总体指标情况</a></li>
             <li><a href="#chart">指标变化趋势图表</a></li>
@@ -39,7 +39,7 @@
             @{ Html.RenderPartial("_DateSpanSelection", Model); }
             <p>
                 <button type="button" id="showresults" class="btn btn-primary btn-lg" 
-                    title="显示MR总数和精确覆盖率的分区统计表，以及各镇区的指标统计图（请到统计图标签页查看）">
+                        title="显示MR总数和精确覆盖率的分区统计表，以及各镇区的指标统计图（请到统计图标签页查看）">
                     <span class="glyphicon glyphicon-search"></span>显示图表
                 </button>
             </p>
@@ -78,9 +78,8 @@
             }
         </div>
     </div>
-</article>
-
-@{ Html.RenderPartial("_KpiMenu");}
+    <div class="col-md-4">@{ Html.RenderPartial("_KpiMenu");}</div>
+</div>
 
 @section css{
     @Styles.Render("~/Content/themes/base/css")

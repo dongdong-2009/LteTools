@@ -9,25 +9,24 @@
                 <h1>@ViewBag.Title.</h1>
             </hgroup>
     }
-<article>
-    
-    <div id="radiotabs">
+<div class="row">
+    <div id="radiotabs" class="col-md-8">
         <ul>
             <li><a href ="#oneday">当日指标分析</a></li>
             <li><a href="#multi-days">TOP小区变化趋势</a></li>
         </ul>
         <div id="oneday">
-        @using (Html.BeginForm("TopConnection3G", "Kpi",
-            FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("TopConnection3G", "Kpi",
+                FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-            Html.RenderPartial("_StatDateSelection", Model);
-            <p><input type="submit" id="stat" value="统计指标" /></p>
+                Html.RenderPartial("_StatDateSelection", Model);
+                <p><input type="submit" id="stat" value="统计指标" /></p>
             }
-        @if (Model.StatList.Any())
-        {
-            <h3>@Model.StatDate.ToShortDateString() TOP连接指标</h3>
-            Html.RenderPartial("_TopConnection3GStatTable", Model.StatList);
-        }
+            @if (Model.StatList.Any())
+            {
+                <h3>@Model.StatDate.ToShortDateString() TOP连接指标</h3>
+                Html.RenderPartial("_TopConnection3GStatTable", Model.StatList);
+            }
         </div>
         <div id="multi-days">
             @{ Html.RenderPartial("_DateSpanAndTopCountSelection", Model); }
@@ -38,14 +37,13 @@
             }
         </div>
     </div>
+    <div class="col-md-4">@{ Html.RenderPartial("_KpiMenu");}</div>
     @foreach (string city in Model.Cities)
     { 
         <input type="hidden" class="citylist" value="@city" />
     }
     <div id="dialog-modal"></div>
-</article>
-
-@{ Html.RenderPartial("_KpiMenu");}
+</div>
 
 @section css{
 @Styles.Render("~/Content/themes/base/css")

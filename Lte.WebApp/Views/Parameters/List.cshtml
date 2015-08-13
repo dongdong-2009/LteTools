@@ -2,33 +2,36 @@
 
 @{
     ViewBag.Title = "各镇区LTE基站分布情况";
+    ViewBag.Message = "——全网各个区和镇的基站数量比例统计";
 }
 
 @section featured {
     <hgroup class="title">
         <h1>@ViewBag.Title</h1>
-
+        <h2>@ViewBag.Message</h2>
     </hgroup>
     }
 
-<article class="half">
-    @{ Html.RenderPartial("_TownENodebStatTable"); }
-</article>
+<div class="row">
+    <div class="col-md-6">
+        @{ Html.RenderPartial("_TownENodebStatTable"); }
+    </div>
+    <div class="col-md-6">
+        <div id="pieCharts">
+            @foreach (string cityName in Model.Select(x=>x.CityName).Distinct())
+            {
+                <h3><a href="#">基站数统计-@cityName</a></h3>
+                <div id="pie-@cityName" class="city" style="min-height: 400px"></div>
+                foreach (string districtName in Model.Where(x => x.CityName == cityName).Select(x => x.DistrictName).Distinct())
+                { 
+                    <h3><a href="#">基站数统计-@cityName@districtName</a></h3>
+                    <div id="pie-@cityName-@districtName" class="district" style="min-height: 400px"></div>
+                }
+            }
+        </div>    
+    </div>
+</div>
 
-<aside class="half">
-    <div id="pieCharts">
-    @foreach (string cityName in Model.Select(x=>x.CityName).Distinct())
-    {
-        <h3><a href="#">基站数统计-@cityName</a></h3>
-        <div id="pie-@cityName" class="city" style="min-height: 400px"></div>
-        foreach (string districtName in Model.Where(x => x.CityName == cityName).Select(x => x.DistrictName).Distinct())
-        { 
-            <h3><a href="#">基站数统计-@cityName@districtName</a></h3>
-            <div id="pie-@cityName-@districtName" class="district" style="min-height: 400px"></div>
-        }
-    }
-    </div>    
-</aside>
 
 @section css{
 @Styles.Render("~/Content/themes/base/css")
