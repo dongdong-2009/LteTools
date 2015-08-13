@@ -16,19 +16,19 @@ namespace Lte.Parameters.Test.Region
 
         public int ConstructTestId(int cityId, int districtId)
         {
-            service = new QueryDistinctTownNamesService(repository.Towns, "C-" + cityId, "D-" + districtId);
+            service = new QueryDistinctTownNamesService(repository.GetAll(), "C-" + cityId, "D-" + districtId);
             return service.QueryCount();
         }
 
         public int ConstructTestId(int cityId)
         {
-            service = new QueryDistinctDistrictNamesService(repository.Towns, "C-" + cityId);
+            service = new QueryDistinctDistrictNamesService(repository.GetAll(), "C-" + cityId);
             return service.QueryCount();
         }
 
         public int ConstructTestId()
         {
-            service = new QueryDistinctCityNamesService(repository.Towns);
+            service = new QueryDistinctCityNamesService(repository.GetAll());
             return service.QueryCount();
         }
     }

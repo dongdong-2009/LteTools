@@ -30,7 +30,7 @@ namespace Lte.Parameters.Service.Cdma
 
         public void Save(IEnumerable<BtsExcel> btsInfoList, bool updateBts)
         {
-            IEnumerable<Town> townList = _townRepository.Towns.ToList();
+            IEnumerable<Town> townList = _townRepository.GetAllList();
             List<ENodeb> eNodebList = (_lteRepository == null) ? null : _lteRepository.GetAllList();
             TownIdAssignedSaveOneBtsService service = new TownIdAssignedSaveOneBtsService(
                 _repository, _baseRepository, 0, eNodebList);

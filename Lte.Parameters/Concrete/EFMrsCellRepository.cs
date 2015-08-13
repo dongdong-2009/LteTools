@@ -1,71 +1,30 @@
-using System.Linq;
+using System.Data.Entity;
 using Lte.Parameters.Abstract;
 using Lte.Parameters.Entities;
 
 namespace Lte.Parameters.Concrete
 {
-    public class EFMrsCellRepository : IMrsCellRepository
+    public class EFMrsCellRepository : LightWeightRepositroyBase<MrsCellDate>, IMrsCellRepository
     {
-        private readonly EFParametersContext context = new EFParametersContext();
-
-        public IQueryable<MrsCellDate> MrsCells
+        protected override DbSet<MrsCellDate> Entities
         {
-            get { return context.MrsCells.AsQueryable(); }
-        }
-
-        public IQueryable<MrsCellTa> TaCells
-        {
-            get { return context.MrsTaCells.AsQueryable(); }
-        }
-
-        public void AddOneCell(MrsCellDate cell)
-        {
-            context.MrsCells.Add(cell);
-        }
-
-        public void AddOneCell(MrsCellTa cell)
-        {
-            context.MrsTaCells.Add(cell);
-        }
-
-        public bool RemoveOneCell(MrsCellDate cell)
-        {
-            return context.MrsCells.Remove(cell) != null;
-        }
-
-        public bool RemoveOneCell(MrsCellTa cell)
-        {
-            return context.MrsTaCells.Remove(cell) != null;
-        }
-
-        public void SaveChanges()
-        {
-            context.SaveChangesWithDelay();
+            get { return context.MrsCells; }
         }
     }
 
-    public class EFMroCellRepository : IMroCellRepository
+    public class EFMrsCellTaRepository : LightWeightRepositroyBase<MrsCellTa>, IMrsCellTaRepository
     {
-        private readonly EFParametersContext context = new EFParametersContext();
-
-        public IQueryable<MroRsrpTa> RsrpTaCells
+        protected override DbSet<MrsCellTa> Entities
         {
-            get { return context.MroRsrpTaCells.AsQueryable(); }
+            get { return context.MrsTaCells; }
         }
+    }
 
-        public void AddOneCell(MroRsrpTa cell)
+    public class EFMroCellRepository : LightWeightRepositroyBase<MroRsrpTa>, IMroCellRepository
+    {
+        protected override DbSet<MroRsrpTa> Entities
         {
-            context.MroRsrpTaCells.Add(cell);
-        }
-
-        public bool RemovceOneCell(MroRsrpTa cell)
-        {
-            return context.MroRsrpTaCells.Remove(cell) != null;
-        }
-
-        public void SaveChanges()
-        {
-            context.SaveChangesWithDelay();
+            get { return context.MroRsrpTaCells; }
         }
     }
 }

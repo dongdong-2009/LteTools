@@ -1,17 +1,11 @@
 using System;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Abp.Domain.Entities;
 using Lte.Domain.Geo.Abstract;
 
 namespace Lte.Parameters.Entities
 {
-    public class MroRsrpTa : ICell
+    public class MroRsrpTa : Entity, ICell
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         public DateTime RecordDate { get; set; }
 
         public int CellId { get; set; }

@@ -13,7 +13,7 @@ namespace Lte.Parameters.Test.Region
 
         public TownRepositoryQueryTestHelp(ITownRepository townRepository)
         {
-            _towns = townRepository.Towns.ToList();
+            _towns = townRepository.GetAllList();
         }
 
         public void TestOneMatchedQueries(string cityName, string districtName, string townName, 

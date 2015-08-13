@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Lte.Parameters.Region.Abstract;
 using Lte.WebApp.Controllers.Parameters;
 using Lte.WebApp.Tests.ControllerParameters;
 using Moq;
 using System.Linq;
-using System.Web.Mvc;
-using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Lte.WebApp.Tests.ControllerParametersQuery
@@ -20,7 +17,9 @@ namespace Lte.WebApp.Tests.ControllerParametersQuery
         [SetUp]
         public void TestInitialize()
         {
-            townRepository.SetupGet(x => x.Towns).Returns(towns.AsQueryable());
+            townRepository.Setup(x => x.GetAll()).Returns(towns.AsQueryable());
+            townRepository.Setup(x => x.GetAllList()).Returns(townRepository.Object.GetAll().ToList());
+            townRepository.Setup(x => x.Count()).Returns(townRepository.Object.GetAll().Count());
             controller = new TownListController(townRepository.Object);
         }
 

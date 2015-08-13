@@ -1,12 +1,10 @@
 ﻿using System.Linq;
-using Lte.Evaluations.Service;
 using Lte.Evaluations.ViewHelpers;
 using Lte.Parameters.Region.Abstract;
 using Lte.WebApp.Controllers.Parameters;
 using Moq;
 using Lte.Parameters.Abstract;
 using System.Web.Mvc;
-using Lte.Parameters.Region;
 using NUnit.Framework;
 
 namespace Lte.WebApp.Tests.ControllerParameters
@@ -35,7 +33,6 @@ namespace Lte.WebApp.Tests.ControllerParameters
     public class ENodebListTest : ParametersConfig
     {
         private readonly Mock<IENodebRepository> eNodebRepository = new Mock<IENodebRepository>();
-        private readonly ParametersContainer container = new ParametersContainer();
         private ParametersController controller;
         private ENodebListTestHelper helper;
         private readonly Mock<ITownRepository> mockTownRepository = new Mock<ITownRepository>();
@@ -45,7 +42,9 @@ namespace Lte.WebApp.Tests.ControllerParameters
         [SetUp]
         public void TestInitialize()
         {
-            mockTownRepository.SetupGet(x => x.Towns).Returns(towns.AsQueryable());
+            mockTownRepository.Setup(x => x.GetAll()).Returns(towns.AsQueryable());
+            mockTownRepository.Setup(x => x.GetAllList()).Returns(mockTownRepository.Object.GetAll().ToList());
+            mockTownRepository.Setup(x => x.Count()).Returns(mockTownRepository.Object.GetAll().Count());
             eNodebRepository.SetupGet(x => x.GetAll()).Returns(lotsOfENodebs.AsQueryable());
             controller = new ParametersController(mockTownRepository.Object, eNodebRepository.Object, null, null, null,
                 mockRegionRepository.Object, null);

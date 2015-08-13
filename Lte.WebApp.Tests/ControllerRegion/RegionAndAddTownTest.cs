@@ -24,7 +24,7 @@ namespace Lte.WebApp.Tests.ControllerRegion
         {
             this.controller = controller;
             this.townRepository = townRepository;
-            cityService = new QueryDistinctCityNamesService(townRepository.Towns);
+            cityService = new QueryDistinctCityNamesService(townRepository.GetAll());
         }
 
         public void AssertTest(int cityId = 0, int districtId = 0, int townId = 0,
@@ -33,9 +33,9 @@ namespace Lte.WebApp.Tests.ControllerRegion
             ViewResult result = controller.Region();
             RegionViewModel viewModel = result.Model as RegionViewModel;
             Assert.IsNotNull(viewModel);
-            Assert.AreEqual(viewModel.CityName, townRepository.Towns.First().CityName);
-            Assert.AreEqual(viewModel.DistrictName, townRepository.Towns.First().DistrictName);
-            Assert.AreEqual(viewModel.TownName, townRepository.Towns.First().TownName);
+            Assert.AreEqual(viewModel.CityName, townRepository.GetAll().First().CityName);
+            Assert.AreEqual(viewModel.DistrictName, townRepository.GetAll().First().DistrictName);
+            Assert.AreEqual(viewModel.TownName, townRepository.GetAll().First().TownName);
 
             UpdateServices(viewModel);
             Assert.AreEqual(viewModel.CityList.Count, cityService.QueryCount());
@@ -76,8 +76,8 @@ namespace Lte.WebApp.Tests.ControllerRegion
 
         private void UpdateServices(RegionViewModel viewModel)
         {
-            districtService = new QueryDistinctDistrictNamesService(townRepository.Towns, viewModel.CityName);
-            townService = new QueryDistinctTownNamesService(townRepository.Towns,
+            districtService = new QueryDistinctDistrictNamesService(townRepository.GetAll(), viewModel.CityName);
+            townService = new QueryDistinctTownNamesService(townRepository.GetAll(),
                 viewModel.CityName, viewModel.DistrictName);
         }
 
@@ -105,7 +105,9 @@ namespace Lte.WebApp.Tests.ControllerRegion
         [SetUp]
         public void TestInitialize()
         {
-            townRepository.SetupGet(x => x.Towns).Returns(towns.AsQueryable());
+            townRepository.Setup(x => x.GetAll()).Returns(towns.AsQueryable());
+            townRepository.Setup(x => x.GetAllList()).Returns(townRepository.Object.GetAll().ToList());
+            townRepository.Setup(x => x.Count()).Returns(townRepository.Object.GetAll().Count());
             controller = new RegionController(townRepository.Object, null, null, null);
             helper = new RegionAndAddTownTestHelper(controller, townRepository.Object);
         }

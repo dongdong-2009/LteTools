@@ -104,6 +104,7 @@
     <Compile Include="Entities\MrCell.cs" />
     <Compile Include="Entities\MroRsrpTa.cs" />
     <Compile Include="Entities\MrsCellDate.cs" />
+    <Compile Include="Entities\MrsCellTa.cs" />
     <Compile Include="Kpi\Entities\AllDailyStatList.cs" />
     <Compile Include="Kpi\Entities\DistanceInfo.cs" />
     <Compile Include="Kpi\Entities\HourDistribution.cs" />

@@ -19,7 +19,7 @@ namespace Lte.WebApp.Models
             if (list == null)
             {
                 IRegionRepository regionRepository = new EFRegionRepository();
-                list = new AllCdmaDailyStatList(regionRepository.OptimizeRegions.ToList());
+                list = new AllCdmaDailyStatList(regionRepository.GetAllList());
                 controllerContext.HttpContext.Session[sessionKey] = list;
             }
             // return the cart

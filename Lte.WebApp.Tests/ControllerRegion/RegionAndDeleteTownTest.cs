@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using Lte.Evaluations.ViewHelpers;
 using Lte.Parameters.Region.Abstract;
+using Lte.Parameters.Region.Entities;
 using Lte.Parameters.Region.Service;
 using Lte.Parameters.MockOperations;
 using Lte.WebApp.Controllers.Parameters;
@@ -21,7 +22,7 @@ namespace Lte.WebApp.Tests.ControllerRegion
         {
             this.controller = controller;
             this.townRepository = townRepository;
-            service = new QueryDistinctCityNamesService(townRepository.Towns);
+            service = new QueryDistinctCityNamesService(townRepository.GetAll());
         }
 
         public void AssertTest(string cityName = "", string districtName = "", string townName = "")
@@ -42,13 +43,14 @@ namespace Lte.WebApp.Tests.ControllerRegion
                 Assert.IsNotNull(viewModel.CityList);
                 Assert.IsNotNull(viewModel.DistrictList);
                 Assert.IsNotNull(viewModel.TownList);
-                Assert.AreEqual(viewModel.CityName, townRepository.Towns.First().CityName);
-                Assert.AreEqual(viewModel.DistrictName, townRepository.Towns.First().DistrictName);
-                Assert.AreEqual(viewModel.TownName, townRepository.Towns.First().TownName);
+                Town town = townRepository.GetAll().First();
+                Assert.AreEqual(viewModel.CityName, town.CityName);
+                Assert.AreEqual(viewModel.DistrictName, town.DistrictName);
+                Assert.AreEqual(viewModel.TownName, town.TownName);
                 Assert.AreEqual(viewModel.CityList.Count, service.QueryCount());
-                service = new QueryDistinctDistrictNamesService(townRepository.Towns, viewModel.CityName);
+                service = new QueryDistinctDistrictNamesService(townRepository.GetAll(), viewModel.CityName);
                 Assert.AreEqual(viewModel.DistrictList.Count, service.QueryCount());
-                service = new QueryDistinctTownNamesService(townRepository.Towns, viewModel.CityName,
+                service = new QueryDistinctTownNamesService(townRepository.GetAll(), viewModel.CityName,
                     viewModel.DistrictName);
                 Assert.AreEqual(viewModel.TownList.Count, service.QueryCount());
             }
@@ -65,7 +67,9 @@ namespace Lte.WebApp.Tests.ControllerRegion
         [SetUp]
         public void TestInitialize()
         {
-            townRepository.SetupGet(x => x.Towns).Returns(towns.AsQueryable());
+            townRepository.Setup(x => x.GetAll()).Returns(towns.AsQueryable());
+            townRepository.Setup(x => x.GetAllList()).Returns(townRepository.Object.GetAll().ToList());
+            townRepository.Setup(x => x.Count()).Returns(townRepository.Object.GetAll().Count());
             townRepository.MockRemoveOneTownOperation();
             controller = new RegionController(townRepository.Object,null, null, null);
             helper = new RegionAndDeleteTownTestHelper(controller, townRepository.Object);

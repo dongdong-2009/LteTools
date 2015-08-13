@@ -27,7 +27,9 @@ namespace Lte.WebApp.Tests.ControllerRegion
 
         public void AssertEmptyTowns()
         {
-            townRepository.SetupGet(x => x.Towns).Returns((new List<Town>()).AsQueryable());
+            townRepository.Setup(x => x.GetAll()).Returns((new List<Town>()).AsQueryable());
+            townRepository.Setup(x => x.GetAllList()).Returns(townRepository.Object.GetAll().ToList());
+            townRepository.Setup(x => x.Count()).Returns(townRepository.Object.GetAll().Count());
             ViewResult result = controller.Region();
             Assert.IsNotNull(result, "The view of Region() is null!");
             RegionViewModel viewModel = result.Model as RegionViewModel;
@@ -49,7 +51,9 @@ namespace Lte.WebApp.Tests.ControllerRegion
                     TownName = townName
                 };
             RegionViewModel initialViewModel = controller.TempData["RegionViewModel"] as RegionViewModel;
-            townRepository.SetupGet(x => x.Towns).Returns(towns.AsQueryable());
+            townRepository.Setup(x => x.GetAll()).Returns(towns.AsQueryable());
+            townRepository.Setup(x => x.GetAllList()).Returns(townRepository.Object.GetAll().ToList());
+            townRepository.Setup(x => x.Count()).Returns(townRepository.Object.GetAll().Count());
             ViewResult result = controller.Region();
             RegionViewModel viewModel = result.Model as RegionViewModel;
             Assert.IsNotNull(viewModel);

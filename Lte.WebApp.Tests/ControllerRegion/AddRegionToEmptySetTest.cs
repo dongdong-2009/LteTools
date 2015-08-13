@@ -8,7 +8,6 @@ using Lte.WebApp.Tests.ControllerParameters;
 using NUnit.Framework;
 using Moq;
 using Lte.Parameters.MockOperations;
-using Lte.Parameters.Region;
 
 namespace Lte.WebApp.Tests.ControllerRegion
 {
@@ -23,8 +22,12 @@ namespace Lte.WebApp.Tests.ControllerRegion
         [SetUp]
         public void TestInitialize()
         {
-            townRepository.SetupGet(x => x.Towns).Returns(towns.AsQueryable());
-            regionRepository.SetupGet(x => x.OptimizeRegions).Returns(new List<OptimizeRegion>().AsQueryable());
+            townRepository.Setup(x => x.GetAll()).Returns(towns.AsQueryable());
+            townRepository.Setup(x => x.GetAllList()).Returns(townRepository.Object.GetAll().ToList());
+            townRepository.Setup(x => x.Count()).Returns(townRepository.Object.GetAll().Count());
+            regionRepository.Setup(x => x.GetAll()).Returns(new List<OptimizeRegion>().AsQueryable());
+            regionRepository.Setup(x => x.GetAllList()).Returns(regionRepository.Object.GetAll().ToList());
+            regionRepository.Setup(x => x.Count()).Returns(regionRepository.Object.GetAll().Count());
             regionRepository.MockAddOneRegionOperation();
             controller = new RegionController(townRepository.Object, null, null, regionRepository.Object);
         }
@@ -78,9 +81,9 @@ namespace Lte.WebApp.Tests.ControllerRegion
             viewModel.DistrictName = "District" + districtId;
             viewModel.RegionName = "Region" + regionId;
             viewModel.ForceSwapRegionDistricts = false;
-            Assert.AreEqual(regionRepository.Object.OptimizeRegions.Count(), 0);
+            Assert.AreEqual(regionRepository.Object.Count(), 0);
             controller.ModifyRegion(viewModel);
-            Assert.AreEqual(regionRepository.Object.OptimizeRegions.Count(), 1);
+            Assert.AreEqual(regionRepository.Object.Count(), 1);
             Assert.AreEqual(controller.TempData["success"], 
                 "保存区域:City" + cityId + "-District" + districtId + "-Region" + regionId + "成功");
         }
@@ -118,9 +121,9 @@ namespace Lte.WebApp.Tests.ControllerRegion
             viewModel.DistrictName = "District" + districtId;
             viewModel.RegionName = "Region" + regionId;
             viewModel.ForceSwapRegionDistricts = true;
-            Assert.AreEqual(regionRepository.Object.OptimizeRegions.Count(), 0);
+            Assert.AreEqual(regionRepository.Object.Count(), 0);
             controller.ModifyRegion(viewModel);
-            Assert.AreEqual(regionRepository.Object.OptimizeRegions.Count(), 1);
+            Assert.AreEqual(regionRepository.Object.Count(), 1);
             Assert.AreEqual(controller.TempData["success"],
                 "保存区域:City" + cityId + "-District" + districtId + "-Region" + regionId + "成功");
         }

@@ -38,7 +38,7 @@ namespace Lte.Parameters.Service.Lte
             }
             else
             {
-                int townId = townRepository.Towns.QueryId(cityName, districtName, townName);
+                int townId = townRepository.GetAll().QueryId(cityName, districtName, townName);
                 _eNodeb = repository.GetAll().FirstOrDefault(x => x.TownId == townId && x.Name == eNodebName);
             }
         }

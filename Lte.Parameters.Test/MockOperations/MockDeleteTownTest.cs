@@ -23,7 +23,9 @@ namespace Lte.Parameters.Test.MockOperations
             IEnumerable<Town> towns = new List<Town> {
                 new Town { Id = 22, CityName = "City1", DistrictName = "District1", TownName = "Town1" }
             };
-            mockTownRepository.SetupGet(x => x.Towns).Returns(towns.AsQueryable());
+            mockTownRepository.Setup(x => x.GetAll()).Returns(towns.AsQueryable());
+            mockTownRepository.Setup(x => x.GetAllList()).Returns(mockTownRepository.Object.GetAll().ToList());
+            mockTownRepository.Setup(x => x.Count()).Returns(mockTownRepository.Object.GetAll().Count());
             mockTownRepository.MockRemoveOneTownOperation();
         }
 
@@ -33,7 +35,7 @@ namespace Lte.Parameters.Test.MockOperations
             TownOperationService service = new TownOperationService(mockTownRepository.Object,
                 "City1", "District1", "Town1");
             Assert.IsTrue(service.DeleteOneTown(null,null));
-            Assert.AreEqual(mockTownRepository.Object.Towns.Count(), 0);
+            Assert.AreEqual(mockTownRepository.Object.Count(), 0);
         }
 
         [Test]
@@ -42,7 +44,7 @@ namespace Lte.Parameters.Test.MockOperations
             TownOperationService service = new TownOperationService(mockTownRepository.Object,
                 "City1", "District1", "Town1");
             Assert.IsTrue(service.DeleteOneTown());
-            Assert.AreEqual(mockTownRepository.Object.Towns.Count(), 0);
+            Assert.AreEqual(mockTownRepository.Object.Count(), 0);
         }
 
         [Test]
@@ -54,7 +56,7 @@ namespace Lte.Parameters.Test.MockOperations
             TownOperationService service = new TownOperationService(mockTownRepository.Object,
                 "City1", "District1", "Town1");
             Assert.IsTrue(service.DeleteOneTown(mockENodebRepository.Object,null));
-            Assert.AreEqual(mockTownRepository.Object.Towns.Count(), 0);
+            Assert.AreEqual(mockTownRepository.Object.Count(), 0);
         }
 
         [Test]
@@ -66,7 +68,7 @@ namespace Lte.Parameters.Test.MockOperations
             TownOperationService service = new TownOperationService(mockTownRepository.Object,
                 "City1", "District1", "Town1");
             Assert.IsFalse(service.DeleteOneTown(mockENodebRepository.Object,null));
-            Assert.AreEqual(mockTownRepository.Object.Towns.Count(), 1);
+            Assert.AreEqual(mockTownRepository.Object.Count(), 1);
         }
     }
 }

@@ -61,7 +61,7 @@ namespace Lte.Evaluations.ViewHelpers
                 ParametersContainer.QueryENodebs 
                     = eNodebRepository.GetAll().Where(x => x.TownId == townId).OrderBy(p => p.Id).ToList();
                 _townId = townId;
-                Town town = townRepository.Towns.FirstOrDefault(x => x.Id == TownId);
+                Town town = townRepository.Get(TownId);
                 _infoTitle = (town == null) ? "" :
                     town.CityName + town.DistrictName + town.TownName + "基站列表";
             }
@@ -142,11 +142,11 @@ namespace Lte.Evaluations.ViewHelpers
         {
             if (town != null)
             {
-                this.Initialize(townRepository.Towns, town);
+                this.Initialize(townRepository.GetAll(), town);
             }
             else
             {
-                this.Initialize(townRepository.Towns);
+                this.Initialize(townRepository.GetAll());
             }
         }
     }

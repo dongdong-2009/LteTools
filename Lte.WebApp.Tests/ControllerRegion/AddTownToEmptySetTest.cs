@@ -21,7 +21,9 @@ namespace Lte.WebApp.Tests.ControllerRegion
         [SetUp]
         public void TestInitialize()
         {
-            repository.SetupGet(x => x.Towns).Returns(towns.AsQueryable());
+            repository.Setup(x => x.GetAll()).Returns(towns.AsQueryable());
+            repository.Setup(x => x.GetAllList()).Returns(repository.Object.GetAll().ToList());
+            repository.Setup(x => x.Count()).Returns(repository.Object.GetAll().Count());
             repository.MockAddOneTownOperation();
         }
 
@@ -54,9 +56,9 @@ namespace Lte.WebApp.Tests.ControllerRegion
             viewModel.NewDistrictName = districtName;
             viewModel.TownName = "";
             viewModel.NewTownName = townName;
-            Assert.AreEqual(repository.Object.Towns.Count(), 0);
+            Assert.AreEqual(repository.Object.Count(), 0);
             controller.AddTown(viewModel);
-            IQueryable<Town> resultTowns = repository.Object.Towns;
+            IQueryable<Town> resultTowns = repository.Object.GetAll();
             Assert.AreEqual(resultTowns.Count(), 1);
             Assert.AreEqual(resultTowns.ElementAt(0).CityName, cityName);
             Assert.AreEqual(resultTowns.ElementAt(0).DistrictName, districtName);

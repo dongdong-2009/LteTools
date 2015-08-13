@@ -1,7 +1,6 @@
 ﻿using Lte.Parameters.Region.Abstract;
 using Lte.Parameters.Region.Service;
 using NUnit.Framework;
-using System.Linq;
 
 namespace Lte.Parameters.Test.Region
 {
@@ -58,7 +57,7 @@ namespace Lte.Parameters.Test.Region
         public void TestAdd(int cityId, int districtId, int regionId, bool success, bool increase)
         {
             helper = new RegionOperationServiceTestHelper(regionRepository.Object);
-            Assert.AreEqual(regionRepository.Object.OptimizeRegions.Count(), 8);
+            Assert.AreEqual(regionRepository.Object.Count(), 8);
             if (success)
             {
                 Assert.IsTrue(helper.TestAddRegion(cityId, districtId, regionId));
@@ -67,7 +66,7 @@ namespace Lte.Parameters.Test.Region
             {
                 Assert.IsFalse(helper.TestAddRegion(cityId, districtId, regionId));
             }
-            Assert.AreEqual(regionRepository.Object.OptimizeRegions.Count(), 8 + (increase ? 1 : 0));
+            Assert.AreEqual(regionRepository.Object.Count(), 8 + (increase ? 1 : 0));
         }
 
         [TestCase(1, 1, 1, false, false)]
@@ -80,7 +79,7 @@ namespace Lte.Parameters.Test.Region
         public void TestAddForce(int cityId, int districtId, int regionId, bool success, bool increase)
         {
             helper = new RegionOperationServiceTestHelper(regionRepository.Object);
-            Assert.AreEqual(regionRepository.Object.OptimizeRegions.Count(), 8);
+            Assert.AreEqual(regionRepository.Object.Count(), 8);
             if (success)
             {
                 Assert.IsTrue(helper.TestAddRegionForce(cityId, districtId, regionId));
@@ -89,7 +88,7 @@ namespace Lte.Parameters.Test.Region
             {
                 Assert.IsFalse(helper.TestAddRegionForce(cityId, districtId, regionId));
             }
-            Assert.AreEqual(regionRepository.Object.OptimizeRegions.Count(), 8 + (increase ? 1 : 0));
+            Assert.AreEqual(regionRepository.Object.Count(), 8 + (increase ? 1 : 0));
         }
 
         [TestCase(1, 2, 2, true)]
@@ -101,16 +100,16 @@ namespace Lte.Parameters.Test.Region
         public void TestDelete(int cityId, int districtId, int regionId, bool success)
         {
             helper = new RegionOperationServiceTestHelper(regionRepository.Object);
-            Assert.AreEqual(regionRepository.Object.OptimizeRegions.Count(), 8);
+            Assert.AreEqual(regionRepository.Object.Count(), 8);
             if (success)
             {
                 Assert.IsTrue(helper.TestDeleteRegion(cityId, districtId, regionId));
-                Assert.AreEqual(regionRepository.Object.OptimizeRegions.Count(), 7);
+                Assert.AreEqual(regionRepository.Object.Count(), 7);
             }
             else
             {
                 Assert.IsFalse(helper.TestDeleteRegion(cityId, districtId, regionId));
-                Assert.AreEqual(regionRepository.Object.OptimizeRegions.Count(), 8);
+                Assert.AreEqual(regionRepository.Object.Count(), 8);
             }
         }
     }

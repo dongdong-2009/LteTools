@@ -44,7 +44,7 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
         private void AssertElements(CdmaBts bts, BtsExcel btsExcel)
         {
             Assert.AreEqual(bts.TownId,
-                GetMatchedTownId(btsExcel, townRepository.Towns.ElementAt(0)));
+                GetMatchedTownId(btsExcel, townRepository.GetAll().ElementAt(0)));
             Assert.AreEqual(bts.Name, btsExcel.Name);
             Assert.AreEqual(bts.Longtitute, btsExcel.Longtitute);
             Assert.AreEqual(bts.Lattitute, btsExcel.Lattitute);
@@ -83,7 +83,7 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
         public void SetUp()
         {
             Initialize();
-            townRepository.SetupGet(x => x.Towns).Returns(new List<Town> 
+            townRepository.Setup(x => x.GetAll()).Returns(new List<Town> 
             {
                 new Town
                 {
@@ -93,6 +93,8 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
                     Id = 122
                 }
             }.AsQueryable());
+            townRepository.Setup(x => x.GetAllList()).Returns(townRepository.Object.GetAll().ToList());
+            townRepository.Setup(x => x.Count()).Returns(townRepository.Object.GetAll().Count());
             helper = new BtsRepositorySaveBtsTestHelper(repository, btsInfos, townRepository.Object);
         }
 

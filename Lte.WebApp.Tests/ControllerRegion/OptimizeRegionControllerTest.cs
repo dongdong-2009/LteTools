@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
+﻿using System.Linq;
 using Lte.Parameters.Region.Abstract;
 using Lte.WebApp.Controllers.Parameters;
 using Lte.WebApp.Tests.ControllerParameters;
@@ -21,7 +16,9 @@ namespace Lte.WebApp.Tests.ControllerRegion
         public void Setup()
         {
             Mock<IRegionRepository> repository=new Mock<IRegionRepository>();
-            repository.SetupGet(x => x.OptimizeRegions).Returns(regions.AsQueryable());
+            repository.Setup(x => x.GetAll()).Returns(regions.AsQueryable());
+            repository.Setup(x => x.GetAllList()).Returns(repository.Object.GetAll().ToList());
+            repository.Setup(x => x.Count()).Returns(repository.Object.GetAll().Count());
             _nameController = new RegionNameController(repository.Object);
         }
 

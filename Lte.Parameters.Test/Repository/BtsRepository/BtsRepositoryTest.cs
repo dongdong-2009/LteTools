@@ -17,7 +17,7 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
         public void SetUp()
         {
             Initialize();
-            townRepository.SetupGet(x => x.Towns).Returns(new List<Town> 
+            townRepository.Setup(x => x.GetAll()).Returns(new List<Town> 
             {
                 new Town
                 {
@@ -27,6 +27,8 @@ namespace Lte.Parameters.Test.Repository.BtsRepository
                     Id = 122
                 }
             }.AsQueryable());
+            townRepository.Setup(x => x.GetAllList()).Returns(townRepository.Object.GetAll().ToList());
+            townRepository.Setup(x => x.Count()).Returns(townRepository.Object.GetAll().Count());
             btsInfo = new BtsExcel
             {
                 BtsId = 2,

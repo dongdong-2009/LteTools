@@ -12,7 +12,7 @@ namespace Lte.Parameters.Test.Repository.ENodebRepository
         public void SetUp()
         {
             Initialize();
-            townRepository.SetupGet(x => x.Towns).Returns(new List<Town> {
+            townRepository.Setup(x => x.GetAll()).Returns(new List<Town> {
                 new Town()
                 {
                     CityName = "Foshan",
@@ -21,6 +21,8 @@ namespace Lte.Parameters.Test.Repository.ENodebRepository
                     Id = 122
                 }
             }.AsQueryable());
+            townRepository.Setup(x => x.GetAllList()).Returns(townRepository.Object.GetAll().ToList());
+            townRepository.Setup(x => x.Count()).Returns(townRepository.Object.GetAll().Count());
         }
 
         [TestCase(true, 2, 3, 122)]

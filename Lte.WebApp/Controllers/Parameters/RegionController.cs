@@ -4,7 +4,6 @@ using System.Web.Mvc;
 using Lte.Domain.Geo.Abstract;
 using Lte.Evaluations.ViewHelpers;
 using Lte.Parameters.Abstract;
-using Lte.Parameters.Region;
 using Lte.Parameters.Region.Abstract;
 using Lte.Parameters.Region.Entities;
 using Lte.Parameters.Region.Service;
@@ -34,7 +33,7 @@ namespace Lte.WebApp.Controllers.Parameters
             RegionViewModel viewModel = TempData["RegionViewModel"] as RegionViewModel;
             if (viewModel == null || viewModel.CityName == null)
             {
-                List<Town> townList = townRepository.Towns.ToList();
+                List<Town> townList = townRepository.GetAllList();
                 Town town = (townList.Count > 0) ? townList.First() : null;
 
                 viewModel = new RegionViewModel("addTown");

@@ -9,7 +9,6 @@ using Lte.Parameters.Abstract;
 using Moq;
 using System.Linq;
 using System.Web.Mvc;
-using Lte.Parameters.Region;
 using NUnit.Framework;
 
 namespace Lte.WebApp.Tests.ControllerParameters
@@ -176,7 +175,7 @@ namespace Lte.WebApp.Tests.ControllerParameters
         [SetUp]
         public void TestInitialize()
         {
-            townRepository.SetupGet(x => x.Towns).Returns(towns.AsQueryable());
+            townRepository.Setup(x => x.GetAll()).Returns(towns.AsQueryable());
             eNodebRepository.SetupGet(x => x.GetAll()).Returns(eNodebs.AsQueryable());
             controller = new ParametersController(townRepository.Object, eNodebRepository.Object, null, null, null,
                 regionRepository.Object, null);

@@ -29,7 +29,9 @@ namespace Lte.Parameters.Test.Repository
                 }
             };
             base.Initialize();
-            repository.SetupGet(x => x.Towns).Returns(towns.AsQueryable());
+            repository.Setup(x => x.GetAll()).Returns(towns.AsQueryable());
+            townRepository.Setup(x => x.GetAllList()).Returns(townRepository.Object.GetAll().ToList());
+            townRepository.Setup(x => x.Count()).Returns(townRepository.Object.GetAll().Count());
             repository.MockAddOneTownOperation();
             repository.MockRemoveOneTownOperation();
         }
@@ -37,21 +39,21 @@ namespace Lte.Parameters.Test.Repository
         [Test]
         public void TestSaveTown_Success()
         {
-            Assert.AreEqual(repository.Object.Towns.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
             TownOperationService service = new TownOperationService(repository.Object,
                 "Foshan", "Nanhai", "Guicheng");
             service.SaveOneTown();
-            Assert.AreEqual(repository.Object.Towns.Count(), 2);
+            Assert.AreEqual(repository.Object.Count(), 2);
         }
 
         [Test]
         public void TestSaveTown_Fail()
         {
-            Assert.AreEqual(repository.Object.Towns.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
             TownOperationService service = new TownOperationService(repository.Object,
                 "Foshan", "Chancheng", "Zhangcha");
             service.SaveOneTown();
-            Assert.AreEqual(repository.Object.Towns.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
         }
 
         [Test]
@@ -60,7 +62,7 @@ namespace Lte.Parameters.Test.Repository
             TownOperationService service = new TownOperationService(repository.Object,
                 "Foshan", "Chancheng", "Zhangcha");
             Assert.IsTrue(service.DeleteOneTown());
-            Assert.AreEqual(repository.Object.Towns.Count(), 0);
+            Assert.AreEqual(repository.Object.Count(), 0);
         }
 
         [Test]
@@ -69,7 +71,7 @@ namespace Lte.Parameters.Test.Repository
             TownOperationService service = new TownOperationService(repository.Object,
                 "Foshan ", "Chancheng ", "Zhangcha");
             Assert.IsTrue(service.DeleteOneTown());
-            Assert.AreEqual(repository.Object.Towns.Count(), 0);
+            Assert.AreEqual(repository.Object.Count(), 0);
         }
 
         [Test]
@@ -78,7 +80,7 @@ namespace Lte.Parameters.Test.Repository
             TownOperationService service = new TownOperationService(repository.Object,
                 "Foshan ", "Chancheng ", "Zhangcha");
             Assert.IsFalse(service.DeleteOneTown(lteRepository.Object, null));
-            Assert.AreEqual(repository.Object.Towns.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
         }
 
         [Test]
@@ -87,52 +89,52 @@ namespace Lte.Parameters.Test.Repository
             TownOperationService service = new TownOperationService(repository.Object,
                 "Foshan", "Chancheng", "Zumiao");
             Assert.IsFalse(service.DeleteOneTown());
-            Assert.AreEqual(repository.Object.Towns.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
         }
 
         [Test]
         public void TestSaveAndDeleteTown_AddSuccess_DeleteSucess()
         {
-            Assert.AreEqual(repository.Object.Towns.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
             TownOperationService service = new TownOperationService(repository.Object,
                 "Foshan", "Nanhai ", "Guicheng ");
             service.SaveOneTown();
-            Assert.AreEqual(repository.Object.Towns.Count(), 2);
+            Assert.AreEqual(repository.Object.Count(), 2);
             repository.MockRemoveOneTownOperation();
             service = new TownOperationService(repository.Object,
                 "Foshan", "Nanhai", "Guicheng");
             Assert.IsTrue(service.DeleteOneTown());
-            Assert.AreEqual(repository.Object.Towns.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
         }
 
         [Test]
         public void TestSaveAndDeleteTown_AddSuccess_DeleteFail()
         {
-            Assert.AreEqual(repository.Object.Towns.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
             TownOperationService service = new TownOperationService(repository.Object,
                 "Foshan", "Nanhai ", "Guicheng ");
             service.SaveOneTown();
-            Assert.AreEqual(repository.Object.Towns.Count(), 2);
+            Assert.AreEqual(repository.Object.Count(), 2);
             repository.MockRemoveOneTownOperation();
             service = new TownOperationService(repository.Object,
                 "Foshan", "Nanhai", "Dali");
             Assert.IsFalse(service.DeleteOneTown());
-            Assert.AreEqual(repository.Object.Towns.Count(), 2);
+            Assert.AreEqual(repository.Object.Count(), 2);
         }
 
         [Test]
         public void TestSaveAndDeleteTown_AddFail_DeleteSuccess()
         {
-            Assert.AreEqual(repository.Object.Towns.Count(), 1);
+            Assert.AreEqual(repository.Object.Count(), 1);
             TownOperationService service = new TownOperationService(repository.Object,
                 "Foshan", "Chancheng ", "Zhangcha ");
             service.SaveOneTown();
-            Assert.AreEqual(repository.Object.Towns.Count(), 1, "Add town success! But it's expected to be failed!");
+            Assert.AreEqual(repository.Object.Count(), 1, "Add town success! But it's expected to be failed!");
             repository.MockRemoveOneTownOperation();
             service = new TownOperationService(repository.Object,
                 "Foshan", "Chancheng ", "Zhangcha ");
             Assert.IsTrue(service.DeleteOneTown());
-            Assert.AreEqual(repository.Object.Towns.Count(), 0);
+            Assert.AreEqual(repository.Object.Count(), 0);
         }
     }
 }

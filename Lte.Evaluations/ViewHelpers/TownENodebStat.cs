@@ -37,7 +37,7 @@ namespace Lte.Evaluations.ViewHelpers
             TownId = town.Id;
 
             QueryRegionService service = new ByDistrictQueryRegionService(
-                regionRepository.OptimizeRegions, town.CityName, town.DistrictName);
+                regionRepository.GetAll(), town.CityName, town.DistrictName);
             OptimizeRegion region = service.Query();
             RegionName = (region == null) ? "" : region.Region;
             TotalENodebs = eNodebs.Count(x => x.TownId == TownId);

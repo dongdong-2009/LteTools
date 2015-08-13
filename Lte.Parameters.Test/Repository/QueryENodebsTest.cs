@@ -19,12 +19,14 @@ namespace Lte.Parameters.Test.Repository
         [SetUp]
         public void TestInitialize()
         {
-            townRepository.SetupGet(x => x.Towns).Returns(new List<Town>{
+            townRepository.Setup(x => x.GetAll()).Returns(new List<Town>{
                 new Town{Id=1,CityName="Guangzhou",DistrictName="Tianhe",TownName="Wushan"},
                 new Town{Id=2,CityName="Guangzhou",DistrictName="Tianhe",TownName="Shipai"},
                 new Town{Id=3,CityName="Guangzhou",DistrictName="YueXiu",TownName="Taojin"},
                 new Town{Id=4,CityName="Foshan",DistrictName="Chancheng",TownName="Zhangcha"}
             }.AsQueryable());
+            townRepository.Setup(x => x.GetAllList()).Returns(townRepository.Object.GetAll().ToList());
+            townRepository.Setup(x => x.Count()).Returns(townRepository.Object.GetAll().Count());
 
             eNodebRepository.Setup(x => x.GetAll()).Returns(new List<ENodeb>{
                 new ENodeb{Name="GuangzhouHengda",Address="Guangzhou 123",TownId=1},

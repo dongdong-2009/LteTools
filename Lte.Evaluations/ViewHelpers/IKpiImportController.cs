@@ -6,7 +6,6 @@ using Lte.Domain.Regular;
 using Lte.Parameters.Concrete;
 using Lte.Parameters.Entities;
 using Lte.Parameters.Kpi.Abstract;
-using Lte.Parameters.Kpi.Concrete;
 using Lte.Parameters.Kpi.Entities;
 using Lte.Parameters.Kpi.Service;
 using Lte.Parameters.Region.Abstract;
@@ -58,7 +57,7 @@ namespace Lte.Evaluations.ViewHelpers
                     }, "佛山");
             if (statList.Count > 0)
             {
-                OptimizeRegion firstOrDefault = regionRepository.OptimizeRegions.ToList().FirstOrDefault(
+                OptimizeRegion firstOrDefault = regionRepository.GetAllList().FirstOrDefault(
                     x => x.Region == statList[0].Region);
                 if (firstOrDefault != null)
                 {

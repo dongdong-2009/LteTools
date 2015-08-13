@@ -1,15 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Abp.Domain.Entities;
 using Lte.Domain.Geo.Abstract;
 
 namespace Lte.Parameters.Region.Entities
 {
-    public class Town : ITown
+    public class Town : Entity, ITown
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         [MaxLength(20)]
         public string CityName { get; set; }
 
@@ -20,12 +16,8 @@ namespace Lte.Parameters.Region.Entities
         public string TownName { get; set; }
     }
 
-    public class OptimizeRegion
+    public class OptimizeRegion : Entity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         public string City { get; set; }
 
         public string Region { get; set; }

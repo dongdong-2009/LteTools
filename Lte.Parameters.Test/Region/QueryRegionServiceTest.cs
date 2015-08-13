@@ -8,7 +8,7 @@ namespace Lte.Parameters.Test.Region
     internal class QueryRegionServiceTestHelper
     {
         private QueryRegionService service;
-        private IRegionRepository repository;
+        private readonly IRegionRepository repository;
 
         public QueryRegionServiceTestHelper(IRegionRepository regionRepository)
         {
@@ -17,14 +17,14 @@ namespace Lte.Parameters.Test.Region
 
         public OptimizeRegion ConstructTestRegion(int cityId, int districtId)
         {
-            service = new ByDistrictQueryRegionService(repository.OptimizeRegions,
+            service = new ByDistrictQueryRegionService(repository.GetAll(),
                 "C-" + cityId, "D-" + districtId);
             return service.Query();
         }
 
         public OptimizeRegion ConstructTestRegion(int cityId, int districtId, int regionId)
         {
-            service = new ByRegionQueryRegionService(repository.OptimizeRegions,
+            service = new ByRegionQueryRegionService(repository.GetAll(),
                 "C-" + cityId, "D-" + districtId, "R-" + regionId);
             return service.Query();
         }

@@ -19,7 +19,7 @@ namespace Lte.WebApp.Controllers.Kpi
             ITownRepository townRepository)
         {
             this.lteStatRepository = lteStatRepository;
-            towns = townRepository.Towns.ToList();
+            towns = townRepository.GetAllList();
         }
 
         [Route("api/QueryLteStat/{begin}/{end}")]

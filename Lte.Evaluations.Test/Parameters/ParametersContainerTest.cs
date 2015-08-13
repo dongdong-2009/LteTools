@@ -19,7 +19,9 @@ namespace Lte.Evaluations.Test.Parameters
         public void TestInitialize()
         {
             Mock<IENodebRepository> eNodebRepository = new Mock<IENodebRepository>();
-            mockTownRepository.SetupGet(x => x.Towns).Returns(towns.AsQueryable());
+            mockTownRepository.Setup(x => x.GetAll()).Returns(towns.AsQueryable());
+            mockTownRepository.Setup(x => x.GetAllList()).Returns(mockTownRepository.Object.GetAll().ToList());
+            mockTownRepository.Setup(x => x.Count()).Returns(mockTownRepository.Object.GetAll().Count());
             eNodebRepository.Setup(x => x.GetAll()).Returns(eNodebs.AsQueryable());
             eNodebRepository.Setup(x => x.GetAllList()).Returns(eNodebRepository.Object.GetAll().ToList());
             eNodebRepository.Setup(x => x.Count()).Returns(eNodebRepository.Object.GetAll().Count());

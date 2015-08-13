@@ -18,7 +18,7 @@ namespace Lte.Parameters.Region.Service
             _cityName = cityName;
             _districtName = districtName;
             _regionName = regionName;
-            _service = new ByRegionQueryRegionService(_repository.OptimizeRegions,
+            _service = new ByRegionQueryRegionService(_repository.GetAll(),
                 _cityName, _districtName, _regionName);
         }
 
@@ -38,27 +38,26 @@ namespace Lte.Parameters.Region.Service
                 return false;
             }
 
-            QueryRegionService districtService = new ByDistrictQueryRegionService(_repository.OptimizeRegions,
+            QueryRegionService districtService = new ByDistrictQueryRegionService(_repository.GetAll(),
                 _cityName, _districtName);
             OptimizeRegion existedRegion = districtService.Query();
             if (existedRegion == null)
             {
                 if (_service.Query() == null)
                 {
-                    _repository.AddOneRegion(new OptimizeRegion
+                    _repository.Insert(new OptimizeRegion
                     {
                         City = _cityName,
                         District = _districtName,
                         Region = _regionName
                     });
-                    _repository.SaveChanges();
                     return true;
                 }
             }
             else if (_regionName != existedRegion.Region && forceChangeExisted)
             {
                 existedRegion.Region = _regionName;
-                _repository.SaveChanges();
+                _repository.Update(existedRegion);
                 return true;
             }
             return false;
@@ -76,8 +75,7 @@ namespace Lte.Parameters.Region.Service
             {
                 return false;
             }
-            _repository.RemoveOneRegion(region);
-            _repository.SaveChanges();
+            _repository.Delete(region);
             return true;
         }
     }

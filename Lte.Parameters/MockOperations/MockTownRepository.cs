@@ -11,28 +11,37 @@ namespace Lte.Parameters.MockOperations
         public static void MockAddOneTownOperation(this Mock<ITownRepository> townRepository,
             IEnumerable<Town> towns)
         {
-            townRepository.Setup(x => x.AddOneTown(It.Is<Town>(t => t != null))).Callback<Town>(
-                town => townRepository.SetupGet(y => y.Towns).Returns(
-                    towns.Concat(new List<Town> { town }).AsQueryable()));
+            townRepository.Setup(x => x.Insert(It.Is<Town>(t => t != null))).Callback<Town>(
+                town =>
+                {
+                    townRepository.Setup(y => y.GetAll()).Returns(
+                        towns.Concat(new List<Town> {town}).AsQueryable());
+                    townRepository.Setup(x => x.GetAllList()).Returns(townRepository.Object.GetAll().ToList());
+                    townRepository.Setup(x => x.Count()).Returns(townRepository.Object.GetAll().Count());
+                });
         }
 
         public static void MockAddOneTownOperation(this Mock<ITownRepository> townRepository)
         {
-            townRepository.MockAddOneTownOperation(townRepository.Object.Towns);
+            townRepository.MockAddOneTownOperation(townRepository.Object.GetAll());
         }
 
         public static void MockRemoveOneTownOperation(this Mock<ITownRepository> townRepository,
             IEnumerable<Town> towns)
         {
-            townRepository.Setup(x => x.RemoveOneTown(It.IsAny<Town>())).Returns(false);
-            townRepository.Setup(x => x.RemoveOneTown(It.Is<Town>(
-                t => t != null && towns.FirstOrDefault(y => y == t) != null))).Returns(true).Callback<Town>(
-                t1 => townRepository.SetupGet(z => z.Towns).Returns(towns.Where(t2 => t2 != t1).AsQueryable()));
+            townRepository.Setup(x => x.Delete(It.Is<Town>(
+                t => t != null && towns.FirstOrDefault(y => y == t) != null))).Callback<Town>(
+                    t1 =>
+                    {
+                        townRepository.Setup(z => z.GetAll()).Returns(towns.Where(t2 => t2 != t1).AsQueryable());
+                        townRepository.Setup(x => x.GetAllList()).Returns(townRepository.Object.GetAll().ToList());
+                        townRepository.Setup(x => x.Count()).Returns(townRepository.Object.GetAll().Count());
+                    });
         }
 
         public static void MockRemoveOneTownOperation(this Mock<ITownRepository> townRepository)
         {
-            townRepository.MockRemoveOneTownOperation(townRepository.Object.Towns);
+            townRepository.MockRemoveOneTownOperation(townRepository.Object.GetAll());
         }
     }
 
@@ -41,28 +50,38 @@ namespace Lte.Parameters.MockOperations
         public static void MockAddOneRegionOperation(this Mock<IRegionRepository> regionRepository,
             IEnumerable<OptimizeRegion> regions)
         {
-            regionRepository.Setup(x => x.AddOneRegion(It.Is<OptimizeRegion>(o => o != null))).Callback<OptimizeRegion>(
-                region => regionRepository.SetupGet(y => y.OptimizeRegions).Returns(
-                    regions.Concat(new List<OptimizeRegion> { region }).AsQueryable()));
+            regionRepository.Setup(x => x.Insert(It.Is<OptimizeRegion>(o => o != null))).Callback<OptimizeRegion>(
+                region =>
+                {
+                    regionRepository.Setup(y => y.GetAll()).Returns(
+                        regions.Concat(new List<OptimizeRegion> { region }).AsQueryable());
+                    regionRepository.Setup(x => x.GetAllList()).Returns(regionRepository.Object.GetAll().ToList());
+                    regionRepository.Setup(x => x.Count()).Returns(regionRepository.Object.GetAll().Count());
+                });
         }
 
         public static void MockAddOneRegionOperation(this Mock<IRegionRepository> regionRepository)
         {
-            regionRepository.MockAddOneRegionOperation(regionRepository.Object.OptimizeRegions);
+            regionRepository.MockAddOneRegionOperation(regionRepository.Object.GetAll());
         }
 
         public static void MockRemoveOneRegionOperation(this Mock<IRegionRepository> regionRepository,
             IEnumerable<OptimizeRegion> regions)
         {
-            regionRepository.Setup(x => x.RemoveOneRegion(It.Is<OptimizeRegion>(
+            regionRepository.Setup(x => x.Delete(It.Is<OptimizeRegion>(
                 t => t != null && regions.FirstOrDefault(y => y == t) != null))).Callback<OptimizeRegion>(
-                t1 => regionRepository.SetupGet(z => z.OptimizeRegions).Returns(
-                    regions.Where(t2 => t2 != t1).AsQueryable()));
+                t1 =>
+                {
+                    regionRepository.Setup(z => z.GetAll()).Returns(
+                        regions.Where(t2 => t2 != t1).AsQueryable());
+                    regionRepository.Setup(x => x.GetAllList()).Returns(regionRepository.Object.GetAll().ToList());
+                    regionRepository.Setup(x => x.Count()).Returns(regionRepository.Object.GetAll().Count());
+                });
         }
 
         public static void MockRemoveOneRegionOperation(this Mock<IRegionRepository> regionRepository)
         {
-            regionRepository.MockRemoveOneRegionOperation(regionRepository.Object.OptimizeRegions);
+            regionRepository.MockRemoveOneRegionOperation(regionRepository.Object.GetAll());
         }
     }
 }

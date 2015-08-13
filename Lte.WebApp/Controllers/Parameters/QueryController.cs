@@ -26,7 +26,7 @@ namespace Lte.WebApp.Controllers.Parameters
         public IEnumerable<string> GetDistrictListByCityName(string cityName)
         {
             QueryNamesService service = new QueryDistinctDistrictNamesService(
-                townRepository.Towns, cityName);
+                townRepository.GetAll(), cityName);
             return service.Query().ToList();
         }
     }
@@ -44,7 +44,7 @@ namespace Lte.WebApp.Controllers.Parameters
         public IEnumerable<string> GetTownListByCityAndDistrictName(string cityName, string districtName)
         {
             QueryNamesService service = new QueryDistinctTownNamesService(
-                townRepository.Towns, cityName, districtName);
+                townRepository.GetAll(), cityName, districtName);
             return service.Query().ToList();
         }
     }
@@ -62,7 +62,7 @@ namespace Lte.WebApp.Controllers.Parameters
         public string GetName(string cityName, string districtName)
         {
             QueryRegionService service = new ByDistrictQueryRegionService(
-                regionRepository.OptimizeRegions, cityName, districtName);
+                regionRepository.GetAll(), cityName, districtName);
             OptimizeRegion region = service.Query();
             return (region == null) ? "" : region.Region;
         }

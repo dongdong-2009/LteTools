@@ -181,11 +181,11 @@ namespace Lte.Evaluations.ViewHelpers
                 CityName = town.CityName;
                 DistrictName = town.DistrictName;
                 TownName = town.TownName;
-                this.Initialize(townRepository.Towns, town);
+                this.Initialize(townRepository.GetAll(), town);
             }
             else
             {
-                this.Initialize(townRepository.Towns);
+                this.Initialize(townRepository.GetAll());
             }
         }
 
@@ -194,7 +194,7 @@ namespace Lte.Evaluations.ViewHelpers
             if (regionRepository == null) { return; }
             if (town != null)
             {
-                this.Initialize(regionRepository.OptimizeRegions, town);
+                this.Initialize(regionRepository.GetAll(), town);
             }
         }
     }

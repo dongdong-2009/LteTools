@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Lte.Evaluations.Service;
 using Lte.Parameters.Abstract;
@@ -21,9 +19,9 @@ namespace Lte.WebApp.Controllers.Rutrace
 
     public class MrsQueryTaController : ApiController
     {
-        private readonly IMrsCellRepository _repository;
+        private readonly IMrsCellTaRepository _repository;
 
-        public MrsQueryTaController(IMrsCellRepository repository)
+        public MrsQueryTaController(IMrsCellTaRepository repository)
         {
             _repository = repository;
         }
@@ -31,7 +29,7 @@ namespace Lte.WebApp.Controllers.Rutrace
         [Route("api/MrsQueryTa/{cellId}/{sectorId}/{date}")]
         public MrsCellTa Get(int cellId, byte sectorId, DateTime date)
         {
-            return _repository.TaCells.FirstOrDefault(x =>
+            return _repository.GetAll().FirstOrDefault(x =>
                 x.CellId == cellId && x.SectorId == sectorId && x.RecordDate == date);
         }
     }
@@ -48,7 +46,7 @@ namespace Lte.WebApp.Controllers.Rutrace
         [Route("api/MroQueryRsrpTa/{cellId}/{sectorId}/{date}")]
         public IEnumerable<MroRsrpTa> Get(int cellId, byte sectorId, DateTime date)
         {
-            return _repository.RsrpTaCells.Where(x =>
+            return _repository.GetAll().Where(x =>
                 x.CellId == cellId && x.SectorId == sectorId && x.RecordDate == date);
         }
     }

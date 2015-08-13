@@ -96,9 +96,9 @@ namespace Lte.Parameters.Test.Region
         [TestCase(4, 2, 3, true)]
         public void TestAdd(int cityId, int districtId, int townId, bool add)
         {
-            Assert.AreEqual(townRepository.Object.Towns.Count(), 8);
+            Assert.AreEqual(townRepository.Object.Count(), 8);
             helper.TestAddTown(cityId, districtId, townId);
-            Assert.AreEqual(townRepository.Object.Towns.Count(), 8 + (add ? 1 : 0));
+            Assert.AreEqual(townRepository.Object.Count(), 8 + (add ? 1 : 0));
         }
 
         [TestCase(1, 2, 2, true)]
@@ -109,7 +109,7 @@ namespace Lte.Parameters.Test.Region
         [TestCase(4, 1, 2, false)]
         public void TestDelete(int cityId, int districtId, int townId, bool delete)
         {
-            Assert.AreEqual(townRepository.Object.Towns.Count(), 8);
+            Assert.AreEqual(townRepository.Object.Count(), 8);
             if (delete)
             {
                 Assert.IsTrue(helper.TestDeleteTown(cityId, districtId, townId));
@@ -118,7 +118,7 @@ namespace Lte.Parameters.Test.Region
             {
                 Assert.IsFalse(helper.TestDeleteTown(cityId, districtId, townId));
             }
-            Assert.AreEqual(townRepository.Object.Towns.Count(), 8 - (delete ? 1 : 0));
+            Assert.AreEqual(townRepository.Object.Count(), 8 - (delete ? 1 : 0));
         }
 
         [TestCase(1, 2, 2, true)]
@@ -129,7 +129,7 @@ namespace Lte.Parameters.Test.Region
         [TestCase(4, 1, 2, false)]
         public void TestDeleteENodebMatched(int cityId, int districtId, int townId, bool delete)
         {
-            Assert.AreEqual(townRepository.Object.Towns.Count(), 8);
+            Assert.AreEqual(townRepository.Object.Count(), 8);
             if (delete)
             {
                 Assert.IsTrue(helper.TestDeleteTown(cityId, districtId, townId, eNodebRepository.Object));
@@ -138,7 +138,7 @@ namespace Lte.Parameters.Test.Region
             {
                 Assert.IsFalse(helper.TestDeleteTown(cityId, districtId, townId, eNodebRepository.Object));
             }
-            Assert.AreEqual(townRepository.Object.Towns.Count(), 8 - (delete ? 1 : 0));
+            Assert.AreEqual(townRepository.Object.Count(), 8 - (delete ? 1 : 0));
         }
 
         [TestCase(1, 2, 2, true)]
@@ -150,7 +150,7 @@ namespace Lte.Parameters.Test.Region
         [TestCase(4, 1, 2, false)]
         public void TestDeleteBtsMatched(int cityId, int districtId, int townId, bool delete)
         {
-            Assert.AreEqual(townRepository.Object.Towns.Count(), 8);
+            Assert.AreEqual(townRepository.Object.Count(), 8);
             if (delete)
             {
                 Assert.IsTrue(helper.TestDeleteTown(cityId, districtId, townId, btsRepository.Object));
@@ -159,7 +159,7 @@ namespace Lte.Parameters.Test.Region
             {
                 Assert.IsFalse(helper.TestDeleteTown(cityId, districtId, townId, btsRepository.Object));
             }
-            Assert.AreEqual(townRepository.Object.Towns.Count(), 8 - (delete ? 1 : 0));
+            Assert.AreEqual(townRepository.Object.Count(), 8 - (delete ? 1 : 0));
         }
 
         [TestCase(1, 2, 2, true)]
@@ -171,7 +171,7 @@ namespace Lte.Parameters.Test.Region
         [TestCase(4, 1, 2, false)]
         public void TestDeleteENodebAndBtsMatched(int cityId, int districtId, int townId, bool delete)
         {
-            Assert.AreEqual(townRepository.Object.Towns.Count(), 8);
+            Assert.AreEqual(townRepository.Object.Count(), 8);
             if (delete)
             {
                 Assert.IsTrue(helper.TestDeleteTown(cityId, districtId, townId, 
@@ -182,7 +182,7 @@ namespace Lte.Parameters.Test.Region
                 Assert.IsFalse(helper.TestDeleteTown(cityId, districtId, townId,
                     eNodebRepository.Object, btsRepository.Object));
             }
-            Assert.AreEqual(townRepository.Object.Towns.Count(), 8 - (delete ? 1 : 0));
+            Assert.AreEqual(townRepository.Object.Count(), 8 - (delete ? 1 : 0));
         }
     }
 }

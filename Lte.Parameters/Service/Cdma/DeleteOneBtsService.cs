@@ -19,7 +19,7 @@ namespace Lte.Parameters.Service.Cdma
         public static bool DeleteOneBts(this IBtsRepository repository, ITownRepository townRepository,
             string districtName, string townName, string btsName)
         {
-            int townId = townRepository.Towns.ToList().QueryId(districtName, townName);
+            int townId = townRepository.GetAllList().QueryId(districtName, townName);
             CdmaBts bts = repository.QueryBts(townId, btsName);
             if (bts == null) return false;
             repository.Delete(bts);

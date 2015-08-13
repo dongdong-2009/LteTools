@@ -64,7 +64,7 @@ namespace Lte.Parameters.Test.MockOperations
 
         protected virtual void Initialize()
         {
-            townRepository.SetupGet(x => x.Towns).Returns(
+            townRepository.Setup(x => x.GetAll()).Returns(
                 new List<Town> {
                     new Town { Id = 1, CityName = "C-1", DistrictName = "D-1", TownName = "T-1" },
                     new Town { Id = 2, CityName = "C-2", DistrictName = "D-2", TownName = "T-2" },
@@ -72,6 +72,8 @@ namespace Lte.Parameters.Test.MockOperations
                     new Town { Id = 4, CityName = "C-4", DistrictName = "D-4", TownName = "T-4" },
                     new Town { Id = 5, CityName = "C-5", DistrictName = "D-5", TownName = "T-5" }
                 }.AsQueryable());
+            townRepository.Setup(x => x.GetAllList()).Returns(townRepository.Object.GetAll().ToList());
+            townRepository.Setup(x => x.Count()).Returns(townRepository.Object.GetAll().Count());
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Lte.WebApp.Controllers.Dt
         {
             LogRecordRepository.ThroughputCalculationDelay = 1;
             if (towns == null)
-                towns = townRepository.Towns.ToList();
+                towns = townRepository.GetAllList();
         }
 
         public ActionResult HandoverImport()

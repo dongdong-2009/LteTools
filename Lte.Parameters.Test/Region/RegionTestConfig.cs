@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Lte.Parameters.Region;
 using Lte.Parameters.MockOperations;
 using Lte.Parameters.Region.Abstract;
 using Lte.Parameters.Region.Entities;
@@ -15,7 +14,7 @@ namespace Lte.Parameters.Test.Region
 
         protected void Initialize()
         {
-            townRepository.SetupGet(x => x.Towns).Returns(
+            townRepository.Setup(x => x.GetAll()).Returns(
                 new List<Town> {
                     new Town { Id = 1, CityName = "C-1", DistrictName = "D-1", TownName = "T-1" },
                     new Town { Id = 2, CityName = "C-1", DistrictName = "D-2", TownName = "T-2" },
@@ -26,9 +25,11 @@ namespace Lte.Parameters.Test.Region
                     new Town { Id = 7, CityName = "C-3", DistrictName = "D-5", TownName = "T-7" },
                     new Town { Id = 8, CityName = "C-3", DistrictName = "D-6", TownName = "T-8" }
                 }.AsQueryable());
+            townRepository.Setup(x => x.GetAllList()).Returns(townRepository.Object.GetAll().ToList());
+            townRepository.Setup(x => x.Count()).Returns(townRepository.Object.GetAll().Count());
             townRepository.MockAddOneTownOperation();
             townRepository.MockRemoveOneTownOperation();
-            regionRepository.SetupGet(x => x.OptimizeRegions).Returns(
+            regionRepository.Setup(x => x.GetAll()).Returns(
                 new List<OptimizeRegion>
                 {
                     new OptimizeRegion {Id = 1, City = "C-1", District = "D-1", Region = "R-1"},
@@ -40,6 +41,8 @@ namespace Lte.Parameters.Test.Region
                     new OptimizeRegion {Id = 7, City = "C-3", District = "D-6", Region = "R-7"},
                     new OptimizeRegion {Id = 8, City = "C-3", District = "D-7", Region = "R-8"}
                 }.AsQueryable());
+            regionRepository.Setup(x => x.GetAllList()).Returns(regionRepository.Object.GetAll().ToList());
+            regionRepository.Setup(x => x.Count()).Returns(regionRepository.Object.GetAll().Count());
             regionRepository.MockAddOneRegionOperation();
             regionRepository.MockRemoveOneRegionOperation();
         }

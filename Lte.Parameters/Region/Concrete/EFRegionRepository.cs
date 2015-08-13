@@ -1,60 +1,23 @@
-﻿using System.Linq;
-using Lte.Parameters.Concrete;
+﻿using System.Data.Entity;
+using Lte.Parameters.Abstract;
 using Lte.Parameters.Region.Abstract;
 using Lte.Parameters.Region.Entities;
 
 namespace Lte.Parameters.Region.Concrete
 {
-    public class EFRegionRepository : IRegionRepository
+    public class EFRegionRepository : LightWeightRepositroyBase<OptimizeRegion>, IRegionRepository
     {
-        private readonly EFParametersContext context = new EFParametersContext();
-
-        public IQueryable<OptimizeRegion> OptimizeRegions
+        protected override DbSet<OptimizeRegion> Entities
         {
-            get
-            {
-                return context.OptimizeRegions;
-            }
-        }
-
-        public void AddOneRegion(OptimizeRegion region)
-        {
-            context.OptimizeRegions.Add(region);
-        }
-
-        public void RemoveOneRegion(OptimizeRegion region)
-        {
-            context.OptimizeRegions.Remove(region);
-        }
-
-        public void SaveChanges()
-        {
-            context.SaveChanges();
+            get { return context.OptimizeRegions; }
         }
     }
 
-    public class EFTownRepository : ITownRepository
+    public class EFTownRepository : LightWeightRepositroyBase<Town>, ITownRepository
     {
-        private readonly EFParametersContext context = new EFParametersContext();
-
-        public IQueryable<Town> Towns
+        protected override DbSet<Town> Entities
         {
             get { return context.Towns; }
-        }
-
-        public void AddOneTown(Town town)
-        {
-            context.Towns.Add(town);
-        }
-
-        public bool RemoveOneTown(Town town)
-        {
-            return context.Towns.Remove(town) != null;
-        }
-
-        public void SaveChanges()
-        {
-            context.SaveChanges();
         }
     }
 }

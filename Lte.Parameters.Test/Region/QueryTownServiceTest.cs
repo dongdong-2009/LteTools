@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Lte.Parameters.Region.Abstract;
 using Lte.Parameters.Region.Entities;
 using Lte.Parameters.Region.Service;
@@ -13,7 +12,7 @@ namespace Lte.Parameters.Test.Region
 
         public QueryTownServiceTestHelper(ITownRepository townRepository)
         {
-            towns = townRepository.Towns.ToList();
+            towns = townRepository.GetAllList();
         }
 
         public int ConstructTestId(int cityId, int districtId, int townId)

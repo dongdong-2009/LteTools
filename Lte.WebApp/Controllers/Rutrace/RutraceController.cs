@@ -16,7 +16,6 @@ using Lte.Parameters.Abstract;
 using Lte.Parameters.Entities;
 using Lte.Parameters.Region.Abstract;
 using Lte.Parameters.Service.Coverage;
-using Lte.Parameters.Service.Lte;
 
 namespace Lte.WebApp.Controllers.Rutrace
 {

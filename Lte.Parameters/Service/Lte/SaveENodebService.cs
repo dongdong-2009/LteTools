@@ -25,7 +25,7 @@ namespace Lte.Parameters.Service.Lte
         {
             _repository = repository;
             _baseRepository = new ENodebBaseRepository(repository);
-            _townList = townRepository.Towns.ToList();
+            _townList = townRepository.GetAllList();
             _infrastructure = infrastructure;
             _infrastructure.ENodebsUpdated = 0;
         }
@@ -35,7 +35,7 @@ namespace Lte.Parameters.Service.Lte
             set { infoFilter = value; }
         }
 
-        public void Save(List<ENodebExcel> eNodebInfoList, bool update)
+        public void Save(IEnumerable<ENodebExcel> eNodebInfoList, bool update)
         {
             IEnumerable<ENodebExcel> validInfos =
                 eNodebInfoList.Where(x => infoFilter(x))

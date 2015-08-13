@@ -33,7 +33,7 @@ namespace Lte.Parameters.Service.Cdma
 
         public bool SaveOneBts(BtsExcel btsInfo, bool updateBts)
         {
-            _townId = _townRepository.Towns.QueryId(btsInfo.DistrictName, btsInfo.TownName);
+            _townId = _townRepository.GetAll().QueryId(btsInfo.DistrictName, btsInfo.TownName);
             string name = btsInfo.Name;
             CdmaBts bts = _repository.QueryBts(_townId, name);
             CdmaBts existedENodebWithSameId = _repository.GetAll().FirstOrDefault(x => x.BtsId == btsInfo.BtsId);

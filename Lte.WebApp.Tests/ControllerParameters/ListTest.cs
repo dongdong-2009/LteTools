@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using Moq;
 using Lte.Parameters.Abstract;
 using System.Web.Mvc;
-using Lte.Parameters.Region;
 using NUnit.Framework;
 
 namespace Lte.WebApp.Tests.ControllerParameters
@@ -23,8 +22,8 @@ namespace Lte.WebApp.Tests.ControllerParameters
             Mock<ITownRepository> townRepository = new Mock<ITownRepository>();
             Mock<IENodebRepository> eNodebRepository = new Mock<IENodebRepository>();
             Mock<IRegionRepository> regionRepository = new Mock<IRegionRepository>();
-            townRepository.SetupGet(x => x.Towns).Returns(towns.AsQueryable());
-            eNodebRepository.SetupGet(x => x.GetAll()).Returns(eNodebs.AsQueryable());
+            townRepository.Setup(x => x.GetAll()).Returns(towns.AsQueryable());
+            eNodebRepository.Setup(x => x.GetAll()).Returns(eNodebs.AsQueryable());
             controller = new ParametersController(townRepository.Object, eNodebRepository.Object, null, null, null, 
                 regionRepository.Object, null);
         }

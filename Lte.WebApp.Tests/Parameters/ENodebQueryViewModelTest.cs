@@ -57,7 +57,9 @@ namespace Lte.WebApp.Tests.Parameters
         [SetUp]
         public void TestInitialize()
         {
-            mockTownRepository.SetupGet(x => x.Towns).Returns(towns.AsQueryable());
+            mockTownRepository.Setup(x => x.GetAll()).Returns(towns.AsQueryable());
+            mockTownRepository.Setup(x => x.GetAllList()).Returns(mockTownRepository.Object.GetAll().ToList());
+            mockTownRepository.Setup(x => x.Count()).Returns(mockTownRepository.Object.GetAll().Count());
             helper = new ENodebQueryViewModelTestHelper(towns, viewModel);
         }
 

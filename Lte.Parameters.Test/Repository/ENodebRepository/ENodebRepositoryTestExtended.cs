@@ -17,7 +17,7 @@ namespace Lte.Parameters.Test.Repository.ENodebRepository
         {
             Initialize();
             baseRepository = new ENodebBaseRepository(lteRepository.Object);
-            towns = townRepository.Object.Towns.ToList();
+            towns = townRepository.Object.GetAllList();
         }
 
         [Test]

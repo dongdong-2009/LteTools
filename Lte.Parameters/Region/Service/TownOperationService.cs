@@ -30,30 +30,28 @@ namespace Lte.Parameters.Region.Service
 
         public void SaveOneTown()
         {
-            Town town = _repository.Towns.ToList().Query(_city, _district, _town);
+            Town town = _repository.GetAllList().Query(_city, _district, _town);
             if (town != null) return;
-            _repository.AddOneTown(new Town
+            _repository.Insert(new Town
             {
                 CityName = _city.Trim(),
                 DistrictName = _district.Trim(),
                 TownName = _town.Trim()
             });
-            _repository.SaveChanges();
         }
 
         public bool DeleteOneTown()
         {
-            Town town = _repository.Towns.ToList().Query(_city.Trim(), _district.Trim(), _town.Trim());
+            Town town = _repository.GetAllList().Query(_city.Trim(), _district.Trim(), _town.Trim());
             if (town == null) return false;
-            bool result = _repository.RemoveOneTown(town);
-            _repository.SaveChanges();
-            return result;
+            _repository.Delete(town);
+            return true;
         }
 
         public bool DeleteOneTown(IENodebRepository eNodebRepository, IBtsRepository btsRepository)
         {
             bool result = false;
-            Town town = _repository.Towns.ToList().Query(_city.Trim(), _district.Trim(), _town.Trim());
+            Town town = _repository.GetAllList().Query(_city.Trim(), _district.Trim(), _town.Trim());
 
             if (town == null) return false;
             ENodeb eNodeb
@@ -66,10 +64,9 @@ namespace Lte.Parameters.Region.Service
                     : null;
             if (eNodeb == null && bts == null)
             {
-                result = _repository.RemoveOneTown(town);
-                _repository.SaveChanges();
+                _repository.Delete(town);
             }
-            return result;
+            return true;
         }
     }
 }

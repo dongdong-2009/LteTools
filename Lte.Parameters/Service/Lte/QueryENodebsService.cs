@@ -15,7 +15,7 @@ namespace Lte.Parameters.Service.Lte
             ITownRepository townRepository, string city, string district, string town, string eNodebName,
             string address)
         {
-            IEnumerable<Town> _townList = townRepository.Towns.QueryTowns(city, district, town).ToList();
+            IEnumerable<Town> _townList = townRepository.GetAll().QueryTowns(city, district, town).ToList();
             return (!_townList.Any())
                 ? null
                 : repository.GetAllList().Where(x =>

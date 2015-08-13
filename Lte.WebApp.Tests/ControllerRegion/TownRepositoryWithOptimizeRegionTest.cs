@@ -8,7 +8,6 @@ using Lte.WebApp.Controllers.Parameters;
 using Lte.WebApp.Tests.ControllerParameters;
 using NUnit.Framework;
 using Moq;
-using Lte.Parameters.Region;
 using Lte.Parameters.Region.Service;
 
 namespace Lte.WebApp.Tests.ControllerRegion
@@ -26,13 +25,15 @@ namespace Lte.WebApp.Tests.ControllerRegion
         {
             this.towns = towns;
             this.regions = regions;
-            townRepository.SetupGet(x => x.Towns).Returns(towns.AsQueryable());
+            townRepository.Setup(x => x.GetAll()).Returns(towns.AsQueryable());
+            townRepository.Setup(x => x.GetAllList()).Returns(townRepository.Object.GetAll().ToList());
+            townRepository.Setup(x => x.Count()).Returns(townRepository.Object.GetAll().Count());
             controller = new RegionController(townRepository.Object, null, null, regionRepository.Object);
         }
 
         public void AssertEmptyRegions()
         {
-            regionRepository.SetupGet(x => x.OptimizeRegions).Returns(
+            regionRepository.Setup(x => x.GetAll()).Returns(
                 new List<OptimizeRegion>().AsQueryable());
             ViewResult result = controller.Region();
             Assert.IsNotNull(result, "The view of Region() is null!");
@@ -50,7 +51,9 @@ namespace Lte.WebApp.Tests.ControllerRegion
                     DistrictName = districtName,
                     RegionName = regionName
                 };
-            regionRepository.SetupGet(x => x.OptimizeRegions).Returns(regions.AsQueryable());
+            regionRepository.Setup(x => x.GetAll()).Returns(regions.AsQueryable());
+            regionRepository.Setup(x => x.GetAllList()).Returns(regionRepository.Object.GetAll().ToList());
+            regionRepository.Setup(x => x.Count()).Returns(regionRepository.Object.GetAll().Count());
             ViewResult result = controller.Region();
             RegionViewModel viewModel = result.Model as RegionViewModel;
             QueryRegionService service = new ByDistrictQueryRegionService(regions,

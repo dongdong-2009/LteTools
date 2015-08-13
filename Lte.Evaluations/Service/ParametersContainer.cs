@@ -6,7 +6,6 @@ using Lte.Parameters.Entities;
 using Lte.Parameters.Kpi.Entities;
 using Lte.Parameters.Region.Abstract;
 using Lte.Parameters.Region.Entities;
-using Lte.Parameters.Service.Lte;
 using Lte.Parameters.Service.Public;
 
 namespace Lte.Evaluations.Service
@@ -34,7 +33,7 @@ namespace Lte.Evaluations.Service
             IRegionRepository regionRepository)
         {
             IEnumerable<ENodeb> eNodebs = eNodebRepository.GetAllList();
-            TownENodebStats = townRepository.Towns.ToList().Select(
+            TownENodebStats = townRepository.GetAllList().Select(
                 x => new TownENodebStat(x, eNodebs, regionRepository)).ToList();
         }
 

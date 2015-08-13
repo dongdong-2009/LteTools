@@ -2,7 +2,6 @@
 using System.Linq;
 using Lte.Domain.TypeDefs;
 using Lte.Parameters.Abstract;
-using Lte.Parameters.Concrete;
 using Lte.Parameters.Entities;
 using Lte.Parameters.Kpi.Service;
 using Lte.Parameters.MockOperations;
@@ -78,7 +77,7 @@ namespace Lte.Parameters.Test.Repository.ENodebRepository
             lteRepository.Setup(x => x.GetAllList()).Returns(lteRepository.Object.GetAll().ToList());
             lteRepository.Setup(x => x.Count()).Returns(lteRepository.Object.GetAll().Count());
 
-            townRepository.SetupGet(x => x.Towns).Returns(new List<Town>
+            townRepository.Setup(x => x.GetAll()).Returns(new List<Town>
             {
                 new Town
                 {
@@ -88,6 +87,8 @@ namespace Lte.Parameters.Test.Repository.ENodebRepository
                     Id = 122
                 }
             }.AsQueryable());
+            townRepository.Setup(x => x.GetAllList()).Returns(townRepository.Object.GetAll().ToList());
+            townRepository.Setup(x => x.Count()).Returns(townRepository.Object.GetAll().Count());
             lteRepository.MockENodebRepositorySaveENodeb();
             lteRepository.MockENodebRepositoryDeleteENodeb();
             SaveENodebListService.InfoFilter = x => true;

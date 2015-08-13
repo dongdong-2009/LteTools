@@ -54,15 +54,15 @@ namespace Lte.WebApp.Controllers.Kpi
             this.eNodebRepository = eNodebRepository;
 
             this.Initialize(topDrop2GRepository, topConnection3GRepository);
-            regionNamesService = new QueryRegionCityNamesService(this.regionRepository.OptimizeRegions);
-            districtNamesService = new QueryDistinctDistrictNamesService(this.townRepository.Towns);
+            regionNamesService = new QueryRegionCityNamesService(this.regionRepository.GetAll());
+            districtNamesService = new QueryDistinctDistrictNamesService(this.townRepository.GetAll());
         }
 
         public ActionResult Index(KpiListViewModel postedModel)
         {
             IEnumerable<CdmaRegionStat> stats 
                 = cdmaStatRepository.Stats.ToList().GetLastDateStats(
-                regionRepository.OptimizeRegions.ToList(), postedModel.StatDate);
+                regionRepository.GetAllList(), postedModel.StatDate);
             DateTime endDate = (stats.Any()) ? 
                 stats.First().StatDate : DateTime.Today.AddDays(-1);
             KpiListViewModel viewModel = new KpiListViewModel
@@ -80,7 +80,7 @@ namespace Lte.WebApp.Controllers.Kpi
         {
             IEnumerable<TownPrecise4GView> stats
                 = townPrecise4GRepository.Stats.GetLastDateStats(
-                townRepository.Towns.ToList(), postedModel.StatDate);
+                townRepository.GetAllList(), postedModel.StatDate);
             DateTime endDate = (stats.Any()) ?
                 stats.First().StatDate : DateTime.Today.AddDays(-1);
             Precise4GViewModel viewModel = new Precise4GViewModel
@@ -132,7 +132,7 @@ namespace Lte.WebApp.Controllers.Kpi
         [Authorize]
         public ViewResult KpiImport()
         {
-            QueryNamesService regionService = new QueryOptimizeRegionNamesService(regionRepository.OptimizeRegions);
+            QueryNamesService regionService = new QueryOptimizeRegionNamesService(regionRepository.GetAll());
             string[] sheetNames = regionService.Query().ToArray();
 
             HttpPostedFileBase httpPostedFileBase = Request.Files["dailyKpi"];

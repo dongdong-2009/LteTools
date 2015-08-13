@@ -37,31 +37,15 @@ namespace Lte.Parameters.Abstract
         void SaveChanges();
     }
 
-    public interface IMrsCellRepository
+    public interface IMrsCellRepository : IRepository<MrsCellDate>
     {
-        IQueryable<MrsCellDate> MrsCells { get; }
-
-        IQueryable<MrsCellTa> TaCells { get; }
-
-        void AddOneCell(MrsCellDate cell);
-
-        void AddOneCell(MrsCellTa cell);
-
-        bool RemoveOneCell(MrsCellDate cell);
-
-        bool RemoveOneCell(MrsCellTa cell);
-
-        void SaveChanges();
     }
 
-    public interface IMroCellRepository
+    public interface IMrsCellTaRepository : IRepository<MrsCellTa>
     {
-        IQueryable<MroRsrpTa> RsrpTaCells { get; }
+    }
 
-        void AddOneCell(MroRsrpTa cell);
-
-        bool RemovceOneCell(MroRsrpTa cell);
-
-        void SaveChanges();
+    public interface IMroCellRepository : IRepository<MroRsrpTa>
+    {
     }
 }

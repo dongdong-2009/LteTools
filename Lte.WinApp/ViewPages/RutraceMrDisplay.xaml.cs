@@ -26,6 +26,7 @@ namespace Lte.WinApp.ViewPages
         private readonly IENodebRepository _eNodebRepository = new EFENodebRepository();
         private readonly ICellRepository _cellRepository = new EFCellRepository();
         private readonly IMrsCellRepository _mrsRepository = new EFMrsCellRepository();
+        private readonly IMrsCellTaRepository _mrsTaRepository=new EFMrsCellTaRepository();
         private readonly IMroCellRepository _mroRepository = new EFMroCellRepository();
 
         private readonly IInterferenceStatRepository _interferenceStatRepository
@@ -177,7 +178,7 @@ namespace Lte.WinApp.ViewPages
             if (mrsFilesImporter.RsrpStatList != null)
             {
                 _mrsRepository.SaveStats(mrsFilesImporter.RsrpStatList);
-                _mrsRepository.SaveTaStats(mrsFilesImporter.TaStatList);
+                _mrsTaRepository.SaveTaStats(mrsFilesImporter.TaStatList);
             }
             if (mroFilesImporter.RsrpTaStatList != null)
             {

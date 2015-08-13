@@ -74,7 +74,7 @@ namespace Lte.WebApp.Controllers.Topic
         public ActionResult List()
         {
             IEnumerable<CollegeInfo> infos = _repository.GetAllList();
-            IEnumerable<Town> towns = _townRepository.Towns.ToList();
+            IEnumerable<Town> towns = _townRepository.GetAllList();
             CollegeViewModel viewModel = new CollegeViewModel
             {
                 Colleges = infos.Select(x => new CollegeDto(x, towns))
@@ -86,7 +86,7 @@ namespace Lte.WebApp.Controllers.Topic
         public ActionResult CollegeDetails(int id)
         {
             CollegeInfo info = _repository.Get(id);
-            IEnumerable<Town> towns = _townRepository.Towns.ToList();
+            IEnumerable<Town> towns = _townRepository.GetAllList();
             CollegeDto dto = (info == null)
                 ? new CollegeDto()
                 : new CollegeDto(info, towns);
@@ -121,7 +121,7 @@ namespace Lte.WebApp.Controllers.Topic
         [HttpPost]
         public ActionResult CollgeEdit(CollegeEditViewModel viewModel)
         {
-            Town town = _townRepository.Towns.FirstOrDefault(x =>
+            Town town = _townRepository.GetAll().FirstOrDefault(x =>
                 x.CityName == viewModel.CollegeDto.CityName
                 && x.DistrictName == viewModel.CollegeDto.DistrictName
                 && x.TownName == viewModel.CollegeDto.TownName);

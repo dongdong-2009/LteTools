@@ -30,7 +30,7 @@ namespace Lte.Parameters.Service.Coverage
             IEnumerable<ENodeb> eNodebs, DateTime startDate, DateTime endDate)
         {
             return from e in eNodebs
-                   join s in repository.MrsCells.Where(x => x.RecordDate >= startDate && x.RecordDate <= endDate)
+                   join s in repository.GetAll().Where(x => x.RecordDate >= startDate && x.RecordDate <= endDate)
                    on e.ENodebId equals s.CellId
                    select s;
         }

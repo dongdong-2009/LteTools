@@ -25,43 +25,40 @@ namespace Lte.Parameters.Service.Lte
         public static void SaveStats(this IMrsCellRepository repository, IEnumerable<MrsCellDate> stats)
         {
             foreach (MrsCellDate stat in 
-                from stat in stats let item = repository.MrsCells.FirstOrDefault(x =>
+                from stat in stats let item = repository.GetAll().FirstOrDefault(x =>
                 x.RecordDate == stat.RecordDate && x.CellId == stat.CellId && x.SectorId == stat.SectorId) 
                 where item == null select stat)
             {
                 stat.UpdateStats();
-                repository.AddOneCell(stat);
+                repository.Insert(stat);
             }
-            repository.SaveChanges();
         }
 
-        public static void SaveTaStats(this IMrsCellRepository repository, IEnumerable<MrsCellTa> stats)
+        public static void SaveTaStats(this IMrsCellTaRepository repository, IEnumerable<MrsCellTa> stats)
         {
             foreach (MrsCellTa stat in
                 from stat in stats
-                let item = repository.TaCells.FirstOrDefault(x =>
+                let item = repository.GetAll().FirstOrDefault(x =>
                     x.RecordDate == stat.RecordDate && x.CellId == stat.CellId && x.SectorId == stat.SectorId)
                 where item == null
                 select stat)
             {
                 stat.UpdateStats();
-                repository.AddOneCell(stat);
+                repository.Insert(stat);
             }
-            repository.SaveChanges();
         }
 
         public static void SaveRsrpTaStats(this IMroCellRepository repository, IEnumerable<MroRsrpTa> stats)
         {
             foreach (MroRsrpTa stat in
                 from stat in stats
-                let item = repository.RsrpTaCells.FirstOrDefault(x =>
+                let item = repository.GetAll().FirstOrDefault(x =>
                     x.RecordDate == stat.RecordDate && x.CellId == stat.CellId && x.SectorId == stat.SectorId)
                 where item == null
                 select stat)
             {
-                repository.AddOneCell(stat);
+                repository.Insert(stat);
             }
-            repository.SaveChanges();
         }
 
     }
