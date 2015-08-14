@@ -12,13 +12,13 @@ namespace Lte.WebApp.Controllers.Parameters
 {
     public class ParametersController : Controller
     {
-        private readonly ITownRepository townRepository;
-        private readonly IENodebRepository eNodebRepository;
-        private readonly ICellRepository cellRepository;
-        private readonly IBtsRepository btsRepository;
-        private readonly ICdmaCellRepository cdmaCellRepository;
-        private readonly IRegionRepository regionRepository;
-        private readonly IENodebPhotoRepository photoRepository;
+        private readonly ITownRepository _townRepository;
+        private readonly IENodebRepository _eNodebRepository;
+        private readonly ICellRepository _cellRepository;
+        private readonly IBtsRepository _btsRepository;
+        private readonly ICdmaCellRepository _cdmaCellRepository;
+        private readonly IRegionRepository _regionRepository;
+        private readonly IENodebPhotoRepository _photoRepository;
 
         public ParametersController(
             ITownRepository townRepository,
@@ -29,85 +29,85 @@ namespace Lte.WebApp.Controllers.Parameters
             IRegionRepository regionRepository,
             IENodebPhotoRepository photoRepository)
         {
-            this.townRepository = townRepository;
-            this.eNodebRepository = eNodebRepository;
-            this.cellRepository = cellRepository;
-            this.btsRepository = btsRepository;
-            this.cdmaCellRepository = cdmaCellRepository;
-            this.regionRepository = regionRepository;
-            this.photoRepository = photoRepository;
+            _townRepository = townRepository;
+            _eNodebRepository = eNodebRepository;
+            _cellRepository = cellRepository;
+            _btsRepository = btsRepository;
+            _cdmaCellRepository = cdmaCellRepository;
+            _regionRepository = regionRepository;
+            _photoRepository = photoRepository;
         }
 
         public ViewResult List(ParametersContainer container)
         {
-            container.ImportTownENodebStats(townRepository, eNodebRepository, regionRepository);
+            container.ImportTownENodebStats(_townRepository, _eNodebRepository, _regionRepository);
             return View(container.TownENodebStats);
         }
 
         public ViewResult ENodebList(int townId, int page = 1)
         {
             ENodebListViewModel viewModel 
-                = new ENodebListViewModel(eNodebRepository, townRepository, townId, page);
+                = new ENodebListViewModel(_eNodebRepository, _townRepository, townId, page);
             return View(viewModel);
         }
 
         public ViewResult Query()
         {
             ENodebQueryViewModel viewModel = new ENodebQueryViewModel();
-            viewModel.InitializeTownList(townRepository);
+            viewModel.InitializeTownList(_townRepository);
             return View(viewModel);
         }
 
         [HttpPost]
         public ViewResult Query(ENodebQueryViewModel viewModel)
         {
-            ParametersContainer.QueryENodebs = viewModel.ENodebs = eNodebRepository.GetAllWithNames(townRepository,
+            ParametersContainer.QueryENodebs = viewModel.ENodebs = _eNodebRepository.GetAllWithNames(_townRepository,
                 viewModel, viewModel.ENodebName, viewModel.Address);
 
-            viewModel.InitializeTownList(townRepository, viewModel);
+            viewModel.InitializeTownList(_townRepository, viewModel);
             if (viewModel.ENodebs != null)
             {
                 return View(viewModel);
             } 
             
             viewModel = new ENodebQueryViewModel();
-            viewModel.InitializeTownList(townRepository);
+            viewModel.InitializeTownList(_townRepository);
             return View(viewModel);
         }
 
         public ActionResult ENodebEdit(int eNodebId)
         {
             ENodebDetailsViewModel viewModel = new ENodebDetailsViewModel();
-            viewModel.Import(eNodebId, eNodebRepository, cellRepository, btsRepository, cdmaCellRepository,
-                photoRepository);
+            viewModel.Import(eNodebId, _eNodebRepository, _cellRepository, _btsRepository, _cdmaCellRepository,
+                _photoRepository);
             return View(viewModel);
         }
 
         [HttpPost]
         public ActionResult UpdateENodebInfo(ENodeb item)
         {
-            ENodeb eNodeb = eNodebRepository.GetAll().FirstOrDefault(x => x.ENodebId == item.ENodebId);
+            ENodeb eNodeb = _eNodebRepository.GetAll().FirstOrDefault(x => x.ENodebId == item.ENodebId);
             if (eNodeb == null) return View("ENodebEdit", new ENodebDetailsViewModel());
             eNodeb.Address = item.Address;
             eNodeb.Name = item.Name;
             eNodeb.Factory = item.Factory;
             ENodebDetailsViewModel viewModel = new ENodebDetailsViewModel();
-            viewModel.Import(eNodeb.ENodebId, eNodebRepository, cellRepository, btsRepository, cdmaCellRepository,
-                photoRepository);
+            viewModel.Import(eNodeb.ENodebId, _eNodebRepository, _cellRepository, _btsRepository, _cdmaCellRepository,
+                _photoRepository);
             return View("ENodebEdit",viewModel);
         }
 
         [HttpPost]
         public ActionResult UpdateBtsInfo(CdmaBts item)
         {
-            CdmaBts bts = btsRepository.GetAll().FirstOrDefault(x => x.ENodebId == item.ENodebId);
+            CdmaBts bts = _btsRepository.GetAll().FirstOrDefault(x => x.ENodebId == item.ENodebId);
             if (bts == null) return View("ENodebEdit", new ENodebDetailsViewModel());
             bts.Address = item.Address;
             bts.Name = item.Name;
-            btsRepository.Update(bts);
+            _btsRepository.Update(bts);
             ENodebDetailsViewModel viewModel = new ENodebDetailsViewModel();
-            viewModel.Import(bts.ENodebId, eNodebRepository, cellRepository, btsRepository, cdmaCellRepository,
-                photoRepository);
+            viewModel.Import(bts.ENodebId, _eNodebRepository, _cellRepository, _btsRepository, _cdmaCellRepository,
+                _photoRepository);
             return View("ENodebEdit", viewModel);
         }
 
@@ -119,7 +119,7 @@ namespace Lte.WebApp.Controllers.Parameters
             if (Request.Files["btsImage"] != null && !string.IsNullOrEmpty(Request.Files["btsImage"].FileName))
             {
                 HttpImporter btsImporter = new ImageFileImporter(Request.Files["btsImage"], name);
-                ENodebPhoto btsPhoto = photoRepository.Photos.FirstOrDefault(
+                ENodebPhoto btsPhoto = _photoRepository.Photos.FirstOrDefault(
                     x => x.ENodebId == eNodebId && x.SectorId == 255 && x.Angle == -1);
                 if (btsPhoto == null)
                 {
@@ -130,11 +130,11 @@ namespace Lte.WebApp.Controllers.Parameters
                         Angle = -1,
                         Path = btsImporter.FilePath
                     };
-                    photoRepository.AddOnePhoto(btsPhoto);
+                    _photoRepository.AddOnePhoto(btsPhoto);
                 }
-                photoRepository.SaveChanges();
+                _photoRepository.SaveChanges();
             }
-            IEnumerable<Cell> cells = cellRepository.GetAll().Where(x => x.ENodebId == eNodebId).ToList();
+            IEnumerable<Cell> cells = _cellRepository.GetAll().Where(x => x.ENodebId == eNodebId).ToList();
             foreach (Cell cell in cells)
             {
                 HttpPostedFileBase file = Request.Files["cellImage-" + cell.SectorId];
@@ -142,7 +142,7 @@ namespace Lte.WebApp.Controllers.Parameters
                 {
                     HttpImporter cellImporter=new ImageFileImporter(file,name);
                     byte sectorId = cell.SectorId;
-                    ENodebPhoto cellPhoto = photoRepository.Photos.FirstOrDefault(
+                    ENodebPhoto cellPhoto = _photoRepository.Photos.FirstOrDefault(
                         x => x.ENodebId == eNodebId && x.SectorId == sectorId && x.Angle == -1);
                     if (cellPhoto == null)
                     {
@@ -153,29 +153,29 @@ namespace Lte.WebApp.Controllers.Parameters
                             Angle = -1,
                             Path = cellImporter.FilePath
                         };
-                        photoRepository.AddOnePhoto(cellPhoto);
+                        _photoRepository.AddOnePhoto(cellPhoto);
                     }
-                    photoRepository.SaveChanges();
+                    _photoRepository.SaveChanges();
                 }
             }
             ENodebDetailsViewModel viewModel = new ENodebDetailsViewModel();
-            viewModel.Import(eNodebId, eNodebRepository, cellRepository, btsRepository, cdmaCellRepository,
-                photoRepository);
+            viewModel.Import(eNodebId, _eNodebRepository, _cellRepository, _btsRepository, _cdmaCellRepository,
+                _photoRepository);
             return View("ENodebEdit", viewModel);
         }
 
         public ViewResult CellList(int eNodebId)
         {
             ENodebDetailsViewModel viewModel = new ENodebDetailsViewModel();
-            viewModel.Import(eNodebId, eNodebRepository, cellRepository, btsRepository, cdmaCellRepository,
-                photoRepository);
+            viewModel.Import(eNodebId, _eNodebRepository, _cellRepository, _btsRepository, _cdmaCellRepository,
+                _photoRepository);
             return View(viewModel);
         }
 
         public JsonResult GetDistrictENodebsStat(ParametersContainer container, string cityName)
         {
             if (container.TownENodebStats == null)
-            { container.ImportTownENodebStats(townRepository, eNodebRepository, regionRepository); }
+            { container.ImportTownENodebStats(_townRepository, _eNodebRepository, _regionRepository); }
 
             return Json(container.GetENodebsByDistrict(cityName).Select(
                 x => new { D = x.Key, N = x.Value }), JsonRequestBehavior.AllowGet);
@@ -185,7 +185,7 @@ namespace Lte.WebApp.Controllers.Parameters
             string cityName, string districtName)
         {
             if (container.TownENodebStats == null)
-            { container.ImportTownENodebStats(townRepository, eNodebRepository, regionRepository); }
+            { container.ImportTownENodebStats(_townRepository, _eNodebRepository, _regionRepository); }
 
             return Json(container.GetENodebsByTown(cityName, districtName).Select(
                 x => new { T = x.Key, N = x.Value }), JsonRequestBehavior.AllowGet);
@@ -194,7 +194,7 @@ namespace Lte.WebApp.Controllers.Parameters
         public ActionResult GetENodebImage(int eNodebId)
         {
             ENodebPhoto photo =
-                photoRepository.Photos.FirstOrDefault(x => x.ENodebId == eNodebId && x.SectorId == 255 && x.Angle == -1);
+                _photoRepository.Photos.FirstOrDefault(x => x.ENodebId == eNodebId && x.SectorId == 255 && x.Angle == -1);
             string path = (photo == null) ? "" : photo.Path;
             return File(path, "image/jpg");
         }
@@ -202,7 +202,7 @@ namespace Lte.WebApp.Controllers.Parameters
         public ActionResult GetCellImage(int eNodebId, byte sectorId)
         {
             ENodebPhoto photo =
-                photoRepository.Photos.FirstOrDefault(x => x.ENodebId == eNodebId && x.SectorId == sectorId && x.Angle == -1);
+                _photoRepository.Photos.FirstOrDefault(x => x.ENodebId == eNodebId && x.SectorId == sectorId && x.Angle == -1);
             string path = (photo == null) ? "" : photo.Path;
             return File(path, "image/jpg");
         }

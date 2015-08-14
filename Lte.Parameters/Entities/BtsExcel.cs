@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using Lte.Domain.Geo.Abstract;
 using Lte.Domain.Regular;
@@ -67,11 +68,14 @@ namespace Lte.Parameters.Entities
             get { return Gateway.AddressString; } 
         }
 
-        [LteExcelColumn(Name = "规划编号")]
+        [LteExcelColumn(Name = "规划编号(设计院)")]
         public string PlanNum { get; set; }
 
         [LteExcelColumn(Name = "制式")]
         public string DivisionDuplex { get; set; }
+
+        [LteExcelColumn(Name = "入网日期")]
+        public DateTime OpenDate { get; set; }
 
         public ENodebExcel() 
         {

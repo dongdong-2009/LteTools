@@ -31,13 +31,13 @@ namespace Lte.Parameters.Test.MockOperations
         [Test]
         public void TestMockSaveENodebs_TwoSuccessiveENodebs()
         {
-            Assert.AreEqual(eNodebRepository.Object.Count(), 7);
+            Assert.AreEqual(eNodebRepository.Object.Count(), 7, "eNodeb Counts");
             Assert.AreEqual(SaveENodebs(new List<ENodebExcel>
             {
                 new ENodebExcel { CityName = "C-5", DistrictName = "D-5", TownName = "T-5", Name = "E-1", ENodebId = 100001 },
                 new ENodebExcel { CityName = "C-5", DistrictName = "D-5", TownName = "T-5", Name = "E-2", ENodebId = 100002 }
             }), 2);
-            Assert.AreEqual(eNodebRepository.Object.Count(), 9);
+            Assert.AreEqual(eNodebRepository.Object.Count(), 9, "Counts after");
         }
 
         [Test]

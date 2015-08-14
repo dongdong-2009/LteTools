@@ -31,7 +31,7 @@ namespace Lte.Parameters.Test.Repository.ENodebRepository
         {
             Assert.AreEqual(eNodebInfos[0].ENodebId,4);
             Assert.AreEqual(eNodebInfos[1].ENodebId,3);
-            Assert.AreEqual(lteRepository.Object.Count(), 1);
+            Assert.AreEqual(lteRepository.Object.Count(), 1, "lte counts");
             Assert.AreEqual(lteRepository.Object.GetAll().ElementAt(0).ENodebId, 1);
             Assert.AreEqual(SaveENodebs(update), saveResults);
             Assert.AreEqual(lteRepository.Object.Count(), resultCounts);
@@ -50,7 +50,7 @@ namespace Lte.Parameters.Test.Repository.ENodebRepository
             Assert.AreEqual(lteRepository.Object.GetAll().ElementAt(1).TownId, townId);
         }
 
-        [TestCase(true, 2, 2, "10.17.165.121", 1)]
+        [TestCase(true, 1, 2, "10.17.165.121", 1)]
         [TestCase(false, 1, 2, "10.17.165.23", 1)]
         public void TestENodebRepositorySaveENodebs_ModifyFirstItem_SameTownAndName_SameId(
             bool update, int saveResults, int resultCounts, string ipAddress, int eNodebId)
@@ -66,7 +66,7 @@ namespace Lte.Parameters.Test.Repository.ENodebRepository
             Assert.AreEqual(lteRepository.Object.GetAll().ElementAt(0).ENodebId, eNodebId);
         }
 
-        [TestCase(true, 1, 2, "10.17.165.23", 1)]
+        [TestCase(true, 1, 2, "10.17.165.121", 4)]
         [TestCase(false, 1, 2, "10.17.165.23", 1)]
         public void TestENodebRepositorySaveENodebs_ModifyFirstItem_SameTownAndName_DifferentId(
             bool update, int saveResults, int resultCounts, string ipAddress, int eNodebId)
@@ -75,13 +75,13 @@ namespace Lte.Parameters.Test.Repository.ENodebRepository
             Assert.AreEqual(eNodebInfos[0].ENodebId, 4);
             Assert.AreEqual(lteRepository.Object.GetAll().ElementAt(0).ENodebId, 1);
             Assert.AreEqual(lteRepository.Object.Count(), 1);
-            Assert.AreEqual(SaveENodebs(update), saveResults);
+            Assert.AreEqual(SaveENodebs(update), saveResults, "save Results");
             Assert.AreEqual(lteRepository.Object.Count(), resultCounts);
             Assert.AreEqual(lteRepository.Object.GetAll().ElementAt(0).Ip.AddressString, ipAddress);
-            Assert.AreEqual(lteRepository.Object.GetAll().ElementAt(0).ENodebId, eNodebId);
+            Assert.AreEqual(lteRepository.Object.GetAll().ElementAt(0).ENodebId, eNodebId, "eNodebId");
         }
 
-        [TestCase(true, 1, 2, "10.17.165.23", 1)]
+        [TestCase(true, 1, 2, "10.17.165.121", 1)]
         [TestCase(false, 1, 2, "10.17.165.23", 1)]
         public void TestENodebRepositorySaveENodebs_ModifyFirstItem_DifferentTownOrName_SameId(
             bool update, int saveResults, int resultCounts, string ipAddress, int eNodebId)

@@ -16,34 +16,26 @@
     <div class="col-md-6">
         @{ Html.RenderPartial("_TownENodebStatTable"); }
     </div>
-    <div class="col-md-6">
-        <div id="pieCharts">
-            @foreach (string cityName in Model.Select(x=>x.CityName).Distinct())
-            {
-                <h3><a href="#">基站数统计-@cityName</a></h3>
-                <div id="pie-@cityName" class="city" style="min-height: 400px"></div>
-                foreach (string districtName in Model.Where(x => x.CityName == cityName).Select(x => x.DistrictName).Distinct())
-                { 
-                    <h3><a href="#">基站数统计-@cityName@districtName</a></h3>
-                    <div id="pie-@cityName-@districtName" class="district" style="min-height: 400px"></div>
-                }
-            }
-        </div>    
-    </div>
+    @foreach (string cityName in Model.Select(x=>x.CityName).Distinct())
+    {
+        <div class="col-md-6">
+            <div id="pie-@cityName" class="city" style="min-height: 400px"></div>  
+        </div>
+        foreach (string districtName in Model.Where(x => x.CityName == cityName).Select(x => x.DistrictName).Distinct())
+        { 
+            <div class="col-md-6">
+                <div id="pie-@cityName-@districtName" class="district" style="min-height: 400px"></div>
+            </div>
+        }
+    }
 </div>
 
-
-@section css{
-@Styles.Render("~/Content/themes/base/css")
-}
 @section scripts{
-@Scripts.Render("~/bundles/jqueryui")
 @Scripts.Render("~/bundles/highcharts")
 <script type="text/javascript" src="~/Scripts/Parameters/ENodebStatSet.js"></script>
 <script type="text/javascript" src="../../Scripts/Dingli/Pie3dSetting.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#pieCharts").accordion({ autoHeight: false });
         var dataSet = new ENodebStatSet();
         $(".city").each(function () {
             var parts = $(this).attr("id").split('-');

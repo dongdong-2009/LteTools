@@ -161,6 +161,10 @@
     <Compile Include="Migrations\201508070836290_college6.Designer.cs">
       <DependentUpon>201508070836290_college6.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508140740439_NewCellWithOpenDate.cs" />
+    <Compile Include="Migrations\201508140740439_NewCellWithOpenDate.Designer.cs">
+      <DependentUpon>201508140740439_NewCellWithOpenDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Region\Abstract\IInfrastructureRepository.cs" />
     <Compile Include="Region\Concrete\EFCollegeRepository.cs" />
     <Compile Include="Region\Entities\InfrastructureInfo.cs" />
@@ -417,6 +421,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508070836290_college6.resx">
       <DependentUpon>201508070836290_college6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508140740439_NewCellWithOpenDate.resx">
+      <DependentUpon>201508140740439_NewCellWithOpenDate.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Service\Coverage\DtContext.dbml.layout">
       <DependentUpon>DtContext.dbml</DependentUpon>

@@ -79,12 +79,6 @@ namespace Lte.WebApp.Tests.Parameters
         }
 
         [Test]
-        public void TestRegionViewModelInitialize_NullTown()
-        {
-            helper.AssertTest(mockTownRepository.Object, null);
-        }
-
-        [Test]
         public void TestRegionViewModelInitialize_NotNullTown()
         {
             helper.AssertTest(mockTownRepository.Object, "City1", "District1", "Town1");

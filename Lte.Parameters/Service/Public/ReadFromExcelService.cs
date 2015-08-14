@@ -127,7 +127,7 @@ namespace Lte.Parameters.Service.Public
                     break;
                 case "DateTime":
                     property.SetValue(_record, fieldContent.ConvertToDateTime(
-                        DateTime.Parse(defaultValue)));
+                        DateTime.Today));
                     break;
                 case "String":
                     property.SetValue(_record, fieldContent);

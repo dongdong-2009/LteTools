@@ -78,6 +78,9 @@ namespace Lte.Parameters.Entities
         [Display(Name = "规划编号")]
         public string PlanNum { get; set; }
 
+        [Display(Name = "入网日期")]
+        public DateTime OpenDate { get; set; }
+
         public void Import(ENodebExcel eNodebExcelInfo, int townId = -1, bool updateId = true)
         {
             int oldId = ENodebId;

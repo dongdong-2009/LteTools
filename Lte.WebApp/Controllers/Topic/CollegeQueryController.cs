@@ -46,7 +46,7 @@ namespace Lte.WebApp.Controllers.Topic
         public CollegeRegion Get(int id, double centerX, double centerY, double radius)
         {
             CollegeInfo info = _repository.Get(id);
-            if (info==null) return null;
+            if (info == null) return null;
             double area = Math.PI*radius*radius;
             string message = centerX + ";" + centerY + ";" + radius;
             UpdateRegion(id, area, message, info, RegionType.Circle);
@@ -62,6 +62,21 @@ namespace Lte.WebApp.Controllers.Topic
             UpdateRegion(id, area, message, info, RegionType.Rectangle);
             _repository.Update(info);
             return info.CollegeRegion;
+        }
+    }
+
+    public class QueryCollegeRegionController : ApiController
+    {
+        private readonly ICollegeRepository _repository;
+
+        public QueryCollegeRegionController(ICollegeRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public CollegeRegion Get(int id)
+        {
+            return _repository.GetRegion(id);
         }
     }
 

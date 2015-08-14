@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using Abp.EntityFramework;
 using Lte.Domain.Geo.Abstract;
 using Lte.Parameters.Abstract;
 using Lte.Parameters.Entities;
@@ -9,18 +9,8 @@ using Lte.Parameters.Service.Lte;
 
 namespace Lte.Parameters.Concrete
 {
-    public class EFENodebRepository : ParametersRepositoryBase<ENodeb>, IENodebRepository
+    public class EFENodebRepository : LightWeightRepositroyBase<ENodeb>, IENodebRepository
     {
-        private EFENodebRepository(IDbContextProvider<EFParametersContext> dbContextProvider)
-            : base(dbContextProvider)
-        {
-        }
-
-        public EFENodebRepository()
-            : this(new EFParametersProvider())
-        {
-        }
-
         public List<ENodeb> GetAllWithIds(IEnumerable<int> ids)
         {
             return (from a in GetAll()
@@ -38,6 +28,11 @@ namespace Lte.Parameters.Concrete
         {
             return GetAllWithNames(townRepository, town.CityName, town.DistrictName, town.TownName,
                 eNodebName, address);
+        }
+
+        protected override DbSet<ENodeb> Entities
+        {
+            get { return context.ENodebs; }
         }
     }
 }

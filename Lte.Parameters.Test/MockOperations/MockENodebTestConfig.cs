@@ -36,7 +36,7 @@ namespace Lte.Parameters.Test.MockOperations
             SaveENodebListService service = new SaveENodebListService(
                 eNodebRepository.Object, infrastructure, townRepository.Object);
             service.Save(infoList, true);
-            return infrastructure.ENodebsUpdated;
+            return infrastructure.ENodebInserted;
         }
 
         protected bool DeleteOneENodeb(int eNodebId)

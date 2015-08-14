@@ -80,10 +80,6 @@
                     <span class="glyphicon glyphicon-plane"></span>
                     显示CDMA室分
                 </button>
-                <button id="draw-area" class="btn btn-danger">
-                    <span class="glyphicon glyphicon-bell"></span>
-                    圈定校园网范围
-                </button>
                 <button id="resetmap" class="btn btn-primary show-details">
                     <span class="glyphicon glyphicon-edit"></span>
                     重置地图
@@ -179,11 +175,6 @@
                 map.removeOverlay(overlays[i]);
             }
             overlays.length = 0;
-        });
-
-        $("#draw-area").click(function() {
-
-            alert(overlays.length);
         });
 
         map.centerAndZoom(point, 15);

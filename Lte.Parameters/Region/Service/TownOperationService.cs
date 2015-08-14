@@ -50,7 +50,6 @@ namespace Lte.Parameters.Region.Service
 
         public bool DeleteOneTown(IENodebRepository eNodebRepository, IBtsRepository btsRepository)
         {
-            bool result = false;
             Town town = _repository.GetAllList().Query(_city.Trim(), _district.Trim(), _town.Trim());
 
             if (town == null) return false;
@@ -65,8 +64,9 @@ namespace Lte.Parameters.Region.Service
             if (eNodeb == null && bts == null)
             {
                 _repository.Delete(town);
+                return true;
             }
-            return true;
+            return false;
         }
     }
 }

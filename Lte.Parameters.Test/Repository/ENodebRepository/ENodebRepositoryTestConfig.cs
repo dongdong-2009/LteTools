@@ -113,7 +113,7 @@ namespace Lte.Parameters.Test.Repository.ENodebRepository
             SaveENodebListService service = new SaveENodebListService(
                 lteRepository.Object, infrastructure, townRepository.Object);
             service.Save(eNodebInfos, update);
-            return infrastructure.ENodebsUpdated;
+            return infrastructure.ENodebInserted;
         }
 
     }

@@ -617,6 +617,7 @@
     <Content Include="Views\Rutrace\_MrsStatTable.cshtml" />
     <Content Include="Views\Home\ChessBoard.cshtml" />
     <Content Include="Views\Shared\_Accessory.cshtml" />
+    <Content Include="Views\College\_CollegeTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

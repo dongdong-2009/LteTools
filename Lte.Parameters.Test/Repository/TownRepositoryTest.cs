@@ -30,8 +30,8 @@ namespace Lte.Parameters.Test.Repository
             };
             base.Initialize();
             repository.Setup(x => x.GetAll()).Returns(towns.AsQueryable());
-            townRepository.Setup(x => x.GetAllList()).Returns(townRepository.Object.GetAll().ToList());
-            townRepository.Setup(x => x.Count()).Returns(townRepository.Object.GetAll().Count());
+            repository.Setup(x => x.GetAllList()).Returns(repository.Object.GetAll().ToList());
+            repository.Setup(x => x.Count()).Returns(repository.Object.GetAll().Count());
             repository.MockAddOneTownOperation();
             repository.MockRemoveOneTownOperation();
         }
